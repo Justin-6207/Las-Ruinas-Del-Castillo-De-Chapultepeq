@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bmmyhqr7am5rm"]
+
+[ext_resource type="PackedScene" uid="uid://s21isuqmuf4q" path="res://assets/objects/Piso.tscn" id="1_xanep"]
+
+[node name="Node3D" type="Node3D" unique_id=1674986011]
+
+[node name="MeshInstance3D" parent="." unique_id=293698511 instance=ExtResource("1_xanep")]
