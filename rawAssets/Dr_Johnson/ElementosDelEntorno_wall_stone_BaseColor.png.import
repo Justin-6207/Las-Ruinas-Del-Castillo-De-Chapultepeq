@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4eaj6amrjegj"
+uid="uid://dyo2mdf3yyx02"
 path.s3tc="res://.godot/imported/ElementosDelEntorno_wall_stone_BaseColor.png-a96b288cdf1a826796ea4e2a8de6dda2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "508d5790eac0ae2c58853ce24c12a730"
 }
 
 [deps]

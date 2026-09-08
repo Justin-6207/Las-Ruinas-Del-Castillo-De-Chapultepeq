@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkry5o8tcpbb7"
+uid="uid://cssso8pxfdndc"
 path.s3tc="res://.godot/imported/ElementosDelEntorno_DefaultMaterial_Normal.jpg-5caf96e23298d7c1aa57f80de5d7aef9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -30,7 +30,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://rawAssets/Dr_Johnson/ElementosDelEntorno_DefaultMaterial_Normal.jpg"
+roughness/src_normal="res://Assets/MeshCaracteres/Dr_Johnson/ElementosDelEntorno_DefaultMaterial_Normal.jpg"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

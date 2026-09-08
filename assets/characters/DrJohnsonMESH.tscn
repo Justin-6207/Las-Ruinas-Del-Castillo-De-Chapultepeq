@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cpi4w2kd76p28"]
+
+[ext_resource type="PackedScene" uid="uid://bjmt8arespx8h" path="res://rawAssets/Dr_Johnson/DRJohnson.glb" id="1_v0jol"]
+
+[node name="DRJohnson" unique_id=1717200868 instance=ExtResource("1_v0jol")]

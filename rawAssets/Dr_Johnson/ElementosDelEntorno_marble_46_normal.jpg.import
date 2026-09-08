@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7hg4unfktocb"
+uid="uid://cu41cepow0ral"
 path.s3tc="res://.godot/imported/ElementosDelEntorno_marble_46_normal.jpg-0ff922ace84e524657a96c35dee64e4b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -30,7 +30,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://rawAssets/Dr_Johnson/ElementosDelEntorno_marble_46_normal.jpg"
+roughness/src_normal="res://Assets/MeshCaracteres/Dr_Johnson/ElementosDelEntorno_marble_46_normal.jpg"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

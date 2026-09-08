@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cegnnt1qbyqy1"]
+
+[ext_resource type="Script" uid="uid://d2u5txu22uii" path="res://assets/scripts/Controllador.gd" id="1_s5et1"]
+[ext_resource type="PackedScene" uid="uid://cpi4w2kd76p28" path="res://assets/characters/DrJohnsonMESH.tscn" id="2_wcpq6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a2icu"]
+
+[node name="DrJohnson" type="CharacterBody3D" unique_id=489573203]
+script = ExtResource("1_s5et1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=936064317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96442986, 0)
+shape = SubResource("CapsuleShape3D_a2icu")
+
+[node name="DRJohnson" parent="." unique_id=770998915 instance=ExtResource("2_wcpq6")]

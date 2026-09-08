@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1ox06s3cjv7r"
+uid="uid://b1aiamtkitm1w"
 path.s3tc="res://.godot/imported/ElementosDelEntorno_Dirty_Black_and_white_checker_Tiles_Normal.jpg-c25b35a9ac6dbc60dacfc7c75d178472.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -30,7 +30,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://rawAssets/Dr_Johnson/ElementosDelEntorno_Dirty_Black_and_white_checker_Tiles_Normal.jpg"
+roughness/src_normal="res://Assets/MeshCaracteres/Dr_Johnson/ElementosDelEntorno_Dirty_Black_and_white_checker_Tiles_Normal.jpg"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2
