@@ -3,12 +3,33 @@
 [ext_resource type="PackedScene" uid="uid://g6cegfv0x062" path="res://assets/objects/GeneradorMapa.tscn" id="1_cjr46"]
 [ext_resource type="PackedScene" uid="uid://cegnnt1qbyqy1" path="res://assets/characters/Jugador.tscn" id="2_cjr46"]
 
-[node name="Node3D" type="Node3D" unique_id=1674986011]
+[node name="Juego" type="Node3D" unique_id=1674986011]
 
 [node name="GeneradorMapa" parent="." unique_id=450716917 instance=ExtResource("1_cjr46")]
 
 [node name="Jugador" parent="." unique_id=489573203 instance=ExtResource("2_cjr46")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36639047, -2.3841858e-07, -0.106937885)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1526147666]
 transform = Transform3D(-1, 0, 8.742277e-08, 4.054791e-08, 0.88593256, 0.46381402, -7.7450686e-08, 0.46381402, -0.88593256, 0, 2.0101333, -1.2842737)
+
+[node name="Control" type="Control" parent="." unique_id=2128033824]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="HFlowContainer" type="HFlowContainer" parent="Control" unique_id=676005398]
+layout_mode = 0
+offset_right = 393.0
+offset_bottom = 125.0
+theme_override_constants/h_separation = 8
+
+[node name="Button" type="Button" parent="Control/HFlowContainer" unique_id=805439558]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="Control/HFlowContainer" unique_id=16942486]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="Control/HFlowContainer" unique_id=1557927505]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
