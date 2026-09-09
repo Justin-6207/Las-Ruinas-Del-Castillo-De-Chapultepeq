@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://bmmyhqr7am5rm"]
 
-[ext_resource type="PackedScene" uid="uid://g6cegfv0x062" path="res://assets/objects/piso.tscn" id="1_cjr46"]
-[ext_resource type="PackedScene" uid="uid://cegnnt1qbyqy1" path="res://assets/characters/DrJohnson.tscn" id="2_cjr46"]
+[ext_resource type="PackedScene" uid="uid://g6cegfv0x062" path="res://assets/objects/GeneradorMapa.tscn" id="1_cjr46"]
+[ext_resource type="PackedScene" uid="uid://cegnnt1qbyqy1" path="res://assets/characters/Jugador.tscn" id="2_cjr46"]
 
 [node name="Node3D" type="Node3D" unique_id=1674986011]
 
-[node name="Piso" parent="." unique_id=450716917 instance=ExtResource("1_cjr46")]
+[node name="GeneradorMapa" parent="." unique_id=450716917 instance=ExtResource("1_cjr46")]
+transform = Transform3D(3.8903878, 0, 0, 0, 0.152439, 0, 0, 0, 3.8084023, 0, 0, 0)
 
-[node name="DrJohnson" parent="." unique_id=489573203 instance=ExtResource("2_cjr46")]
+[node name="Jugador" parent="." unique_id=489573203 instance=ExtResource("2_cjr46")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36639047, -2.3841858e-07, -0.106937885)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1526147666]

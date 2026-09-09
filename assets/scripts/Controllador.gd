@@ -13,23 +13,30 @@ var CamHeight = Vector3(0,2.5,0)
 var current_mouse_position = Vector2(0,0)
 var last_mouse_position = Vector2(0,0)
 
+var xMouseMove : float
+var yMouseMove : float
+
 func ManejarMovimiento(delta):
 	
 	var directionX = 0
 	var directionY = 0
 	
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("Movimiento - Izquierda"):
 		directionX = -1.0
-	elif Input.is_action_pressed("ui_right"):
+	elif Input.is_action_pressed("Movimiento - Derecha"):
 		directionX = 1.0
 	
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("Movimiento - Arriba"):
 		directionY = -1.0
-	elif Input.is_action_pressed("ui_down"):
+	elif Input.is_action_pressed("Movimiento - Abajo"):
 		directionY = 1.0
 
 	var TrueIncrement = Globales.Increment
-	Direction = Vector3(-directionX,0,-directionY)
+	
+	var basisX = camera.global_basis.x
+	var basisZ = camera.global_basis.z
+	
+	Direction = (basisX * directionX + basisZ * directionY).normalized()
 
 	CurrentSpeed = CurrentSpeed + (Direction * TrueIncrement * delta)
 	CurrentSpeed = CurrentSpeed - (CurrentSpeed * Globales.Friction * delta)
@@ -43,28 +50,40 @@ func ManejarGravedad(delta):
 	else:
 		CurrentGravitySpeed = Vector3(0,0,0)
 
-
+func _unhandled_input(event):
+	var input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+	if input:
+		xMouseMove = event.relative.x
+		yMouseMove = event.relative.y
 
 func ManejarCamara(delta):
-
+	
 	#var result = Globales.rayCast(get_world_3d().direct_space_state,global_position + CamHeight, blendedPosition)
-	
 	var blend = 1.0 - (pow(0.5,delta * Globales.RotationSpeed))
-	var current_mouse_position = get_viewport().get_mouse_position()
-	var mouse_motion = (current_mouse_position - last_mouse_position).normalized()
+	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
 	
-	last_mouse_position = current_mouse_position
+	xMouseMove = 0
+	yMouseMove = 0
 
-	var lookVector = Vector3(mouse_motion.x,mouse_motion.y,0)
-	var rightVector = upVector.cross(lookVector)
-	var correctedLook = upVector.cross(rightVector)
-	var newBasis = Basis(rightVector, upVector, -correctedLook)
+	var basisX = camera.global_basis.x
+	var basisY = camera.global_basis.y
+	var basisZ = camera.global_basis.z
 	
-	global_basis = global_basis.slerp(newBasis,blend)
-	camera.global_basis = newBasis
-	camera.global_position = global_position
+	var upAddition = basisY * mouse_motion.y
+	var rightAddition = basisX * -mouse_motion.x
+	
+	var newLook = -(basisZ + upAddition + rightAddition)
+	newLook = (newLook * Vector3(1,0,1)).normalized()
+
+	var camBasis = Basis.looking_at(newLook,Vector3.UP)
+	var charBasis = Basis.looking_at(-newLook,Vector3.UP)
+	
+	global_basis = global_basis.slerp(charBasis,blend)
+	camera.global_basis = camera.global_basis.slerp(camBasis,blend)
+	camera.global_position = global_position + Vector3.UP 
 
 func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	Globales.DrJohnson = self
 
 func _physics_process(delta):

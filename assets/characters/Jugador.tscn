@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cegnnt1qbyqy1"]
+
+[ext_resource type="Script" uid="uid://d2u5txu22uii" path="res://assets/scripts/Controllador.gd" id="1_s5et1"]
+[ext_resource type="Texture2D" uid="uid://dqn5ul401qnk0" path="res://assets/imagenes/espada.png" id="2_blofm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a2icu"]
+
+[node name="Jugador" type="CharacterBody3D" unique_id=489573203]
+script = ExtResource("1_s5et1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=936064317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96442986, 0)
+shape = SubResource("CapsuleShape3D_a2icu")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=275346033]
+transform = Transform3D(0.1703493, 0, 0, 0, 0.18950424, 0, 0, 0, 1, -0.48748493, 0.87446296, 0.91170776)
+texture = ExtResource("2_blofm")
