@@ -3,21 +3,23 @@ extends CharacterBody3D
 @onready var camera = $"../Camera3D"
 
 var CurrentSpeed = Vector3(0,0,0)
-var VelocidadDaño = Vector3(0,0,0)
 var CurrentGravitySpeed = Vector3(0,0,0)
 
 var Direction = Vector3(0,0,0)
 var upVector = Vector3(0, 1, 0)
-var CamHeight = Vector3(0,2.5,0)
-
-var current_mouse_position = Vector2(0,0)
-var last_mouse_position = Vector2(0,0)
 
 var xMouseMove : float
 var yMouseMove : float
 
+static var MaxSpeed = 7.0
+static var Increment = 30.0
+static var RotationSpeed = 35.0
+static var GravityIncrement = 9.81
+static var Friction = Increment/MaxSpeed
+
+###############################################################################################
+
 func ManejarMovimiento(delta):
-	
 	var directionX = 0
 	var directionY = 0
 	
@@ -31,7 +33,7 @@ func ManejarMovimiento(delta):
 	elif Input.is_action_pressed("Movimiento - Abajo"):
 		directionY = 1.0
 
-	var TrueIncrement = Globales.Increment
+	var TrueIncrement = Increment
 	
 	var basisX = camera.global_basis.x
 	var basisZ = camera.global_basis.z
@@ -39,25 +41,18 @@ func ManejarMovimiento(delta):
 	Direction = (basisX * directionX + basisZ * directionY).normalized()
 
 	CurrentSpeed = CurrentSpeed + (Direction * TrueIncrement * delta)
-	CurrentSpeed = CurrentSpeed - (CurrentSpeed * Globales.Friction * delta)
+	CurrentSpeed = CurrentSpeed - (CurrentSpeed * Friction * delta)
 
 	velocity = CurrentSpeed
 
 func ManejarGravedad(delta):
 	velocity += CurrentGravitySpeed
-	if (not  is_on_floor()):
+	if (not is_on_floor()):
 		CurrentGravitySpeed -= (Vector3.UP * 9.81 * delta) 	
 	else:
 		CurrentGravitySpeed = Vector3(0,0,0)
 
-func _unhandled_input(event):
-	var input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
-	if input:
-		xMouseMove = event.relative.x
-		yMouseMove = event.relative.y
-
 func ManejarCamara(delta):
-	
 	#var result = Globales.rayCast(get_world_3d().direct_space_state,global_position + CamHeight, blendedPosition)
 	var blend = 1.0 - (pow(0.5,delta * Globales.RotationSpeed))
 	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
@@ -80,11 +75,19 @@ func ManejarCamara(delta):
 	
 	global_basis = global_basis.slerp(charBasis,blend)
 	camera.global_basis = camera.global_basis.slerp(camBasis,blend)
-	camera.global_position = global_position + Vector3.UP 
+	camera.global_position = global_position + Vector3.UP
+
+###############################################################################################
+
+func _unhandled_input(event):
+	var input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+	if input:
+		xMouseMove = event.relative.x
+		yMouseMove = event.relative.y
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	Globales.DrJohnson = self
+	Globales.MiPersonaje = self
 
 func _physics_process(delta):
 	ManejarMovimiento(delta)

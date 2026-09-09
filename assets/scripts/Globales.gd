@@ -5,7 +5,7 @@ static var Increment = 30.0
 static var RotationSpeed = 35.0
 static var GravityIncrement = 9.81
 static var Friction = Increment/MaxSpeed
-static var DrJohnson
+static var MiPersonaje
 
 static func rayCast(space_state,Start,End):
 
@@ -15,7 +15,7 @@ static func rayCast(space_state,Start,End):
 	var parameters = PhysicsRayQueryParameters3D.new()
 	parameters.from = raycastStart
 	parameters.to = raycastEnd
-	parameters.exclude = [DrJohnson]
+	parameters.exclude = [MiPersonaje]
 	parameters.hit_from_inside = true
 	
 	var result = space_state.intersect_ray(parameters)
