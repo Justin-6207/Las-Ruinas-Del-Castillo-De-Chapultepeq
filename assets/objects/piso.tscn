@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://gmxlufd6frv5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80732"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ucgpn"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_a0700"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Cubo" type="Node3D" unique_id=1471863833]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=567728897]
+material_override = SubResource("StandardMaterial3D_80732")
+mesh = SubResource("BoxMesh_ucgpn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=322836981]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=175193655]
+shape = SubResource("ConcavePolygonShape3D_a0700")

@@ -1,8 +1,10 @@
-class_name LaberintoRNG
+extends Node3D
+
+@export var pared: PackedScene
+@export var piso: PackedScene
 # Called when the node enters the scene tree for the first time.
 
-
-static func generarLaberinto(tamanoLaberinto):
+func generarLaberinto(tamanoLaberinto : int):
 	var laberinto = []
 	var laberintoVisitado = []
 	
@@ -60,6 +62,28 @@ static func generarLaberinto(tamanoLaberinto):
 			
 	for y in laberinto:
 		print(y)
-		
-		
-		
+	laberinto[0][0] = 1
+	return laberinto
+
+func createLaberinto(laberintoArray : Array):
+	var x = 0
+	var z = 0
+	var startPos = Vector3(-1,0,-1)
+	
+	for contenedor in laberintoArray:
+		for nodo in contenedor:
+			if nodo == 1:
+				var block = pared.instantiate()
+				block.position = startPos + Vector3(x,0,z)
+				add_child(block)
+			else:
+				var block = piso.instantiate()
+				block.position = startPos + Vector3(x,-.5,z)
+				add_child(block)
+			x += 1
+		z += 1
+		x = 0
+
+func _ready() -> void:
+	var laberintoArray = generarLaberinto(25)
+	createLaberinto(laberintoArray)

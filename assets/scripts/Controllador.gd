@@ -86,7 +86,6 @@ func _unhandled_input(event):
 		yMouseMove = event.relative.y
 
 func _ready():
-	LaberintoRNG.generarLaberinto(25)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	Globales.MiPersonaje = self
 

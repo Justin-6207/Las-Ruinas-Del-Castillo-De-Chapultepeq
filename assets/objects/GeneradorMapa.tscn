@@ -1,18 +1,11 @@
 [gd_scene format=3 uid="uid://g6cegfv0x062"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_esf6n"]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_80732"]
-points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+[ext_resource type="Script" uid="uid://cao8bubqecydf" path="res://assets/scripts/LaberintoRNG.gd" id="1_4k5rq"]
+[ext_resource type="PackedScene" uid="uid://b5y6fsbuxmeas" path="res://assets/objects/pared.tscn" id="2_epfxa"]
+[ext_resource type="PackedScene" uid="uid://gmxlufd6frv5" path="res://assets/objects/piso.tscn" id="3_mbxyf"]
 
 [node name="Piso" type="Node3D" unique_id=450716917]
-transform = Transform3D(5.593473, 0, 0, 0, 0.152439, 0, 0, 0, 3.8084023, 0, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2021363231]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1.5254738, 0, 0, 0)
-mesh = SubResource("BoxMesh_esf6n")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1154841151]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=870374481]
-shape = SubResource("ConvexPolygonShape3D_80732")
+transform = Transform3D(2, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_4k5rq")
+pared = ExtResource("2_epfxa")
+piso = ExtResource("3_mbxyf")
