@@ -8,7 +8,6 @@ static var Friction = Increment/MaxSpeed
 static var MiPersonaje
 
 static func rayCast(space_state,Start,End):
-
 	var raycastStart = Start
 	var raycastEnd = End
 
