@@ -1,11 +1,12 @@
 extends CharacterBody3D
 
+@onready var camera = $"../Camera3D"
+@onready var SpriteOBJ3D = $"SpriteOBJ3D"
 @export var miInventario = ["Espada","",""]
 var espacioEnLaMano = 0
 var invObj = Globales.Objetos
 
-@onready var camera = $"../Camera3D"
-@onready var SpriteOBJ3D = $"SpriteOBJ3D"
+
 
 var CurrentSpeed = Vector3(0,0,0)
 var CurrentGravitySpeed = Vector3(0,0,0)

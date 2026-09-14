@@ -59,9 +59,32 @@ func generarLaberinto(tamanoLaberinto : int):
 				continue
 			else:
 				nodosAVisitar.push_back([nodoVecino,miPosicion])
-			
-	for y in laberinto:
-		print(y)
+
+	for y in range(0,tamanoLaberinto-1):
+		for x in range(0,tamanoLaberinto-1):
+			if (x+2 < tamanoLaberinto) and (x-2 > 0) and (y+2 < tamanoLaberinto) and (y-2 > 0) and laberinto[y][x] == 0:
+				var nodosVecinos = [
+					[laberinto[y][x + 1],laberinto[y][x + 2],[y,x+1]],
+					[laberinto[y][x - 1],laberinto[y][x - 2],[y,x-1]],
+					[laberinto[y + 1][x],laberinto[y + 2][x],[y+1,x]],
+					[laberinto[y - 1][x],laberinto[y - 2][x],[y-1,x]],
+				]
+				var nodosLlenos = 0
+				var nodoCC
+				
+				var iter = 0
+				for vecino in nodosVecinos:
+					if vecino[0] == 1:
+						nodosLlenos += 1
+						if vecino[1] == 0:
+							nodoCC = iter
+					iter += 1
+					
+				if nodosLlenos >= 3 and nodoCC:
+					laberinto[ nodosVecinos[nodoCC][2][0] ] [ nodosVecinos[nodoCC][2][1] ] = 0
+				else:
+					continue
+				
 	laberinto[0][0] = 1
 	return laberinto
 
