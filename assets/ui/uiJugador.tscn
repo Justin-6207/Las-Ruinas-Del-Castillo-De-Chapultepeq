@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dj0tvsn21bdum"]
+
+[ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/uiJugador.gd" id="1_oqi0v"]
+
+[node name="Control" type="Control" unique_id=525737445]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_oqi0v")
+
+[node name="HFlowContainer" type="HFlowContainer" parent="." unique_id=236521533]
+layout_mode = 0
+offset_right = 393.0
+offset_bottom = 125.0
+theme_override_constants/h_separation = 8
+
+[node name="Button" type="Button" parent="HFlowContainer" unique_id=1892703830]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
+expand_icon = true
+
+[node name="Button2" type="Button" parent="HFlowContainer" unique_id=1710054809]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
+expand_icon = true
+
+[node name="Button3" type="Button" parent="HFlowContainer" unique_id=2028912789]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
+expand_icon = true

@@ -1,11 +1,19 @@
 class_name Globales
 
-static var MaxSpeed = 7.0
-static var Increment = 30.0
-static var RotationSpeed = 35.0
-static var GravityIncrement = 9.81
-static var Friction = Increment/MaxSpeed
+const MaxSpeed = 7.0
+const Increment = 30.0
+const RotationSpeed = 35.0
+const GravityIncrement = 9.81
+const Friction = Increment/MaxSpeed
+
 static var MiPersonaje
+
+const Objetos = {
+	"Espada" : {
+		"icono" : "res://assets/imagenes/espada.png",
+		"costo" : 3
+	}
+}
 
 static func rayCast(space_state,Start,End):
 	var raycastStart = Start

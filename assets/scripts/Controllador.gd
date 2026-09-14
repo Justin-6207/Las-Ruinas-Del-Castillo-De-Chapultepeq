@@ -1,6 +1,11 @@
 extends CharacterBody3D
 
+@export var miInventario = ["Espada","",""]
+var espacioEnLaMano = 0
+var invObj = Globales.Objetos
+
 @onready var camera = $"../Camera3D"
+@onready var SpriteOBJ3D = $"SpriteOBJ3D"
 
 var CurrentSpeed = Vector3(0,0,0)
 var CurrentGravitySpeed = Vector3(0,0,0)
@@ -77,6 +82,13 @@ func ManejarCamara(delta):
 	camera.global_basis = camera.global_basis.slerp(camBasis,blend)
 	camera.global_position = global_position + Vector3.UP
 
+func ManejarInventario(delta):
+	var objetoStr = miInventario[espacioEnLaMano]
+	if objetoStr == "":
+		SpriteOBJ3D.texture = null
+	else:
+		SpriteOBJ3D.texture = load(invObj[objetoStr].icono)
+		pass
 ###############################################################################################
 
 func _unhandled_input(event):
@@ -93,5 +105,6 @@ func _physics_process(delta):
 	ManejarMovimiento(delta)
 	ManejarGravedad(delta)
 	ManejarCamara(delta)
+	ManejarInventario(delta)
 	move_and_slide()
 	
