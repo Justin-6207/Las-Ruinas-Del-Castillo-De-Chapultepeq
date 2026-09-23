@@ -4,8 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://b5y6fsbuxmeas" path="res://assets/objects/pared.tscn" id="2_epfxa"]
 [ext_resource type="PackedScene" uid="uid://gmxlufd6frv5" path="res://assets/objects/piso.tscn" id="3_mbxyf"]
 
-[node name="Piso" type="Node3D" unique_id=450716917]
+[node name="GeneradorDeMapa" type="Node3D" unique_id=450716917]
 transform = Transform3D(2, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_4k5rq")
 pared = ExtResource("2_epfxa")
 piso = ExtResource("3_mbxyf")
+
+[node name="Piso" type="Node3D" parent="." unique_id=1323824451]
+
+[node name="Paredes" type="Node3D" parent="." unique_id=1777525595]
+
+[node name="Objetos" type="Node3D" parent="." unique_id=348054286]

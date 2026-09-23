@@ -1,7 +1,9 @@
 extends CharacterBody3D
 
 @onready var camera = $"../Camera3D"
-@onready var SpriteOBJ3D = $"SpriteOBJ3D"
+@onready var objetoEnLaMano = $"objetoEnLaMano"
+@onready var manoIndicadora = $"manoIndicadora"
+
 @export var miInventario = ["Espada","",""]
 var espacioEnLaMano = 0
 var invObj = Globales.Objetos
@@ -86,11 +88,15 @@ func ManejarCamara(delta):
 func ManejarInventario(delta):
 	var objetoStr = miInventario[espacioEnLaMano]
 	if objetoStr == "":
-		SpriteOBJ3D.texture = null
+		objetoEnLaMano.texture = null
 	else:
-		SpriteOBJ3D.texture = load(invObj[objetoStr].icono)
-		pass
-###############################################################################################
+		objetoEnLaMano.texture = load(invObj[objetoStr].icono)
+
+func ManejarMano(delta):
+	var DireccionHaciaJugador = (camera.global_position-manoIndicadora.global_position).normalized()
+	manoIndicadora.global_position = Vector3(0,.75,0)
+	manoIndicadora.global_basis = basis.looking_at(DireccionHaciaJugador)
+	manoIndicadora.scale = Vector3(.1,.1,.1)
 
 func _unhandled_input(event):
 	var input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
@@ -107,5 +113,6 @@ func _physics_process(delta):
 	ManejarGravedad(delta)
 	ManejarCamara(delta)
 	ManejarInventario(delta)
+	ManejarMano(delta)
 	move_and_slide()
 	

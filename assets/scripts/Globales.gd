@@ -7,6 +7,7 @@ const GravityIncrement = 9.81
 const Friction = Increment/MaxSpeed
 
 static var MiPersonaje
+static var MiLaberinto
 
 const Objetos = {
 	"Espada" : {
