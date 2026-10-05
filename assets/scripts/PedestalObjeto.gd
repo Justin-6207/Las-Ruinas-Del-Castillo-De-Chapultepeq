@@ -2,6 +2,7 @@ extends Node3D
 
 @export var ObjetoContenido: String 
 @onready var SpriteObjeto = $"SpriteObjeto"
+
 var invObj = Globales.Objetos
 var botones = []
 var invPers

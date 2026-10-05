@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bfmvsp5m4n3fk"]
 
-[ext_resource type="Script" uid="uid://b4mivbyiqt31j" path="res://assets/objects/PedestalObjeto.gd" id="1_rmfht"]
+[ext_resource type="Script" uid="uid://b4mivbyiqt31j" path="res://assets/scripts/PedestalObjeto.gd" id="1_rmfht"]
 
 [node name="Node3D" type="Node3D" unique_id=1448700201]
 script = ExtResource("1_rmfht")

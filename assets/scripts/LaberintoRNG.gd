@@ -1,6 +1,7 @@
 extends Node3D
 
 @export var pared: PackedScene
+@export var paredVacia: PackedScene
 @export var piso: PackedScene
 
 @onready var Paredes = $"Paredes"
@@ -11,20 +12,81 @@ extends Node3D
 func obtenerNodosVecinos(laberinto,tamLabArreglado,x,y):
 	var nodosVecinos = []
 	
+	# 2: Direccion Derecha
+	# 3: Direccion Izquierda
+	# 4: Direccion Arriba
+	# 5: Direccion Abajo
+	
 	if (x+2 < tamLabArreglado) and (x < tamLabArreglado):
-		nodosVecinos.push_back([laberinto[y][x + 1],laberinto[y][x + 2],[y,x+1]])
+		nodosVecinos.push_back([laberinto[y][x + 1],laberinto[y][x + 2],[y,x+1],2,3])
 	
 	if (x-2 > 0) and (x > 0):
-		nodosVecinos.push_back([laberinto[y][x - 1],laberinto[y][x - 2],[y,x-1]])
+		nodosVecinos.push_back([laberinto[y][x - 1],laberinto[y][x - 2],[y,x-1],3,2])
 	
 	if (y+2 < tamLabArreglado) and (y < tamLabArreglado):
-		nodosVecinos.push_back([laberinto[y + 1][x],laberinto[y + 2][x],[y+1,x]])
+		nodosVecinos.push_back([laberinto[y + 1][x],laberinto[y + 2][x],[y+1,x],4,5])
 		
 	if (y-2 > 0) and (y > 0):
-		nodosVecinos.push_back([laberinto[y - 1][x],laberinto[y - 2][x],[y-1,x]])
+		nodosVecinos.push_back([laberinto[y - 1][x],laberinto[y - 2][x],[y-1,x],5,4])
 	
 	return nodosVecinos
+
+func generarCuartosEnLaberinto(laberinto,tamanoLaberinto,numCuartos):
+	var tamLabArreglado = tamanoLaberinto-1
+	for y in range(0,tamanoLaberinto):
+		
+		for x in range(0,tamanoLaberinto):
+			
+			if numCuartos <= 0:
+				return
+			
+			if laberinto[y][x] == 0:
+				var nodosVecinos = obtenerNodosVecinos(laberinto,tamLabArreglado,x,y)
+				var nodosLlenos = 0
+				
+				var iter = 0
+				for vecino in nodosVecinos:
+					if vecino[0] == 1:
+						nodosLlenos += 1
+					iter += 1
+					
+				if nodosLlenos >= 2 and nodosVecinos.size() < 4:
+					numCuartos -= 1
+					
+					for nodoVecino in nodosVecinos:
+						var DireccionVecino = nodoVecino[3]
+						var DireccionOrigen = nodoVecino[4]
+						
+						if nodoVecino[0] == 0:
+							laberinto[y][x] = DireccionVecino
+						else:
+							laberinto[nodoVecino[2][0]][nodoVecino[2][1]] = DireccionOrigen
+				else:
+					continue
+
+func eliminarCallejonesSinSalida(laberinto,tamanoLaberinto):
+	var tamLabArreglado = tamanoLaberinto-1
 	
+	for y in range(0,tamanoLaberinto):
+		for x in range(0,tamanoLaberinto):
+			if laberinto[y][x] == 0:
+				var nodosVecinos = obtenerNodosVecinos(laberinto,tamLabArreglado,x,y)
+				var nodosLlenos = 0
+				var nodoCC
+				
+				var iter = 0
+				for vecino in nodosVecinos:
+					if vecino[0] == 1:
+						nodosLlenos += 1
+						if vecino[1] == 0:
+							nodoCC = iter
+					iter += 1
+					
+				if nodosLlenos >= nodosVecinos.size()-1 and nodosVecinos.size() >= 3 and nodoCC:
+
+					laberinto[ nodosVecinos[nodoCC][2][0] ] [ nodosVecinos[nodoCC][2][1] ] = 0
+				else:
+					continue
 
 func generarLaberinto(tamanoLaberinto : int):
 	var laberinto = []
@@ -72,8 +134,7 @@ func generarLaberinto(tamanoLaberinto : int):
 			Vector2(miPosicion.x, miPosicion.y + 2),
 		]
 		nodosVecinos.shuffle()
-		
-		print("")
+
 		for nodo in range(0,3):
 			var nodoVecino = nodosVecinos.pop_back()
 			var condicion1 = (nodoVecino.x <= 0 or nodoVecino.x >= tamLabArreglado)
@@ -89,49 +150,67 @@ func generarLaberinto(tamanoLaberinto : int):
 			else:
 				nodosAVisitar.push_back([nodoVecino,miPosicion])
 
-	for y in range(0,tamanoLaberinto):
-		for x in range(0,tamanoLaberinto):
-			if laberinto[y][x] == 0:
-				var nodosVecinos = obtenerNodosVecinos(laberinto,tamLabArreglado,x,y)
-				var nodosLlenos = 0
-				var nodoCC
-				
-				var iter = 0
-				for vecino in nodosVecinos:
-					if vecino[0] == 1:
-						nodosLlenos += 1
-						if vecino[1] == 0:
-							nodoCC = iter
-					iter += 1
-					
-				if nodosLlenos >= nodosVecinos.size()-1 and nodosVecinos.size() >= 3 and nodoCC:
-
-					laberinto[ nodosVecinos[nodoCC][2][0] ] [ nodosVecinos[nodoCC][2][1] ] = 0
-				else:
-					continue
-				
 	laberinto[0][0] = 1
+	
+	eliminarCallejonesSinSalida(laberinto,tamanoLaberinto)
+	generarCuartosEnLaberinto(laberinto,tamanoLaberinto,3)
+	
+	for x in laberinto:
+		print(x)
+	
 	return laberinto
 
-func createLaberinto(laberintoArray : Array):
+func createLaberintoFisico(laberintoArray : Array):
 	var x = 0
 	var z = 0
 	var startPos = Vector3(-1,0,-1)
 	
+	# 2: Direccion Derecha
+	# 3: Direccion Izquierda
+	# 4: Direccion Arriba
+	# 5: Direccion Abajo
+	var PosicionInicial 
+	
 	for contenedor in laberintoArray:
 		for nodo in contenedor:
+			var movingPos = startPos + Vector3(x,0,z)
+			
+
 			if nodo == 1:
 				var block = pared.instantiate()
-				block.position = startPos + Vector3(x,0,z)
+				block.position = movingPos
 				Paredes.add_child(block)
+			elif nodo >= 2:
+				var block = paredVacia.instantiate()
+				block.position = movingPos
+				Paredes.add_child(block)
+
+				var miPiso = piso.instantiate()
+				miPiso.position = movingPos + Vector3(0,-.5,0)
+				Piso.add_child(miPiso)
+				
+				if nodo == 2:
+					print("NODO DERECHA REMOVIDO")
+					block.find_child("Derecha").queue_free()
+				elif nodo == 3:
+					print("NODO IZQUIERDA REMOVIDO")
+					block.find_child("Izquierda").queue_free()
+				elif nodo == 4:
+					print("NODO FRENTE REMOVIDO")
+					block.find_child("Frente").queue_free()
+				elif nodo == 5:
+					print("NODO DETRAS REMOVIDO")
+					block.find_child("Detras").queue_free()
 			else:
 				var block = piso.instantiate()
-				block.position = startPos + Vector3(x,-.5,z)
+				block.position = movingPos + Vector3(0,-.5,0)
 				Piso.add_child(block)
 			x += 1
 		z += 1
 		x = 0
 
+
 func _ready() -> void:
+	await(get_tree().create_timer(.05).timeout)
 	var laberintoArray = generarLaberinto(25)
-	createLaberinto(laberintoArray)
+	var PosicionInicial = createLaberintoFisico(laberintoArray)

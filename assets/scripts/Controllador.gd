@@ -3,12 +3,10 @@ extends CharacterBody3D
 @onready var camera = $"../Camera3D"
 @onready var objetoEnLaMano = $"objetoEnLaMano"
 @onready var manoIndicadora = $"manoIndicadora"
-
 @export var miInventario = ["Espada","",""]
+
 var espacioEnLaMano = 0
 var invObj = Globales.Objetos
-
-
 
 var CurrentSpeed = Vector3(0,0,0)
 var CurrentGravitySpeed = Vector3(0,0,0)
@@ -46,7 +44,7 @@ func ManejarMovimiento(delta):
 	var basisX = camera.global_basis.x
 	var basisZ = camera.global_basis.z
 	
-	Direction = (basisX * directionX + basisZ * directionY).normalized()
+	Direction = ((basisX * directionX + basisZ * directionY) * Vector3(1,0,1)).normalized()
 
 	CurrentSpeed = CurrentSpeed + (Direction * TrueIncrement * delta)
 	CurrentSpeed = CurrentSpeed - (CurrentSpeed * Friction * delta)
@@ -85,6 +83,28 @@ func ManejarCamara(delta):
 	camera.global_basis = camera.global_basis.slerp(camBasis,blend)
 	camera.global_position = global_position + Vector3.UP
 
+func CamaraTopDown(delta):
+	var blend = 1.0 - (pow(0.5,delta * Globales.RotationSpeed))
+	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
+	
+	xMouseMove = 0
+	yMouseMove = 0
+
+	var basisX = camera.global_basis.x
+	var basisY = camera.global_basis.y
+	var basisZ = camera.global_basis.z
+	
+	var upAddition = basisY * mouse_motion.y
+	var rightAddition = basisX * -mouse_motion.x
+	
+	var newLook = -(basisZ + upAddition + rightAddition)
+	var camBasis = Basis.looking_at(newLook,Vector3.UP)
+	var charBasis = Basis.looking_at(-newLook,Vector3.UP)
+	
+	global_basis = global_basis.slerp(charBasis,blend)
+	camera.global_basis = camera.global_basis.slerp(camBasis,blend)
+	camera.global_position = global_position + Vector3.UP * 5
+	
 func ManejarInventario(delta):
 	var objetoStr = miInventario[espacioEnLaMano]
 	if objetoStr == "":
@@ -111,7 +131,7 @@ func _ready():
 func _physics_process(delta):
 	ManejarMovimiento(delta)
 	ManejarGravedad(delta)
-	ManejarCamara(delta)
+	CamaraTopDown(delta)
 	ManejarInventario(delta)
 	ManejarMano(delta)
 	move_and_slide()
