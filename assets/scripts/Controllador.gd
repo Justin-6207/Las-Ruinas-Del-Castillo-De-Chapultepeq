@@ -131,7 +131,8 @@ func _ready():
 func _physics_process(delta):
 	ManejarMovimiento(delta)
 	ManejarGravedad(delta)
-	CamaraTopDown(delta)
+	#CamaraTopDown(delta)
+	ManejarCamara(delta)
 	ManejarInventario(delta)
 	ManejarMano(delta)
 	move_and_slide()

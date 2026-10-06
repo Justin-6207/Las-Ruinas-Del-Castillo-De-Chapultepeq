@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Las ruinas del castillo de Chapultepeq"
 run/main_scene="uid://bmmyhqr7am5rm"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
