@@ -59,7 +59,6 @@ func ManejarGravedad(delta):
 		CurrentGravitySpeed = Vector3(0,0,0)
 
 func ManejarCamara(delta):
-	#var result = Globales.rayCast(get_world_3d().direct_space_state,global_position + CamHeight, blendedPosition)
 	var blend = 1.0 - (pow(0.5,delta * Globales.RotationSpeed))
 	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
 	
@@ -112,9 +111,24 @@ func ManejarInventario(delta):
 	else:
 		objetoEnLaMano.texture = load(invObj[objetoStr].icono)
 
+var valorInterpolacion = 0
 func ManejarMano(delta):
+	var objetoMasCercano
+	var distancia = 99999
+	for interaccionable in Globales.MisInteraccionables:
+		var distTemp = (global_position - interaccionable.global_position).length()
+		if distTemp < distancia and distTemp <= 2.5:
+			distancia = distTemp
+			objetoMasCercano = interaccionable
+		pass
+	
+	if objetoMasCercano:
+		manoIndicadora.global_position = objetoMasCercano.global_position
+	else:
+		manoIndicadora.global_position = global_position - Vector3(0,.75,0)
+	
 	var DireccionHaciaJugador = (camera.global_position-manoIndicadora.global_position).normalized()
-	manoIndicadora.global_position = Vector3(0,.75,0)
+	manoIndicadora.global_position += DireccionHaciaJugador * .15
 	manoIndicadora.global_basis = basis.looking_at(DireccionHaciaJugador)
 	manoIndicadora.scale = Vector3(.1,.1,.1)
 
@@ -127,6 +141,7 @@ func _unhandled_input(event):
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	Globales.MiPersonaje = self
+	Globales.Camara = camera
 
 func _physics_process(delta):
 	ManejarMovimiento(delta)

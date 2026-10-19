@@ -1,15 +1,17 @@
 extends Node3D
 
 @export var pared: PackedScene
+@export var pedestalObjeto : PackedScene
 @export var paredVacia: PackedScene
 @export var piso: PackedScene
 
 @onready var Paredes = $"Paredes"
 @onready var Piso = $"Piso"
 @onready var Objetos = $"Objetos"
-# Called when the node enters the scene tree for the first time.
 
-func obtenerNodosVecinosConSalidaYEsquinas(laberinto,y,x):
+#################################################################################
+
+func obtenerNodosVecinosConSalidaYEsquinas(laberinto : Array,y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
@@ -42,7 +44,7 @@ func obtenerNodosVecinosConSalidaYEsquinas(laberinto,y,x):
 	
 	return nodosVecinos
 
-func obtenerNodosVecinosConSalida(laberinto,y,x):
+func obtenerNodosVecinosConSalida(laberinto : Array,y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
@@ -60,7 +62,7 @@ func obtenerNodosVecinosConSalida(laberinto,y,x):
 	
 	return nodosVecinos
 
-func obtenerNodosVecinos(laberinto,y,x):
+func obtenerNodosVecinos(laberinto : Array,y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
@@ -80,7 +82,7 @@ func obtenerNodosVecinos(laberinto,y,x):
 
 #################################################################################
 
-func generarCuartosEnLaberinto(laberinto,numCuartos):
+func generarCuartosArray(laberinto : Array, numCuartos : int):
 	var cuartos = []
 	var tamanoLaberinto = laberinto.size()
 	var tamLabArreglado = tamanoLaberinto-1
@@ -119,7 +121,7 @@ func generarCuartosEnLaberinto(laberinto,numCuartos):
 					
 	return cuartos
 
-func eliminarCallejonesSinSalida(laberinto):
+func eliminarCallejonesSinSalida(laberinto : Array):
 	var tamanoLaberinto = laberinto.size()
 	var tamLabArreglado = tamanoLaberinto-1
 	
@@ -143,7 +145,7 @@ func eliminarCallejonesSinSalida(laberinto):
 				else:
 					continue
 
-func generarLaberinto(tamanoLaberinto : int):
+func generarLaberintoArray(tamanoLaberinto : int):
 	var laberinto = []
 	var laberintoVisitado = []
 	
@@ -208,13 +210,13 @@ func generarLaberinto(tamanoLaberinto : int):
 	laberinto[0][0] = 1
 	
 	eliminarCallejonesSinSalida(laberinto)
-	var cuartos = generarCuartosEnLaberinto(laberinto,5)
+	var cuartos = generarCuartosArray(laberinto,5)
 	
 	return [laberinto, cuartos]
 
 #################################################################################
 
-func createLaberintoFisico(laberinto : Array, cuartos : Array):
+func crearLaberintoFisico(laberinto : Array, cuartos : Array):
 	var x = 0
 	var z = 0
 	var startPos = Vector3(-1,0,-1)
@@ -231,11 +233,13 @@ func createLaberintoFisico(laberinto : Array, cuartos : Array):
 			var movingPos = startPos + Vector3(x,0,z)
 			var nodosVecinos = obtenerNodosVecinos(laberinto,z,x)
 			var paredGenerada
+			
 			if nodo == 1:
 				paredGenerada = pared.instantiate()
 				paredGenerada.position = movingPos
 				Paredes.add_child(paredGenerada)
-			elif nodo >= 2:
+				
+			elif nodo == 2:
 				paredGenerada = paredVacia.instantiate()
 				paredGenerada.position = movingPos
 				Paredes.add_child(paredGenerada)
@@ -243,57 +247,42 @@ func createLaberintoFisico(laberinto : Array, cuartos : Array):
 				var miPiso = piso.instantiate()
 				miPiso.position = movingPos + Vector3(0,-.5,0)
 				Piso.add_child(miPiso)
-				
-				for nodoVecino in nodosVecinos:
-					if not (laberinto[nodoVecino[1][0]][nodoVecino[1][1]] >= 2):
-						continue
-					if nodoVecino[2] == "N":
-						paredGenerada.find_child("Frente").queue_free()
-					elif nodoVecino[2] == "S":
-						paredGenerada.find_child("Detras").queue_free()
-					elif nodoVecino[2] == "E":
-						paredGenerada.find_child("Derecha").queue_free()
-					elif nodoVecino[2] == "O":	
-						paredGenerada.find_child("Izquierda").queue_free()
-					
-					#####################################################
-					
-					elif nodoVecino[2] == "NE":
-						paredGenerada.find_child("Derecha").queue_free()
-						paredGenerada.find_child("Frente").queue_free()
-						
-					elif nodoVecino[2] == "NO":
-						paredGenerada.find_child("Izquierda").queue_free()
-						paredGenerada.find_child("Frente").queue_free()
-						
-					elif nodoVecino[2] == "SE":
-						paredGenerada.find_child("Derecha").queue_free()
-						paredGenerada.find_child("Detras").queue_free()
-						
-					elif nodoVecino[2] == "SO":
-						paredGenerada.find_child("Izquierda").queue_free()
-						paredGenerada.find_child("Detras").queue_free()
+
 			else:
 				paredGenerada = piso.instantiate()
 				paredGenerada.position = movingPos + Vector3(0,-.5,0)
 				Piso.add_child(paredGenerada)
+				
 			paredesLaberinto[z].push_back(paredGenerada)
+			
 			x += 1
 		z += 1
 		x = 0
+
+	return paredesLaberinto
+
+func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Array):
+	var cuartosFisicos = []
 	
 	for cuarto in cuartos:
-		
 		var encontroSalida = false
+		var CuartoFisico = {
+			"Piso" : [],
+			"PisoPrincipal" : null,
+			"Puerta" : null
+		}
 		
 		for pos in cuarto:
-			if encontroSalida:
-				break
-			
-			var nodosVecinos = obtenerNodosVecinosConSalida(laberinto,pos[0],pos[1])
+			var nodosVecinosRestringidos = obtenerNodosVecinosConSalida(laberinto,pos[0],pos[1])
+			var nodosVecinos = obtenerNodosVecinos(laberinto,pos[0],pos[1])
 			var paredCorrespondiente = paredesLaberinto[pos[0]][pos[1]]
 
-			for nodoVecino in nodosVecinos:
+			CuartoFisico.Piso.push_back(paredCorrespondiente)
+			
+			for nodoVecino in nodosVecinosRestringidos:
+				if encontroSalida == true:
+					break
+				
 				if nodoVecino[0] == 0:
 					if nodoVecino[3] == "N":
 						paredCorrespondiente.find_child("Frente").queue_free()
@@ -303,18 +292,65 @@ func createLaberintoFisico(laberinto : Array, cuartos : Array):
 						paredCorrespondiente.find_child("Derecha").queue_free()
 					elif nodoVecino[3] == "O":	
 						paredCorrespondiente.find_child("Izquierda").queue_free()
-						
-					encontroSalida = true
-					break
 					
+					CuartoFisico.PisoPrincipal = paredCorrespondiente
+					encontroSalida = true
+					
+					break
 			
+			for nodoVecino in nodosVecinos:
+				if not (laberinto[nodoVecino[1][0]][nodoVecino[1][1]] == 2):
+					continue
+				if nodoVecino[2] == "N":
+					paredCorrespondiente.find_child("Frente").queue_free()
+				elif nodoVecino[2] == "S":
+					paredCorrespondiente.find_child("Detras").queue_free()
+				elif nodoVecino[2] == "E":
+					paredCorrespondiente.find_child("Derecha").queue_free()
+				elif nodoVecino[2] == "O":	
+					paredCorrespondiente.find_child("Izquierda").queue_free()
+				elif nodoVecino[2] == "NE":
+					paredCorrespondiente.find_child("Derecha").queue_free()
+					paredCorrespondiente.find_child("Frente").queue_free()
+				elif nodoVecino[2] == "NO":
+					paredCorrespondiente.find_child("Izquierda").queue_free()
+					paredCorrespondiente.find_child("Frente").queue_free()
+				elif nodoVecino[2] == "SE":
+					paredCorrespondiente.find_child("Derecha").queue_free()
+					paredCorrespondiente.find_child("Detras").queue_free()
+				elif nodoVecino[2] == "SO":
+					paredCorrespondiente.find_child("Izquierda").queue_free()
+					paredCorrespondiente.find_child("Detras").queue_free()
+		cuartosFisicos.push_back(CuartoFisico)
+	
+	return cuartosFisicos
+
+func crearObjetosEnCuartos(cuartos : Array):
+	for cuarto in cuartos:
+		var pisoPrincipal = cuarto.PisoPrincipal
+		var pisoElegido
+		var distancia = 9999
+		
+		for piso in cuarto.Piso:
+			var tempDist = (piso.global_position - pisoPrincipal.global_position).length()
+			if tempDist < distancia:
+				pisoElegido = piso
+		
+		var MiLlave = pedestalObjeto.instantiate()
+		MiLlave.ObjetoContenido = "Espada"
+		MiLlave.position = pisoElegido.position + Vector3.UP * .25
+		Objetos.add_child(MiLlave)
 			
+#################################################################################
+
 func _ready() -> void:
 	await(get_tree().create_timer(.05).timeout)
 	
 	var tamanoLaberinto = 25
-	var retorno = generarLaberinto(tamanoLaberinto)
+	var retorno = generarLaberintoArray(tamanoLaberinto)
 	var laberintoArray = retorno[0]
-	var cuartosLaberingo = retorno[1]
+	var cuartosArray = retorno[1]
 	
-	createLaberintoFisico(laberintoArray,cuartosLaberingo)
+	var paredesFisicas = crearLaberintoFisico(laberintoArray,cuartosArray)
+	var cuartosFisicos = crearCuartosFisicos(laberintoArray,cuartosArray,paredesFisicas)
+	crearObjetosEnCuartos(cuartosFisicos)

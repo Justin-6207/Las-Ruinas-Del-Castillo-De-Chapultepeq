@@ -1,13 +1,10 @@
 class_name Globales
 
-const MaxSpeed = 7.0
-const Increment = 30.0
 const RotationSpeed = 35.0
-const GravityIncrement = 9.81
-const Friction = Increment/MaxSpeed
 
 static var MiPersonaje
-static var MiLaberinto
+static var Camara
+static var MisInteraccionables = [] 
 
 const Objetos = {
 	"Espada" : {
