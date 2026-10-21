@@ -338,7 +338,7 @@ func crearObjetosEnCuartos(cuartos : Array):
 		
 		var MiLlave = pedestalObjeto.instantiate()
 		MiLlave.ObjetoContenido = "Espada"
-		MiLlave.position = pisoElegido.position + Vector3.UP * .25
+		MiLlave.global_position = pisoElegido.position + Vector3.UP * .25
 		Objetos.add_child(MiLlave)
 			
 #################################################################################

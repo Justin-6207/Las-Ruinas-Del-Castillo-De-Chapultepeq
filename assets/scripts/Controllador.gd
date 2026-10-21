@@ -1,12 +1,13 @@
 extends CharacterBody3D
 
+@export var elInventario = ["Espada","",""]
 @onready var camera = $"../Camera3D"
 @onready var objetoEnLaMano = $"objetoEnLaMano"
 @onready var manoIndicadora = $"manoIndicadora"
-@export var miInventario = ["Espada","",""]
+
 
 var espacioEnLaMano = 0
-var invObj = Globales.Objetos
+var invObj = G.Objetos
 
 var CurrentSpeed = Vector3(0,0,0)
 var CurrentGravitySpeed = Vector3(0,0,0)
@@ -59,7 +60,7 @@ func ManejarGravedad(delta):
 		CurrentGravitySpeed = Vector3(0,0,0)
 
 func ManejarCamara(delta):
-	var blend = 1.0 - (pow(0.5,delta * Globales.RotationSpeed))
+	var blend = 1.0 - (pow(0.5,delta * G.RotationSpeed))
 	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
 	
 	xMouseMove = 0
@@ -83,7 +84,7 @@ func ManejarCamara(delta):
 	camera.global_position = global_position + Vector3.UP
 
 func CamaraTopDown(delta):
-	var blend = 1.0 - (pow(0.5,delta * Globales.RotationSpeed))
+	var blend = 1.0 - (pow(0.5,delta * G.RotationSpeed))
 	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
 	
 	xMouseMove = 0
@@ -105,32 +106,11 @@ func CamaraTopDown(delta):
 	camera.global_position = global_position + Vector3.UP * 5
 	
 func ManejarInventario(delta):
-	var objetoStr = miInventario[espacioEnLaMano]
+	var objetoStr = elInventario[espacioEnLaMano]
 	if objetoStr == "":
 		objetoEnLaMano.texture = null
 	else:
 		objetoEnLaMano.texture = load(invObj[objetoStr].icono)
-
-var valorInterpolacion = 0
-func ManejarMano(delta):
-	var objetoMasCercano
-	var distancia = 99999
-	for interaccionable in Globales.MisInteraccionables:
-		var distTemp = (global_position - interaccionable.global_position).length()
-		if distTemp < distancia and distTemp <= 2.5:
-			distancia = distTemp
-			objetoMasCercano = interaccionable
-		pass
-	
-	if objetoMasCercano:
-		manoIndicadora.global_position = objetoMasCercano.global_position
-	else:
-		manoIndicadora.global_position = global_position - Vector3(0,.75,0)
-	
-	var DireccionHaciaJugador = (camera.global_position-manoIndicadora.global_position).normalized()
-	manoIndicadora.global_position += DireccionHaciaJugador * .15
-	manoIndicadora.global_basis = basis.looking_at(DireccionHaciaJugador)
-	manoIndicadora.scale = Vector3(.1,.1,.1)
 
 func _unhandled_input(event):
 	var input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
@@ -140,8 +120,9 @@ func _unhandled_input(event):
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	Globales.MiPersonaje = self
-	Globales.Camara = camera
+	G.MiPersonaje = self
+	G.Camara = camera
+	G.MiInventario = elInventario
 
 func _physics_process(delta):
 	ManejarMovimiento(delta)
@@ -149,6 +130,5 @@ func _physics_process(delta):
 	#CamaraTopDown(delta)
 	ManejarCamara(delta)
 	ManejarInventario(delta)
-	ManejarMano(delta)
 	move_and_slide()
 	

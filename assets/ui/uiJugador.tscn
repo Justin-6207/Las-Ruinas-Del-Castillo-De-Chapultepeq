@@ -27,3 +27,12 @@ expand_icon = true
 custom_minimum_size = Vector2(125, 125)
 layout_mode = 2
 expand_icon = true
+
+[node name="Label" type="Label" parent="." unique_id=793498923]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 132.0
+offset_right = 388.0
+offset_bottom = 186.0
+text = "LLAVES RESTANTES: "
+vertical_alignment = 1

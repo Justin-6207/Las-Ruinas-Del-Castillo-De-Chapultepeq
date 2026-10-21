@@ -1,7 +1,8 @@
-class_name Globales
+class_name G
 
 const RotationSpeed = 35.0
 
+static var MiInventario
 static var MiPersonaje
 static var Camara
 static var MisInteraccionables = [] 
