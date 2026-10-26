@@ -80,49 +80,81 @@ func obtenerNodosVecinos(laberinto : Array,y : int,x : int):
 	
 	return nodosVecinos
 
+func obtenerNodosVecinosYEsquinas(laberinto : Array,y : int,x : int):
+	var nodosVecinos = []
+	var tamLabArreglado = laberinto.size()-1
+	
+	if (y-1 > 0) and (y > 0) and (x-1 > 0) and (x > 0):
+		nodosVecinos.push_back([laberinto[y - 1][x - 1],[y - 1,x - 1],"NO"])
+		
+	if (y-1 > 0) and (y > 0) and (x+1 < tamLabArreglado) and (x < tamLabArreglado):
+		nodosVecinos.push_back([laberinto[y - 1][x + 1],[y - 1,x + 1],"NE"])
+	
+	if (y+1 < tamLabArreglado) and (y < tamLabArreglado) and (x-1 > 0) and (x > 0):
+		nodosVecinos.push_back([laberinto[y - 1][x - 1],[y - 1,x - 1],"SO"])
+		
+	if (y+1 < tamLabArreglado) and (y < tamLabArreglado) and (x+1 < tamLabArreglado) and (x < tamLabArreglado):
+		nodosVecinos.push_back([laberinto[y - 1][x + 1],[y - 1,x + 1],"SE"])
+	
+	
+	#############################################################################################
+	
+	if (y-1 > 0) and (y > 0):
+		nodosVecinos.push_back([laberinto[y - 1][x],[y-1,x],"N"])
+	
+	if (y+1 < tamLabArreglado) and (y < tamLabArreglado):
+		nodosVecinos.push_back([laberinto[y + 1][x],[y+1,x],"S"])
+		
+	if (x+1 < tamLabArreglado) and (x < tamLabArreglado):
+		nodosVecinos.push_back([laberinto[y][x + 1],[y,x+1],"E"])
+	
+	if (x-1 > 0) and (x > 0):
+		nodosVecinos.push_back([laberinto[y][x - 1],[y,x-1],"O"])
+	
+	return nodosVecinos
+
 #################################################################################
 
 func generarCuartosArray(laberinto : Array, numCuartos : int):
 	var cuartos = []
 	var tamanoLaberinto = laberinto.size()
 	var tamLabArreglado = tamanoLaberinto-1
-	for y in range(0,tamanoLaberinto):
-		for x in range(0,tamanoLaberinto):
-			if (y == 0 and x == 0):
+	var RNG = RandomNumberGenerator.new()
+	
+	while numCuartos > 0:
+		var y = RNG.randi_range(0,tamLabArreglado)
+		var x = RNG.randi_range(0,tamLabArreglado)
+		if (y == 0 and x == 0):
+			continue
+		if laberinto[y][x] == 0:
+			var nodosVecinos = obtenerNodosVecinosYEsquinas(laberinto,y,x)
+			var nodosLlenos = 0
+			var iter = 0
+			
+			for vecino in nodosVecinos:
+				if vecino[0] == 1:
+					nodosLlenos += 1
+				elif vecino[0] == 2:
+					nodosLlenos = 0
+					break
+					
+				iter += 1
+				
+			if nodosLlenos >= 1:
+				var cuarto = []
+				cuarto.push_back([y,x])
+				numCuartos -= 1
+				print("Cuarto generado")
+				laberinto[y][x] = 2
+				
+				for nodoVecino in nodosVecinos:
+					cuarto.push_back([nodoVecino[1][0],nodoVecino[1][1]])
+					laberinto[nodoVecino[1][0]][nodoVecino[1][1]] = 2
+					
+				cuartos.push_back(cuarto)
+			else:
 				continue
 				
-			if numCuartos <= 0:
-				return
-			
-			if laberinto[y][x] == 0:
-				var nodosVecinos = obtenerNodosVecinosConSalidaYEsquinas(laberinto,y,x)
-				var nodosLlenos = 0
-				var iter = 0
-				
-				for vecino in nodosVecinos:
-					if vecino[0] == 1:
-						nodosLlenos += 1
-					elif vecino[0] == 2:
-						nodosLlenos = 0
-						break
-						
-					iter += 1
-					
-				if nodosLlenos >= 2 and nodosVecinos.size() < 4:
-					var cuarto = []
-					cuarto.push_back([y,x])
-					print("Generar cuarto")
-					numCuartos -= 1
-					
-					laberinto[y][x] = 2
-					for nodoVecino in nodosVecinos:
-						cuarto.push_back([nodoVecino[2][0],nodoVecino[2][1]])
-						laberinto[nodoVecino[2][0]][nodoVecino[2][1]] = 2
-					
-					cuartos.push_back(cuarto)
-				else:
-					continue
-					
 	return cuartos
 
 func eliminarCallejonesSinSalida(laberinto : Array):
@@ -213,9 +245,8 @@ func generarLaberintoArray(tamanoLaberinto : int):
 
 	laberinto[0][0] = 1
 	
-	
-	var cuartos = generarCuartosArray(laberinto,5)
 	eliminarCallejonesSinSalida(laberinto)
+	var cuartos = generarCuartosArray(laberinto,5)
 	
 	return [laberinto, cuartos]
 
