@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dj0tvsn21bdum"]
 
-[ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/uiJugador.gd" id="1_oqi0v"]
+[ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/InterfazGrafica.gd" id="1_oqi0v"]
 
-[node name="Control" type="Control" unique_id=525737445]
+[node name="UIJugador" type="Control" unique_id=525737445]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_oqi0v")
@@ -28,11 +28,11 @@ custom_minimum_size = Vector2(125, 125)
 layout_mode = 2
 expand_icon = true
 
-[node name="Label" type="Label" parent="." unique_id=793498923]
+[node name="ContadorLlaves" type="Label" parent="." unique_id=793498923]
 layout_mode = 0
-offset_left = 131.0
+offset_left = 7.0
 offset_top = 132.0
 offset_right = 388.0
 offset_bottom = 186.0
-text = "LLAVES RESTANTES: "
+text = "LLAVES RECOLECTADAS: "
 vertical_alignment = 1

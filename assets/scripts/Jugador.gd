@@ -1,14 +1,19 @@
 extends CharacterBody3D
 
 @export var elInventario = ["Espada","",""]
+@export var llavesRecolectadas = 0
+@export var stamina = 100
+@export var maxStamina = 100
+
 @onready var camera = $"../Camera3D"
 @onready var objetoEnLaMano = $"objetoEnLaMano"
 @onready var manoIndicadora = $"manoIndicadora"
 
-
 var espacioEnLaMano = 0
 var invObj = G.Objetos
 
+var directionX = 0
+var directionY = 0
 var CurrentSpeed = Vector3(0,0,0)
 var CurrentGravitySpeed = Vector3(0,0,0)
 
@@ -26,9 +31,9 @@ static var Friction = Increment/MaxSpeed
 
 ###############################################################################################
 
-func ManejarMovimiento(delta):
-	var directionX = 0
-	var directionY = 0
+func ManejarInput():
+	directionX = 0
+	directionY = 0
 	
 	if Input.is_action_pressed("Movimiento - Izquierda"):
 		directionX = -1.0
@@ -39,7 +44,11 @@ func ManejarMovimiento(delta):
 		directionY = -1.0
 	elif Input.is_action_pressed("Movimiento - Abajo"):
 		directionY = 1.0
+	
+	if Input.is_action_just_pressed("Click Izquierdo"):
+		manoIndicadora.interactuarConObjeto()
 
+func ManejarMovimiento(delta):
 	var TrueIncrement = Increment
 	
 	var basisX = camera.global_basis.x
@@ -125,6 +134,7 @@ func _ready():
 	G.MiInventario = elInventario
 
 func _physics_process(delta):
+	ManejarInput()
 	ManejarMovimiento(delta)
 	ManejarGravedad(delta)
 	#CamaraTopDown(delta)

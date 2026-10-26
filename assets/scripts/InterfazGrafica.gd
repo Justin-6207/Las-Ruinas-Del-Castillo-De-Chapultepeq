@@ -1,6 +1,7 @@
 extends Control
 
 @onready var Contenedor = $"HFlowContainer"
+@onready var ContadorLlaves = $"ContadorLlaves"
 var botones = []
 
 
@@ -14,6 +15,7 @@ func _process(delta):
 	if G.MiInventario == null:
 		return
 	
+	ContadorLlaves.text = "LLAVES RECOLECTADAS: " + str(G.MiPersonaje.llavesRecolectadas)
 	var iter = 0
 	for objStr in G.MiInventario:
 		if objStr != "":

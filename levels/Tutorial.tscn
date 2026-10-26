@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://g6cegfv0x062" path="res://assets/objects/GeneradorMapa.tscn" id="1_cjr46"]
 [ext_resource type="PackedScene" uid="uid://bfmvsp5m4n3fk" path="res://assets/objects/PedestalObjetoColeccionable.tscn" id="2_5u61p"]
 [ext_resource type="PackedScene" uid="uid://cegnnt1qbyqy1" path="res://assets/characters/Jugador.tscn" id="2_cjr46"]
-[ext_resource type="PackedScene" uid="uid://dj0tvsn21bdum" path="res://assets/ui/uiJugador.tscn" id="3_is76y"]
+[ext_resource type="PackedScene" uid="uid://dj0tvsn21bdum" path="res://assets/ui/UIJugador.tscn" id="3_is76y"]
 
 [node name="Juego" type="Node3D" unique_id=1674986011]
 
@@ -15,4 +15,4 @@ pedestalObjeto = ExtResource("2_5u61p")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1526147666]
 transform = Transform3D(-1, 0, 8.742277e-08, 4.054791e-08, 0.88593256, 0.46381402, -7.7450686e-08, 0.46381402, -0.88593256, 0, 2.0101333, -1.2842737)
 
-[node name="Control" parent="." unique_id=525737445 instance=ExtResource("3_is76y")]
+[node name="UIJugador" parent="." unique_id=525737445 instance=ExtResource("3_is76y")]

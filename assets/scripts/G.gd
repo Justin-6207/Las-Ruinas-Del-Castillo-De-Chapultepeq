@@ -10,8 +10,16 @@ static var MisInteraccionables = []
 const Objetos = {
 	"Espada" : {
 		"icono" : "res://assets/imagenes/espada.png",
-		"costo" : 3
-	}
+		"proporcion" : Vector3(.1,.05,.1)
+	},
+	"Llave" : {
+		"icono" : "res://assets/imagenes/llave.jpg",
+		"proporcion" : Vector3(.1,.05,.1) * .5
+	},
+}
+
+const Enemigos = {
+	
 }
 
 static func rayCast(space_state,Start,End):
@@ -26,3 +34,6 @@ static func rayCast(space_state,Start,End):
 	
 	var result = space_state.intersect_ray(parameters)
 	return result
+
+static func dirCam(posicion):
+	return ((Camara.global_position-posicion) * Vector3(1,0,1)).normalized()

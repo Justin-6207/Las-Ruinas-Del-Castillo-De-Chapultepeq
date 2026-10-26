@@ -88,6 +88,9 @@ func generarCuartosArray(laberinto : Array, numCuartos : int):
 	var tamLabArreglado = tamanoLaberinto-1
 	for y in range(0,tamanoLaberinto):
 		for x in range(0,tamanoLaberinto):
+			if (y == 0 and x == 0):
+				continue
+				
 			if numCuartos <= 0:
 				return
 			
@@ -108,6 +111,7 @@ func generarCuartosArray(laberinto : Array, numCuartos : int):
 				if nodosLlenos >= 2 and nodosVecinos.size() < 4:
 					var cuarto = []
 					cuarto.push_back([y,x])
+					print("Generar cuarto")
 					numCuartos -= 1
 					
 					laberinto[y][x] = 2
@@ -209,8 +213,9 @@ func generarLaberintoArray(tamanoLaberinto : int):
 
 	laberinto[0][0] = 1
 	
-	eliminarCallejonesSinSalida(laberinto)
+	
 	var cuartos = generarCuartosArray(laberinto,5)
+	eliminarCallejonesSinSalida(laberinto)
 	
 	return [laberinto, cuartos]
 
@@ -337,7 +342,7 @@ func crearObjetosEnCuartos(cuartos : Array):
 				pisoElegido = piso
 		
 		var MiLlave = pedestalObjeto.instantiate()
-		MiLlave.ObjetoContenido = "Espada"
+		MiLlave.ObjetoContenido = "Llave"
 		MiLlave.global_position = pisoElegido.position + Vector3.UP * .25
 		Objetos.add_child(MiLlave)
 			

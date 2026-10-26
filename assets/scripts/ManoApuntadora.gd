@@ -2,30 +2,42 @@ extends Sprite3D
 
 var valorInterpolacion = 0
 var alJugador = true
-var MiPersonaje
 var posManoInicial
 var posManoFinal
+var interaccionableCercano
+
+func interactuarConObjeto():
+	if interaccionableCercano:
+		interaccionableCercano.usar()
 
 func ManejarMano(delta):
 	var objetoMasCercano
 	var distancia = 99999
+	var indice = -1
 	
 	for interaccionable in G.MisInteraccionables:
-		var dir = (G.MiPersonaje.global_position - interaccionable.global_position) * Vector3(1,0,1)
-		var dp = dir.normalized().dot(G.Camara.global_basis.z)
+		indice += 1
+		if interaccionable == null:
+			G.MisInteraccionables.remove_at(indice)
+			break
+			
+		var dir =  G.dirCam(interaccionable.global_position)
+		var dp = dir.dot(G.Camara.global_basis.z)
 		var angle = rad_to_deg(acos(dp))
 		var distTemp = (G.MiPersonaje.global_position - interaccionable.global_position).length()
 
-		if distTemp < distancia and distTemp <= 2.5 and angle <= 25:
+		if distTemp < distancia and distTemp <= 2.5 and angle <= 35:
 			distancia = distTemp
 			objetoMasCercano = interaccionable
 		
 	var Cambio = false
 	if objetoMasCercano:
+		interaccionableCercano = objetoMasCercano
 		if alJugador == true:
 			Cambio = true
 		alJugador = false
 	else:
+		interaccionableCercano = null
 		if alJugador == false:
 			Cambio = true
 		alJugador = true
@@ -46,7 +58,7 @@ func ManejarMano(delta):
 	
 	global_position = posManoInicial.lerp(posManoFinal, valorInterpolacion)
 	
-	var DireccionHaciaJugador = (G.Camara.global_position-global_position).normalized()
+	var DireccionHaciaJugador = G.dirCam(global_position)
 	global_position += DireccionHaciaJugador * .15
 	global_basis = basis.looking_at(DireccionHaciaJugador)
 	scale = Vector3(.1,.1,.1)
