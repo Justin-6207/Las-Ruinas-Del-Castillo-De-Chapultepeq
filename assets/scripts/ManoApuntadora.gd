@@ -1,5 +1,6 @@
 extends Sprite3D
 
+
 var valorInterpolacion = 0
 var alJugador = true
 var posManoInicial

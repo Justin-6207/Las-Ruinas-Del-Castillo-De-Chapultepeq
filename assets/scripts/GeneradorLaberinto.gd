@@ -1,6 +1,7 @@
 extends Node3D
 
 @export var pared: PackedScene
+@export var puerta: PackedScene
 @export var pedestalObjeto : PackedScene
 @export var paredVacia: PackedScene
 @export var piso: PackedScene
@@ -302,6 +303,10 @@ func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Ar
 	
 	for cuarto in cuartos:
 		var encontroSalida = false
+		
+		var PuertaFisica = puerta.instantiate()
+		Objetos.add_child(PuertaFisica)
+		
 		var CuartoFisico = {
 			"Piso" : [],
 			"PisoPrincipal" : null,
@@ -320,19 +325,32 @@ func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Ar
 					break
 				
 				if nodoVecino[0] == 0:
+					var POSSalvada
+					var BASISSalvada
+					
 					if nodoVecino[3] == "N":
+						POSSalvada = paredCorrespondiente.find_child("Frente").global_position
+						BASISSalvada = paredCorrespondiente.find_child("Frente").basis
 						paredCorrespondiente.find_child("Frente").queue_free()
 					elif nodoVecino[3] == "S":
+						POSSalvada = paredCorrespondiente.find_child("Detras").global_position
+						BASISSalvada = paredCorrespondiente.find_child("Detras").basis
 						paredCorrespondiente.find_child("Detras").queue_free()
 					elif nodoVecino[3] == "E":
+						POSSalvada = paredCorrespondiente.find_child("Derecha").global_position
+						BASISSalvada = paredCorrespondiente.find_child("Derecha").basis
 						paredCorrespondiente.find_child("Derecha").queue_free()
 					elif nodoVecino[3] == "O":	
+						POSSalvada = paredCorrespondiente.find_child("Izquierda").global_position
+						BASISSalvada = paredCorrespondiente.find_child("Izquierda").basis
 						paredCorrespondiente.find_child("Izquierda").queue_free()
+					
+					PuertaFisica.global_position = POSSalvada
+					PuertaFisica.basis = BASISSalvada
+					PuertaFisica.position += Vector3.UP * .25
 					
 					CuartoFisico.PisoPrincipal = paredCorrespondiente
 					encontroSalida = true
-					
-					break
 			
 			for nodoVecino in nodosVecinos:
 				if not (laberinto[nodoVecino[1][0]][nodoVecino[1][1]] == 2):
@@ -374,9 +392,9 @@ func crearObjetosEnCuartos(cuartos : Array):
 		
 		var MiLlave = pedestalObjeto.instantiate()
 		MiLlave.ObjetoContenido = "Llave"
-		MiLlave.global_position = pisoElegido.position + Vector3.UP * .25
 		Objetos.add_child(MiLlave)
-			
+		
+		MiLlave.global_position = pisoElegido.global_position + Vector3.UP
 #################################################################################
 
 func _ready() -> void:
