@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/InterfazGrafica.gd" id="1_oqi0v"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_esf6n"]
+font_size = 20
+
 [node name="UIJugador" type="Control" unique_id=525737445]
 layout_mode = 3
 anchors_preset = 0
@@ -35,4 +38,31 @@ offset_top = 132.0
 offset_right = 388.0
 offset_bottom = 186.0
 text = "LLAVES RECOLECTADAS: "
+vertical_alignment = 1
+
+[node name="BarraStamina" type="ColorRect" parent="." unique_id=1139124254]
+layout_mode = 0
+offset_left = 835.0
+offset_top = 11.0
+offset_right = 1135.0
+offset_bottom = 51.0
+offset_transform_scale = Vector2(0, 0)
+color = Color(1, 0, 0, 1)
+
+[node name="Lleno" type="ColorRect" parent="BarraStamina" unique_id=770445587]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 40.0
+offset_transform_scale = Vector2(0, 0)
+color = Color(0, 0.34586588, 0.68865025, 1)
+
+[node name="Restante" type="Label" parent="BarraStamina" unique_id=508567337]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 300.0
+offset_bottom = 68.0
+offset_transform_scale = Vector2(0, 0)
+text = "STAMINA"
+label_settings = SubResource("LabelSettings_esf6n")
+horizontal_alignment = 1
 vertical_alignment = 1

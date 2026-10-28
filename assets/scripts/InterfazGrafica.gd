@@ -2,6 +2,9 @@ extends Control
 
 @onready var Contenedor = $"HFlowContainer"
 @onready var ContadorLlaves = $"ContadorLlaves"
+@onready var BarraStamina = $"BarraStamina"
+@onready var BarraStaminaLlena = $"BarraStamina/Lleno"
+@onready var BarraStaminaRestante = $"BarraStamina/Restante"
 var botones = []
 
 
@@ -21,4 +24,6 @@ func _process(delta):
 		if objStr != "":
 			botones[iter].icon = load(G.Objetos[objStr].icono)
 		iter += 1
+	
+	BarraStaminaRestante.text = "STAMINA: " + str(String.num(G.MiPersonaje.stamina, 1)) + "/" + str(G.MiPersonaje.maxStamina)
 		

@@ -12,6 +12,7 @@ extends CharacterBody3D
 var espacioEnLaMano = 0
 var invObj = G.Objetos
 
+var Corriendo = false
 var directionX = 0
 var directionY = 0
 var CurrentSpeed = Vector3(0,0,0)
@@ -31,7 +32,7 @@ static var Friction = Increment/MaxSpeed
 
 ###############################################################################################
 
-func ManejarInput():
+func ManejarInput(delta):
 	directionX = 0
 	directionY = 0
 	
@@ -47,10 +48,19 @@ func ManejarInput():
 	
 	if Input.is_action_just_pressed("Click Izquierdo"):
 		manoIndicadora.interactuarConObjeto()
+		
+	if Input.is_action_pressed("Correr") and stamina > 0:
+		Corriendo = true
+		stamina -= delta
+	else:
+		Corriendo = false	
+		
 
 func ManejarMovimiento(delta):
 	var TrueIncrement = Increment
-	
+	if Corriendo == false:
+		TrueIncrement = TrueIncrement * .5
+		
 	var basisX = camera.global_basis.x
 	var basisZ = camera.global_basis.z
 	
@@ -134,7 +144,7 @@ func _ready():
 	G.MiInventario = elInventario
 
 func _physics_process(delta):
-	ManejarInput()
+	ManejarInput(delta)
 	ManejarMovimiento(delta)
 	ManejarGravedad(delta)
 	#CamaraTopDown(delta)
