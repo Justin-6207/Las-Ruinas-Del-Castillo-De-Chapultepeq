@@ -26,4 +26,5 @@ func _process(delta):
 		iter += 1
 	
 	BarraStaminaRestante.text = "STAMINA: " + str(String.num(G.MiPersonaje.stamina, 1)) + "/" + str(G.MiPersonaje.maxStamina)
+	BarraStaminaLlena.scale = Vector2(G.MiPersonaje.stamina/G.MiPersonaje.maxStamina,1)
 		

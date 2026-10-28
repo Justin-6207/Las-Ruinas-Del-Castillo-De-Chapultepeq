@@ -5,10 +5,12 @@ extends Node3D
 @export var pedestalObjeto : PackedScene
 @export var paredVacia: PackedScene
 @export var piso: PackedScene
+@export var enemigoBase: PackedScene
 
 @onready var Paredes = $"Paredes"
 @onready var Piso = $"Piso"
 @onready var Objetos = $"Objetos"
+@onready var Enemigos = $"Enemigos"
 
 #################################################################################
 
@@ -379,8 +381,8 @@ func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Ar
 	
 	return cuartosFisicos
 
-func crearObjetosEnCuartos(cuartos : Array):
-	for cuarto in cuartos:
+func crearObjetosEnCuartos(cuartosFisicos : Array):
+	for cuarto in cuartosFisicos:
 		var pisoPrincipal = cuarto.PisoPrincipal
 		var pisoElegido
 		var distancia = 9999
@@ -395,6 +397,24 @@ func crearObjetosEnCuartos(cuartos : Array):
 		Objetos.add_child(MiLlave)
 		
 		MiLlave.global_position = pisoElegido.global_position + Vector3.UP
+
+func generarEnemigo(paredesLaberinto : Array,NombreEnemigo):
+	var posicionMasLejana
+	var distancia = 99999999
+	var enemigo = enemigoBase.instantiate()
+	enemigo.tipoEnemigo = "Vicente_Suarez"
+	
+	for fila in paredesLaberinto:
+		for piso in fila:
+			var distanciaTemp = (Vector3.ZERO - piso.global_position * Vector3(1,0,1))
+
+			if piso.get_meta("Libre") and distanciaTemp.length() < distancia:
+				distancia = distanciaTemp.length()
+				posicionMasLejana = piso.global_position
+	
+	Enemigos.add_child(enemigo)
+	enemigo.global_position = Vector3.ZERO  + Vector3.UP
+	
 #################################################################################
 
 func _ready() -> void:
@@ -408,3 +428,4 @@ func _ready() -> void:
 	var paredesFisicas = crearLaberintoFisico(laberintoArray,cuartosArray)
 	var cuartosFisicos = crearCuartosFisicos(laberintoArray,cuartosArray,paredesFisicas)
 	crearObjetosEnCuartos(cuartosFisicos)
+	generarEnemigo(paredesFisicas,"Vicente_Suarez")

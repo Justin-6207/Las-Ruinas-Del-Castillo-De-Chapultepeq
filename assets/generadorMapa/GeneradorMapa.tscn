@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://g6cegfv0x062"]
+
+[ext_resource type="Script" uid="uid://cao8bubqecydf" path="res://assets/scripts/GeneradorLaberinto.gd" id="1_4k5rq"]
+[ext_resource type="PackedScene" uid="uid://b5y6fsbuxmeas" path="res://assets/generadorMapa/Pared.tscn" id="2_epfxa"]
+[ext_resource type="PackedScene" uid="uid://lrfpyy6na1no" path="res://assets/generadorMapa/Puerta.tscn" id="2_mj0no"]
+[ext_resource type="PackedScene" uid="uid://bfmvsp5m4n3fk" path="res://assets/generadorMapa/PedestalObjetoColeccionable.tscn" id="3_557wv"]
+[ext_resource type="PackedScene" uid="uid://gmxlufd6frv5" path="res://assets/generadorMapa/Piso.tscn" id="3_mbxyf"]
+[ext_resource type="PackedScene" uid="uid://beul3dr8s371x" path="res://assets/generadorMapa/ParedVacia.tscn" id="3_mj0no"]
+[ext_resource type="PackedScene" uid="uid://d3yatailfhfbi" path="res://assets/personajes/EnemigoBase.tscn" id="7_u6fk3"]
+
+[node name="GeneradorDeMapa" type="Node3D" unique_id=450716917]
+transform = Transform3D(2, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_4k5rq")
+pared = ExtResource("2_epfxa")
+puerta = ExtResource("2_mj0no")
+pedestalObjeto = ExtResource("3_557wv")
+paredVacia = ExtResource("3_mj0no")
+piso = ExtResource("3_mbxyf")
+enemigoBase = ExtResource("7_u6fk3")
+
+[node name="Piso" type="Node3D" parent="." unique_id=1323824451]
+
+[node name="Paredes" type="Node3D" parent="." unique_id=1777525595]
+
+[node name="Objetos" type="Node3D" parent="." unique_id=348054286]
+
+[node name="Enemigos" type="Node3D" parent="." unique_id=908336941]

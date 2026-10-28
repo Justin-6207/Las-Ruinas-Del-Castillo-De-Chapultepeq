@@ -48,13 +48,16 @@ func ManejarInput(delta):
 	
 	if Input.is_action_just_pressed("Click Izquierdo"):
 		manoIndicadora.interactuarConObjeto()
-		
+
 	if Input.is_action_pressed("Correr") and stamina > 0:
 		Corriendo = true
-		stamina -= delta
+		stamina -= delta * 20
 	else:
-		Corriendo = false	
-		
+		Corriendo = false
+		if directionX == 0 and directionY == 0:
+			stamina += delta * 20
+	
+	stamina = clamp(stamina,0,100)
 
 func ManejarMovimiento(delta):
 	var TrueIncrement = Increment
@@ -118,7 +121,7 @@ func CamaraTopDown(delta):
 	
 	var newLook = -(basisZ + upAddition + rightAddition)
 	var camBasis = Basis.looking_at(newLook,Vector3.UP)
-	var charBasis = Basis.looking_at(-newLook,Vector3.UP)
+	var charBasis = Basis.looking_at((-newLook * Vector3(1,0,1)).normalized(),Vector3.UP)
 	
 	global_basis = global_basis.slerp(charBasis,blend)
 	camera.global_basis = camera.global_basis.slerp(camBasis,blend)

@@ -61,7 +61,7 @@ func ManejarMano(delta):
 	
 	var DireccionHaciaJugador = G.dirCam(global_position)
 	global_position += DireccionHaciaJugador * .15
-	global_basis = basis.looking_at(DireccionHaciaJugador)
+	global_basis = G.basisCam(global_position)
 	scale = Vector3(.1,.1,.1)
 
 func _ready():
