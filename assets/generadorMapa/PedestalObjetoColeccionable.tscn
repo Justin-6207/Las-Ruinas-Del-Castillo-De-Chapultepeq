@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b4mivbyiqt31j" path="res://assets/scripts/Laberinto/PedestalObjeto.gd" id="1_rmfht"]
 [ext_resource type="AudioStream" uid="uid://k3iqrkvn4x67" path="res://assets/sonidos/llaves.mp3" id="2_hwdao"]
 [ext_resource type="AudioStream" uid="uid://b63as4cj05q7p" path="res://assets/sonidos/puertaBloqueada.mp3" id="3_kxffr"]
+[ext_resource type="AudioStream" uid="uid://djalqoiilvg88" path="res://assets/sonidos/victoria.mp3" id="4_hln5f"]
 
 [node name="Node3D" type="Node3D" unique_id=1448700201]
 script = ExtResource("1_rmfht")
@@ -16,3 +17,6 @@ stream = ExtResource("2_hwdao")
 
 [node name="PuertaBloqueada" type="AudioStreamPlayer" parent="Sonidos" unique_id=1815979683]
 stream = ExtResource("3_kxffr")
+
+[node name="Victoria" type="AudioStreamPlayer" parent="Sonidos" unique_id=680160999]
+stream = ExtResource("4_hln5f")

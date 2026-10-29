@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/Jugador/InterfazGrafica/InterfazGrafica.gd" id="1_oqi0v"]
 [ext_resource type="Script" uid="uid://bgoi0m5foklgf" path="res://assets/scripts/Jugador/InterfazGrafica/Anunciante.gd" id="2_lad2y"]
+[ext_resource type="AudioStream" uid="uid://cgh1b5brimkhw" path="res://assets/sonidos/notificacion.mp3" id="3_fuinq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2m0w"]
 
@@ -67,6 +68,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 script = ExtResource("2_lad2y")
+
+[node name="Notificacion" type="AudioStreamPlayer" parent="Anunciante" unique_id=1078346627]
+stream = ExtResource("3_fuinq")
 
 [node name="BarraStamina" type="ColorRect" parent="." unique_id=1139124254]
 layout_mode = 0

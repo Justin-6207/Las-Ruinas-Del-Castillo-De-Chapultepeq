@@ -458,14 +458,17 @@ func generarSalida(pisosFisicos : Array):
 
 func tutorialIntro():
 	G.Anunciante.Anuncio = "Bienvenido al tutorial del juego"
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(2.75).timeout
 	G.Anunciante.Anuncio = "A continuacion se mostraran los controles basicos del juego"
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(2.75).timeout
 	G.Anunciante.Anuncio = "Controles - Boton del Mouse Izquierdo: Abrir / cerrar puertas, agarrar objetos"
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(2.75).timeout
 	G.Anunciante.Anuncio = "Controles - Boton del Mouse Derecho: Usar objetos en el inventario"
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(2.75).timeout
 	G.Anunciante.Anuncio = "Controles - Shift derecho: correr"
+	await get_tree().create_timer(2.75).timeout
+	G.Anunciante.Anuncio = "Controles - Teclas 1, 2 y 3: Cambiar de objeto dentro del inventario"
+	await get_tree().create_timer(2.75).timeout
 	G.Tutorial = true
 
 func _ready():

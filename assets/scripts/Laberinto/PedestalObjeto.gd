@@ -18,10 +18,11 @@ func usar():
 		
 		await get_tree().create_timer(2.0).timeout
 		queue_free()
+		
 	elif  ObjetoContenido == "Salida":
 		if (G.MiPersonaje.llavesRecolectadas >= G.LlavesTotales):
 			ObjetoContenido = ""
-			queue_free()
+			sonidos["Victoria"].play()
 			get_tree().change_scene_to_file("res://escenas/Inicio.tscn")
 		else:
 			sonidos["PuertaBloqueada"].play()

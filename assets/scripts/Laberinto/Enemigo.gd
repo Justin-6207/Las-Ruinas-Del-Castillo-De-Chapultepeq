@@ -20,9 +20,13 @@ var sonidos = {}
 func _ready():
 	for sonido in ContenedorSonidos.get_children():
 		sonidos[sonido.name] = sonido
+	sonidos["Estatica"].play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if not G.MiPersonaje:
+		return
+	
 	var isStunned = false
 	
 	if stunned > 0:

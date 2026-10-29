@@ -73,22 +73,20 @@ func encontrarCamino(PosicionInicial,PosicionFinal):
 		padre[key] = "NULL"
 	
 	minDist[PosicionInicial] = 0;
-	
-	while minDist[PosicionFinal] >= valorMaximo:
-		for y in range(0,matrizLaberinto.size()):
-			for x in range(0,matrizLaberinto.size()):
-				var nodoActual = genKey(y,x)
-				if not matrizAdyacencia.has(nodoActual):
-					continue
-					
-				if minDist[nodoActual] >= valorMaximo:
-					continue
-				var listaAdyacencia = matrizAdyacencia[nodoActual]
-				for nodoMeta in listaAdyacencia:
-					var peso = listaAdyacencia[nodoMeta]
-					if (minDist[nodoActual] + peso) < minDist[nodoMeta]:
-						minDist[nodoMeta] = minDist[nodoActual] + peso
-						padre[nodoMeta] = nodoActual
+	var timeout = 100
+	while minDist[PosicionFinal] >= valorMaximo and timeout > 0:
+		timeout -= 1
+		var llavesMatAdya = matrizAdyacencia.keys()
+		llavesMatAdya.shuffle()
+		for nodoActual in llavesMatAdya:
+			if minDist[nodoActual] >= valorMaximo:
+				continue
+			var listaAdyacencia = matrizAdyacencia[nodoActual]
+			for nodoMeta in listaAdyacencia:
+				var peso = listaAdyacencia[nodoMeta]
+				if (minDist[nodoActual] + peso) < minDist[nodoMeta]:
+					minDist[nodoMeta] = minDist[nodoActual] + peso
+					padre[nodoMeta] = nodoActual
 		
 	if minDist[PosicionFinal] >= valorMaximo:
 		return

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dwn05jfvn7ip3" path="res://assets/scripts/Laberinto/Enemigo.gd" id="1_hgynr"]
 [ext_resource type="AudioStream" uid="uid://c0rnn0paqthvt" path="res://assets/sonidos/rompiendoPuerta.mp3" id="2_4m4qh"]
+[ext_resource type="AudioStream" uid="uid://bqux6kf4evrp2" path="res://assets/sonidos/estatica.mp3" id="3_sc0y2"]
 
 [node name="Node3D" type="Node3D" unique_id=1448700201]
 script = ExtResource("1_hgynr")
@@ -12,3 +13,7 @@ script = ExtResource("1_hgynr")
 
 [node name="RompiendoPuerta" type="AudioStreamPlayer" parent="Sonidos" unique_id=238744768]
 stream = ExtResource("2_4m4qh")
+
+[node name="Estatica" type="AudioStreamPlayer3D" parent="Sonidos" unique_id=582026228]
+stream = ExtResource("3_sc0y2")
+volume_db = -20.0
