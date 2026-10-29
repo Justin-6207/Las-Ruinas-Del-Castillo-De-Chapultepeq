@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://lrfpyy6na1no"]
 
 [ext_resource type="Script" uid="uid://ch8t85pyjiybw" path="res://assets/scripts/Puerta.gd" id="1_iwrfn"]
+[ext_resource type="AudioStream" uid="uid://v366mgmtxjqf" path="res://assets/sonidos/abriendoPuerta.mp3" id="2_3yb2h"]
+[ext_resource type="AudioStream" uid="uid://c0okrf0riul0s" path="res://assets/sonidos/cerrandoPuerta.mp3" id="3_pgff1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nekdi"]
 albedo_color = Color(0.61755615, 0.30092567, 8.663535e-07, 1)
@@ -22,3 +24,11 @@ mesh = SubResource("BoxMesh_iwrfn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=927621083]
 shape = SubResource("ConcavePolygonShape3D_3pvhf")
+
+[node name="AbriendoPuerta" type="AudioStreamPlayer" parent="." unique_id=1811398398]
+stream = ExtResource("2_3yb2h")
+volume_db = -5.0
+
+[node name="CerrandoPuerta" type="AudioStreamPlayer" parent="." unique_id=800440510]
+stream = ExtResource("3_pgff1")
+volume_db = -5.0

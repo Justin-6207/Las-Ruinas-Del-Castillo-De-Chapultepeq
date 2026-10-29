@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://d3yatailfhfbi"]
 
 [ext_resource type="Script" uid="uid://dwn05jfvn7ip3" path="res://assets/scripts/Enemigo.gd" id="1_hgynr"]
+[ext_resource type="AudioStream" uid="uid://c0rnn0paqthvt" path="res://assets/sonidos/rompiendoPuerta.mp3" id="2_4m4qh"]
 
 [node name="Node3D" type="Node3D" unique_id=1448700201]
 script = ExtResource("1_hgynr")
-tipoEnemigo = null
 
 [node name="SpriteObjeto" type="Sprite3D" parent="." unique_id=16824637]
+
+[node name="Sonidos" type="Node3D" parent="." unique_id=1371313270]
+
+[node name="RompiendoPuerta" type="AudioStreamPlayer" parent="Sonidos" unique_id=238744768]
+stream = ExtResource("2_4m4qh")

@@ -27,7 +27,7 @@ func ManejarMano(delta):
 		var angle = rad_to_deg(acos(dp))
 		var distTemp = (G.MiPersonaje.global_position - interaccionable.global_position).length()
 
-		if distTemp < distancia and distTemp <= 2.5 and angle <= 35:
+		if distTemp < distancia and distTemp <= 3 and angle <= 40:
 			distancia = distTemp
 			objetoMasCercano = interaccionable
 		
@@ -53,7 +53,7 @@ func ManejarMano(delta):
 			posManoInicial = global_position
 			posManoFinal = objetoMasCercano.global_position	
 
-	valorInterpolacion += delta
+	valorInterpolacion += delta * 2
 	if (valorInterpolacion > 1):
 		valorInterpolacion = 1
 	

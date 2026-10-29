@@ -15,7 +15,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96442986, 0)
 shape = SubResource("CapsuleShape3D_a2icu")
 
 [node name="objetoEnLaMano" type="Sprite3D" parent="." unique_id=275346033]
-transform = Transform3D(0.1703493, 0, 0, 0, 0.18950424, 0, 0, 0, 1, -0.48748493, 0.80074966, 0.91170776)
+transform = Transform3D(0.07370811, 0, 0, 0, 0.08199622, 0, 0, 0, 1, -0.0024001598, 0.65789855, 0.6471132)
 texture = ExtResource("2_blofm")
 
 [node name="manoIndicadora" type="Sprite3D" parent="." unique_id=1059537019]

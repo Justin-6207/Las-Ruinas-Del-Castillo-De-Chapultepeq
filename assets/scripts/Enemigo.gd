@@ -6,17 +6,23 @@ var direccionMovimiento = Vector3(0,0,1)
 @export var posicionArray = [1,1]
 @export var tipoEnemigo: String
 @onready var SpriteObjeto = $"SpriteObjeto"
+@onready var ContenedorSonidos = $"Sonidos"
 
+var sonidos = {}
 var enemigos = G.Enemigos
-var velocidad = 3.5
-var caminoASeguir 
+var velocidad = 3.25
+var abriendoPuerta = 0
 var generandoCamino = false
+var rompiendoPuerta = false
+var caminoASeguir 
 
 func _ready():
-	pass
+	for sonido in ContenedorSonidos.get_children():
+		sonidos[sonido.name] = sonido
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	G.setPosArray(self)
 	global_basis = G.basisCam(global_position)
 	if tipoEnemigo != "":
 		scale = enemigos[tipoEnemigo].proporcion
@@ -28,22 +34,21 @@ func _process(delta):
 	var dirJug = G.dirJug(global_position)
 	var casteoCaracter = G.objectCast(self,dirJug)
 
-	
 	if casteoCaracter.is_empty():
 		caminoASeguir = null
 		direccionElegida = dirJug.normalized()
-	else:
+	elif not rompiendoPuerta:
 		if caminoASeguir == null and generandoCamino == false:
 			generandoCamino = true
 			
 			var inicio = G.PathfindObject.genKey(posicionArray[0],posicionArray[1])
 			var fin = G.PathfindObject.genKey(G.MiPersonaje.posicionArray[0],G.MiPersonaje.posicionArray[1])
+			
 			caminoASeguir = G.PathfindObject.encontrarCamino(inicio,fin)
 			if caminoASeguir != null:
 				caminoASeguir.remove_at(0)
 				
 			generandoCamino = false
-			
 		elif generandoCamino == false and caminoASeguir != null:
 
 			if not caminoASeguir.is_empty():
@@ -54,9 +59,26 @@ func _process(delta):
 				direccionElegida = direccion.normalized()
 			else:
 				caminoASeguir = null
-				
+
 	
 	if direccionElegida:
-		movimientoAnterior = direccionElegida
-		global_position += direccionElegida * delta * velocidad
+		var casteoDE = G.objectCast(self,direccionElegida.normalized())
+		
+		if not casteoDE.is_empty():
+			var nodoPrincipal = casteoDE.collider.get_parent().get_parent()
+			var condicion1 = (nodoPrincipal.get_meta("Puerta") and nodoPrincipal.Abierta == false and rompiendoPuerta == false)
+			var condicion2 = (nodoPrincipal.global_position - global_position).length() <= 1
+			
+			if condicion1 and condicion2:
+				rompiendoPuerta = true
+				sonidos["RompiendoPuerta"].play()
+				await get_tree().create_timer(2.0).timeout
+				nodoPrincipal.usar()
+				rompiendoPuerta = false
+				abriendoPuerta = 0
+
+		
+		if not rompiendoPuerta:
+			movimientoAnterior = direccionElegida
+			global_position += direccionElegida * delta * velocidad
 		

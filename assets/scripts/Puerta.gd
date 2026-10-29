@@ -3,7 +3,14 @@ extends Node3D
 @onready var CS3D = $MeshInstance3D/StaticBody3D/CollisionShape3D
 @export var Abierta = false 
 
+@onready var AbriendoPuerta = $AbriendoPuerta
+@onready var CerrandoPuerta = $CerrandoPuerta
+
 func usar():
+	if Abierta:
+		CerrandoPuerta.play()
+	else:
+		AbriendoPuerta.play()	
 	Abierta = not Abierta
 
 func _ready():

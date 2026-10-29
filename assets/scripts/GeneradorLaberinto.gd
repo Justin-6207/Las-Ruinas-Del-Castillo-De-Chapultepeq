@@ -310,14 +310,11 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 	
 	for cuarto in cuartosArray:
 		var encontroSalida = false
-		
-		var PuertaFisica = puerta.instantiate()
-		Objetos.add_child(PuertaFisica)
+		var posPuertaAnterior
 		
 		var CuartoFisico = {
 			"Piso" : [],
 			"PisoPrincipal" : null,
-			"Puerta" : null
 		}
 		
 		for pos in cuarto:
@@ -325,6 +322,7 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 			var nodosVecinos = obtenerNodosVecinos(pos[0],pos[1])
 			var paredCorrespondiente = paredesLaberinto[pos[0]][pos[1]]
 
+			
 			CuartoFisico.Piso.push_back(paredCorrespondiente)
 			
 			for nodoVecino in nodosVecinosRestringidos:
@@ -334,6 +332,13 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 				if nodoVecino[0] == 0:
 					var POSSalvada
 					var BASISSalvada
+					
+					if not CuartoFisico.PisoPrincipal:
+						CuartoFisico.PisoPrincipal = paredCorrespondiente
+					
+					if posPuertaAnterior != null:
+						if (paredCorrespondiente.global_position - posPuertaAnterior).length() <= 4:
+							continue
 					
 					if nodoVecino[3] == "N":
 						POSSalvada = paredCorrespondiente.find_child("Frente").global_position
@@ -354,12 +359,16 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 					
 					laberinto[pos[0]][pos[1]] = 3
 					
+					var PuertaFisica = puerta.instantiate()
+					Objetos.add_child(PuertaFisica)
+					PuertaFisica.set_meta("Puerta",true)
+					
+					posPuertaAnterior = paredCorrespondiente.global_position
 					PuertaFisica.global_position = POSSalvada
 					PuertaFisica.basis = BASISSalvada
 					PuertaFisica.position += Vector3.UP * .25
 					
-					CuartoFisico.PisoPrincipal = paredCorrespondiente
-					encontroSalida = true
+					
 			
 			for nodoVecino in nodosVecinos:
 				if not (laberinto[nodoVecino[1][0]][nodoVecino[1][1]] >= 2):
