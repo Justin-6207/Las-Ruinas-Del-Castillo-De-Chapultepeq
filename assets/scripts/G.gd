@@ -5,6 +5,7 @@ const RotationSpeed = 35.0
 static var MiInventario
 static var MiPersonaje
 static var Camara
+static var PathfindObject
 static var MisInteraccionables = [] 
 
 const Objetos = {
@@ -52,6 +53,14 @@ static func rayCast(space_state,Start,End):
 	var result = space_state.intersect_ray(parameters)
 	return result
 
+static func setPosArray(Objeto : Node3D):
+	var resultado = objectCast(Objeto,-Vector3.UP * 10)
+	if not resultado.is_empty():
+		var objetoColision = resultado.collider
+		var posArray = objetoColision.get_meta("PosicionArray")
+		if posArray:
+			Objeto.posicionArray = [posArray[0],posArray[1]]
+	
 static func magCam(posicion):
 	return (Camara.global_position-posicion).length()
 

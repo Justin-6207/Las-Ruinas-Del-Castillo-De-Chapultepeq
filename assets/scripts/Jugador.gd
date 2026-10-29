@@ -4,6 +4,7 @@ extends CharacterBody3D
 @export var llavesRecolectadas = 0
 @export var stamina = 100
 @export var maxStamina = 100
+@export var posicionArray = [1,1]
 
 @onready var camera = $"../Camera3D"
 @onready var objetoEnLaMano = $"objetoEnLaMano"
@@ -80,7 +81,7 @@ func ManejarGravedad(delta):
 		CurrentGravitySpeed -= (Vector3.UP * 9.81 * delta) 	
 	else:
 		CurrentGravitySpeed = Vector3(0,0,0)
-
+		
 func ManejarCamara(delta):
 	var blend = 1.0 - (pow(0.5,delta * G.RotationSpeed))
 	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
@@ -147,6 +148,7 @@ func _ready():
 	G.MiInventario = elInventario
 
 func _physics_process(delta):
+	G.setPosArray(self)
 	ManejarInput(delta)
 	ManejarMovimiento(delta)
 	ManejarGravedad(delta)

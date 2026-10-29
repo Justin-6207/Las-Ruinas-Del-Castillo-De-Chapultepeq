@@ -12,9 +12,10 @@ extends Node3D
 @onready var Objetos = $"Objetos"
 @onready var Enemigos = $"Enemigos"
 
+var laberinto
 #################################################################################
 
-func obtenerNodosVecinosConSalidaYEsquinas(laberinto : Array,y : int,x : int):
+func obtenerNodosVecinosConSalidaYEsquinas(y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
@@ -47,7 +48,7 @@ func obtenerNodosVecinosConSalidaYEsquinas(laberinto : Array,y : int,x : int):
 	
 	return nodosVecinos
 
-func obtenerNodosVecinosConSalida(laberinto : Array,y : int,x : int):
+func obtenerNodosVecinosConSalida(y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
@@ -65,7 +66,7 @@ func obtenerNodosVecinosConSalida(laberinto : Array,y : int,x : int):
 	
 	return nodosVecinos
 
-func obtenerNodosVecinos(laberinto : Array,y : int,x : int):
+func obtenerNodosVecinos(y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
@@ -83,7 +84,7 @@ func obtenerNodosVecinos(laberinto : Array,y : int,x : int):
 	
 	return nodosVecinos
 
-func obtenerNodosVecinosYEsquinas(laberinto : Array,y : int,x : int):
+func obtenerNodosVecinosYEsquinas(y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
@@ -118,7 +119,7 @@ func obtenerNodosVecinosYEsquinas(laberinto : Array,y : int,x : int):
 
 #################################################################################
 
-func generarCuartosArray(laberinto : Array, numCuartos : int):
+func generarCuartosArray(numCuartos : int):
 	var cuartos = []
 	var tamanoLaberinto = laberinto.size()
 	var tamLabArreglado = tamanoLaberinto-1
@@ -127,10 +128,10 @@ func generarCuartosArray(laberinto : Array, numCuartos : int):
 	while numCuartos > 0:
 		var y = RNG.randi_range(0,tamLabArreglado)
 		var x = RNG.randi_range(0,tamLabArreglado)
-		if (y == 0 and x == 0):
+		if (y == 0 and x == 0) or (y == -1) or (x == -1):
 			continue
 		if laberinto[y][x] == 0:
-			var nodosVecinos = obtenerNodosVecinosYEsquinas(laberinto,y,x)
+			var nodosVecinos = obtenerNodosVecinosYEsquinas(y,x)
 			var nodosLlenos = 0
 			var iter = 0
 			
@@ -147,7 +148,6 @@ func generarCuartosArray(laberinto : Array, numCuartos : int):
 				var cuarto = []
 				cuarto.push_back([y,x])
 				numCuartos -= 1
-				print("Cuarto generado")
 				laberinto[y][x] = 2
 				
 				for nodoVecino in nodosVecinos:
@@ -160,14 +160,14 @@ func generarCuartosArray(laberinto : Array, numCuartos : int):
 				
 	return cuartos
 
-func eliminarCallejonesSinSalida(laberinto : Array):
+func eliminarCallejonesSinSalida():
 	var tamanoLaberinto = laberinto.size()
 	var tamLabArreglado = tamanoLaberinto-1
 	
 	for y in range(0,tamanoLaberinto):
 		for x in range(0,tamanoLaberinto):
 			if laberinto[y][x] == 0:
-				var nodosVecinos = obtenerNodosVecinosConSalida(laberinto,y,x)
+				var nodosVecinos = obtenerNodosVecinosConSalida(y,x)
 				var nodosLlenos = 0
 				var nodoCC
 				
@@ -185,9 +185,7 @@ func eliminarCallejonesSinSalida(laberinto : Array):
 					continue
 
 func generarLaberintoArray(tamanoLaberinto : int):
-	var laberinto = []
 	var laberintoVisitado = []
-	
 	var nodosAVisitar = [[Vector2(1,1),Vector2(0,0)]]
 	var miPosicion = Vector2(1,1)
 	var tamLabArreglado = tamanoLaberinto-1
@@ -248,14 +246,17 @@ func generarLaberintoArray(tamanoLaberinto : int):
 
 	laberinto[0][0] = 1
 	
-	eliminarCallejonesSinSalida(laberinto)
-	var cuartos = generarCuartosArray(laberinto,5)
+	eliminarCallejonesSinSalida()
+	var cuartos = generarCuartosArray(5)
 	
-	return [laberinto, cuartos]
+	return cuartos
 
 #################################################################################
 
-func crearLaberintoFisico(laberinto : Array, cuartos : Array):
+func darPosMeta(Piso,Posicion):
+	Piso.find_child("MeshInstance3D").find_child("StaticBody3D").set_meta("PosicionArray", [Posicion[0],Posicion[1]])
+
+func crearLaberintoFisico():
 	var x = 0
 	var z = 0
 	var startPos = Vector3(-1,0,-1)
@@ -263,14 +264,16 @@ func crearLaberintoFisico(laberinto : Array, cuartos : Array):
 	var PosicionInicial 
 	var tamLabArreglado = laberinto.size()-1
 	var paredesLaberinto = []
+	var pisosLaberinto = []
 	
 	for c in range(0,laberinto.size()):
 		paredesLaberinto.push_back([])
+		pisosLaberinto.push_back([])
 	
 	for contenedor in laberinto:
 		for nodo in contenedor:
 			var movingPos = startPos + Vector3(x,0,z)
-			var nodosVecinos = obtenerNodosVecinos(laberinto,z,x)
+			var nodosVecinos = obtenerNodosVecinos(z,x)
 			var paredGenerada
 			
 			if nodo == 1:
@@ -282,28 +285,30 @@ func crearLaberintoFisico(laberinto : Array, cuartos : Array):
 				paredGenerada = paredVacia.instantiate()
 				paredGenerada.position = movingPos
 				Paredes.add_child(paredGenerada)
-
-				var miPiso = piso.instantiate()
-				miPiso.position = movingPos + Vector3(0,-.5,0)
-				Piso.add_child(miPiso)
-
-			else:
-				paredGenerada = piso.instantiate()
-				paredGenerada.position = movingPos + Vector3(0,-.5,0)
-				Piso.add_child(paredGenerada)
 				
-			paredesLaberinto[z].push_back(paredGenerada)
+			var miPiso = piso.instantiate()
+			miPiso.position = movingPos + Vector3(0,-.5,0)
+			miPiso.name = str(z) + "-" + str(x)
+			pisosLaberinto[z].push_back(miPiso)
+			darPosMeta(miPiso,[z,x])
+			Piso.add_child(miPiso)
 			
+			if paredGenerada:
+				paredGenerada.name = str(z) + "-" + str(x)
+				paredesLaberinto[z].push_back(paredGenerada)
+			else:
+				paredesLaberinto[z].push_back(null)
+				
 			x += 1
 		z += 1
 		x = 0
 
-	return paredesLaberinto
+	return [paredesLaberinto, pisosLaberinto]
 
-func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Array):
+func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 	var cuartosFisicos = []
 	
-	for cuarto in cuartos:
+	for cuarto in cuartosArray:
 		var encontroSalida = false
 		
 		var PuertaFisica = puerta.instantiate()
@@ -316,8 +321,8 @@ func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Ar
 		}
 		
 		for pos in cuarto:
-			var nodosVecinosRestringidos = obtenerNodosVecinosConSalida(laberinto,pos[0],pos[1])
-			var nodosVecinos = obtenerNodosVecinos(laberinto,pos[0],pos[1])
+			var nodosVecinosRestringidos = obtenerNodosVecinosConSalida(pos[0],pos[1])
+			var nodosVecinos = obtenerNodosVecinos(pos[0],pos[1])
 			var paredCorrespondiente = paredesLaberinto[pos[0]][pos[1]]
 
 			CuartoFisico.Piso.push_back(paredCorrespondiente)
@@ -347,6 +352,8 @@ func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Ar
 						BASISSalvada = paredCorrespondiente.find_child("Izquierda").basis
 						paredCorrespondiente.find_child("Izquierda").queue_free()
 					
+					laberinto[pos[0]][pos[1]] = 3
+					
 					PuertaFisica.global_position = POSSalvada
 					PuertaFisica.basis = BASISSalvada
 					PuertaFisica.position += Vector3.UP * .25
@@ -355,7 +362,7 @@ func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Ar
 					encontroSalida = true
 			
 			for nodoVecino in nodosVecinos:
-				if not (laberinto[nodoVecino[1][0]][nodoVecino[1][1]] == 2):
+				if not (laberinto[nodoVecino[1][0]][nodoVecino[1][1]] >= 2):
 					continue
 				if nodoVecino[2] == "N":
 					paredCorrespondiente.find_child("Frente").queue_free()
@@ -377,6 +384,7 @@ func crearCuartosFisicos(laberinto : Array,cuartos : Array,paredesLaberinto : Ar
 				elif nodoVecino[2] == "SO":
 					paredCorrespondiente.find_child("Izquierda").queue_free()
 					paredCorrespondiente.find_child("Detras").queue_free()
+					
 		cuartosFisicos.push_back(CuartoFisico)
 	
 	return cuartosFisicos
@@ -418,14 +426,17 @@ func generarEnemigo(paredesLaberinto : Array,NombreEnemigo):
 #################################################################################
 
 func _ready() -> void:
+	laberinto = []
 	await(get_tree().create_timer(.05).timeout)
 	
 	var tamanoLaberinto = 25
-	var retorno = generarLaberintoArray(tamanoLaberinto)
-	var laberintoArray = retorno[0]
-	var cuartosArray = retorno[1]
+	var cuartosArray = generarLaberintoArray(tamanoLaberinto)
+	var retornoFisico = crearLaberintoFisico()
+	var paredesFisicas = retornoFisico[0]
+	var pisosFisicos = retornoFisico[1]
 	
-	var paredesFisicas = crearLaberintoFisico(laberintoArray,cuartosArray)
-	var cuartosFisicos = crearCuartosFisicos(laberintoArray,cuartosArray,paredesFisicas)
+	var cuartosFisicos = crearCuartosFisicos(cuartosArray,paredesFisicas)
 	crearObjetosEnCuartos(cuartosFisicos)
-	generarEnemigo(paredesFisicas,"Vicente_Suarez")
+	generarEnemigo(pisosFisicos,"Vicente_Suarez")
+	
+	G.PathfindObject = PathfindingClass.new(laberinto,pisosFisicos)
