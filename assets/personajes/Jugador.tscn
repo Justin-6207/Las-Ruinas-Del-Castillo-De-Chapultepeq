@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cegnnt1qbyqy1"]
 
 [ext_resource type="Script" uid="uid://d2u5txu22uii" path="res://assets/scripts/Jugador/Jugador.gd" id="1_s5et1"]
-[ext_resource type="Texture2D" uid="uid://dqn5ul401qnk0" path="res://assets/imagenes/espada.png" id="2_blofm"]
 [ext_resource type="Texture2D" uid="uid://dqcu53dr44jve" path="res://assets/imagenes/mano.png" id="3_0gm3f"]
 [ext_resource type="Script" uid="uid://cdamptqbdybut" path="res://assets/scripts/Jugador/ObjetoMano.gd" id="3_i30lq"]
 [ext_resource type="Script" uid="uid://b2jngkdvmrnnd" path="res://assets/scripts/Jugador/ManoApuntadora.gd" id="3_tqbgv"]
 [ext_resource type="AudioStream" uid="uid://5junb178q61s" path="res://assets/sonidos/espada.mp3" id="4_uvepe"]
+[ext_resource type="AudioStream" uid="uid://bmmrk0wdpbw31" path="res://assets/sonidos/espadacritica.mp3" id="4_w1ytx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a2icu"]
 
@@ -18,11 +18,13 @@ shape = SubResource("CapsuleShape3D_a2icu")
 
 [node name="objetoEnLaMano" type="Sprite3D" parent="." unique_id=275346033]
 transform = Transform3D(0.07370811, 0, 0, 0, 0.08199622, 0, 0, 0, 1, -0.0024001598, 0.65789855, 0.6471132)
-texture = ExtResource("2_blofm")
 script = ExtResource("3_i30lq")
 
 [node name="Espada" type="AudioStreamPlayer" parent="objetoEnLaMano" unique_id=253891000]
 stream = ExtResource("4_uvepe")
+
+[node name="EspadaCritica" type="AudioStreamPlayer" parent="objetoEnLaMano" unique_id=1670977386]
+stream = ExtResource("4_w1ytx")
 
 [node name="manoIndicadora" type="Sprite3D" parent="." unique_id=1059537019]
 transform = Transform3D(0.089, 0, 0, 0, 0.1, 0, 0, 0, 0.526, 0, -0.46704614, -0.03185153)

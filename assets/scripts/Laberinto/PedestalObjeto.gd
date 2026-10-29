@@ -4,7 +4,7 @@ extends Node3D
 @onready var SpriteObjeto = $"SpriteObjeto"
 @onready var ContenedorSonidos = $"Sonidos"
 
-var invObj = G.DataObjetos
+var invObj = G.ObjetosData
 var sonidos = {}
 
 func usar():
@@ -12,18 +12,40 @@ func usar():
 		ObjetoContenido = ""
 		G.MiPersonaje.llavesRecolectadas += 1
 		self.set_meta("Inusable",true)
+		sonidos["Llaves"].play()
 		await get_tree().create_timer(2.0).timeout
 		queue_free()
-
+	elif  ObjetoContenido == "Salida":
+		if (G.MiPersonaje.llavesRecolectadas > G.LlavesTotales):
+			ObjetoContenido = ""
+			queue_free()
+			get_tree().change_scene_to_file("res://escenas/Inicio.tscn")
+	else:
+		var indice = 0
+		for str in G.MiPersonaje.MiInventario:
+			if str == "":
+				G.MiPersonaje.MiInventario[indice] = ObjetoContenido
+				ObjetoContenido = ""
+				queue_free()
+				return
+			indice += 1
+		
+		var buffr = ObjetoContenido
+		var ind = G.MiPersonaje.espacioEnLaMano
+		var buffr2 = G.MiPersonaje.MiInventario[ind]
+		
+		G.MiPersonaje.MiInventario[ind] = buffr
+		ObjetoContenido = buffr2
+		
+		
 func _ready():
 	for sonido in ContenedorSonidos.get_children():
 		sonidos[sonido.name] = sonido
-	G.MisInteraccionables.push_back(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	global_basis = G.basisCam(global_position)
-
+	
 	if ObjetoContenido != "":
 		scale = invObj[ObjetoContenido].proporcion
 		SpriteObjeto.texture  = load(invObj[ObjetoContenido].icono)

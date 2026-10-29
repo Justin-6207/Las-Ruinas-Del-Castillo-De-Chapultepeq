@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bfmvsp5m4n3fk"]
 
 [ext_resource type="Script" uid="uid://b4mivbyiqt31j" path="res://assets/scripts/Laberinto/PedestalObjeto.gd" id="1_rmfht"]
+[ext_resource type="AudioStream" uid="uid://k3iqrkvn4x67" path="res://assets/sonidos/llaves.mp3" id="2_hwdao"]
 
 [node name="Node3D" type="Node3D" unique_id=1448700201]
 script = ExtResource("1_rmfht")
@@ -8,3 +9,6 @@ script = ExtResource("1_rmfht")
 [node name="SpriteObjeto" type="Sprite3D" parent="." unique_id=16824637]
 
 [node name="Sonidos" type="Node3D" parent="." unique_id=2061051477]
+
+[node name="Llaves" type="AudioStreamPlayer" parent="Sonidos" unique_id=1270462260]
+stream = ExtResource("2_hwdao")

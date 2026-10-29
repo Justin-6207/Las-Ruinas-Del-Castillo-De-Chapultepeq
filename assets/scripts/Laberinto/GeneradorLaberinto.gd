@@ -9,7 +9,7 @@ extends Node3D
 @export var dificultad = 0
 
 @onready var Paredes = $"Paredes"
-@onready var Piso = $"Piso"
+@onready var Pisos = $"Piso"
 @onready var Objetos = $"Objetos"
 @onready var Enemigos = $"Enemigos"
 
@@ -287,16 +287,25 @@ func crearLaberintoFisico():
 			var miPiso = piso.instantiate()
 			miPiso.position = movingPos + Vector3(0,-.5,0)
 			miPiso.name = str(z) + "-" + str(x)
+			
 			pisosLaberinto[z].push_back(miPiso)
 			darPosMeta(miPiso,[z,x])
-			Piso.add_child(miPiso)
+			
+			if nodo == 0:
+				miPiso.set_meta("Libre",true)
+			else:
+				miPiso.set_meta("Libre",null)
+			
+			Pisos.add_child(miPiso)
 			
 			if paredGenerada:
 				paredGenerada.name = str(z) + "-" + str(x)
 				paredesLaberinto[z].push_back(paredGenerada)
 			else:
 				paredesLaberinto[z].push_back(null)
-				
+			
+
+			
 			x += 1
 		z += 1
 		x = 0
@@ -396,7 +405,7 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 	
 	return cuartosFisicos
 
-func crearObjetosEnCuartos(cuartosFisicos : Array):
+func crearObjetosEnCuartos(cuartosFisicos : Array,llavesAGenerar):
 	for cuarto in cuartosFisicos:
 		var pisoPrincipal = cuarto.PisoPrincipal
 		var pisoElegido
@@ -408,33 +417,50 @@ func crearObjetosEnCuartos(cuartosFisicos : Array):
 				pisoElegido = piso
 		
 		var MiLlave = pedestalObjeto.instantiate()
-		MiLlave.ObjetoContenido = "Llave"
+		
+		if llavesAGenerar > 0:
+			llavesAGenerar -= 1
+			MiLlave.ObjetoContenido = "Llave"
+		else:
+			MiLlave.ObjetoContenido = G.ObjetosGenerables.pick_random()	
+		
 		Objetos.add_child(MiLlave)
 		
 		MiLlave.global_position = pisoElegido.global_position + Vector3.UP
 
-func generarEnemigo(paredesLaberinto : Array,NombreEnemigo):
+func generarEnemigo(NombreEnemigo):
 	var posicionMasLejana
-	var distancia = 99999999
+	var distancia = 0
 	var enemigo = enemigoBase.instantiate()
-	enemigo.tipoEnemigo = "Vicente_Suarez"
-	
-	for fila in paredesLaberinto:
-		for piso in fila:
-			var distanciaTemp = (Vector3.ZERO - piso.global_position * Vector3(1,0,1))
-
-			if piso.get_meta("Libre") and distanciaTemp.length() < distancia:
-				distancia = distanciaTemp.length()
-				posicionMasLejana = piso.global_position
-	
+	enemigo.tipoEnemigo = NombreEnemigo
 	Enemigos.add_child(enemigo)
-	enemigo.global_position = Vector3.ZERO  + Vector3.UP
+	enemigo.global_position = Vector3.ZERO + Vector3.UP
+
+func generarSalida(pisosFisicos : Array):
+	var dist = 0
+	var pisoS
 	
+	for piso in Pisos.get_children():
+		var distTemp = piso.global_position - G.MiPersonaje.global_position
+		distTemp = distTemp.length()
+		if (distTemp > dist) and piso.get_meta("Libre"):
+			dist = distTemp
+			pisoS = piso
+	
+	var MiSalida = pedestalObjeto.instantiate()
+	MiSalida.ObjetoContenido = "Salida"
+	MiSalida.name = "SALIDA"
+	
+	Objetos.add_child(MiSalida)
+	
+	MiSalida.global_position = pisoS.global_position + Vector3.UP * 3
 #################################################################################
 
 func _ready():
 	G.PathfindObject = null
-	G.MisInteraccionables = []
+	G.MisInteraccionables = Objetos
+	G.MisEnemigos = Enemigos
+	
 	laberinto = []
 	await get_tree().create_timer(.05).timeout
 	
@@ -454,15 +480,18 @@ func _ready():
 		llavesAGenerar = 5
 		tamanoLaberinto = 25	
 	
+	G.LlavesTotales = llavesAGenerar
+	
 	generarLaberintoArray(tamanoLaberinto)
 	var cuartosArray = generarCuartosArray(cuartosAGenerar)
 	var retornoFisico = crearLaberintoFisico()
 	var paredesFisicas = retornoFisico[0]
 	var pisosFisicos = retornoFisico[1]
 	var cuartosFisicos = crearCuartosFisicos(cuartosArray,paredesFisicas)
-	crearObjetosEnCuartos(cuartosFisicos)
-	
-	if generarEnemigos: 
-		generarEnemigo(pisosFisicos,"Vicente_Suarez")
+	crearObjetosEnCuartos(cuartosFisicos,llavesAGenerar)
 	
 	G.PathfindObject = PathfindingClass.new(laberinto,pisosFisicos)
+	generarSalida(pisosFisicos)
+	if generarEnemigos:
+		await get_tree().create_timer(5).timeout
+		generarEnemigo("Vicente_Suarez")

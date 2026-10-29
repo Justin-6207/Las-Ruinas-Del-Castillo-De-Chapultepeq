@@ -17,7 +17,6 @@ func usar():
 func _ready():
 	for sonido in ContenedorSonidos.get_children():
 		sonidos[sonido.name] = sonido
-	G.MisInteraccionables.push_back(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

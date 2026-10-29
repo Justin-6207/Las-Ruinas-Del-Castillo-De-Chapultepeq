@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
-@export var elInventario = ["Espada","",""]
-var espacioEnLaMano = 0
+@export var MiInventario = ["Espada","",""]
+@export var espacioEnLaMano = 0
 
 @export var llavesRecolectadas = 0
 @export var stamina = 100
@@ -33,8 +33,8 @@ static var Friction = Increment/MaxSpeed
 ###############################################################################################
 
 func UsarObjeto():
-	objetoEnLaMano.UsarObjeto(elInventario[espacioEnLaMano])
-	elInventario[espacioEnLaMano] = ""
+	objetoEnLaMano.UsarObjeto(MiInventario[espacioEnLaMano])
+	MiInventario[espacioEnLaMano] = ""
 
 func ManejarInput(delta):
 	directionX = 0
@@ -49,13 +49,7 @@ func ManejarInput(delta):
 		directionY = -1.0
 	elif Input.is_action_pressed("Movimiento - Abajo"):
 		directionY = 1.0
-	
-	if Input.is_action_just_pressed("Click Izquierdo"):
-		manoIndicadora.interactuarConObjeto()
 		
-	if Input.is_action_just_pressed("Usar Objeto"):
-		UsarObjeto()
-
 	if Input.is_action_pressed("Correr") and stamina > 0:
 		Corriendo = true
 		stamina -= delta * 20
@@ -65,6 +59,19 @@ func ManejarInput(delta):
 			stamina += delta * 20
 	
 	stamina = clamp(stamina,0,100)
+	
+	if Input.is_action_just_pressed("Click Izquierdo"):
+		manoIndicadora.interactuarConObjeto()
+		
+	if Input.is_action_just_pressed("Usar Objeto"):
+		UsarObjeto()
+
+	if Input.is_action_just_pressed("Inventorio 1"):
+		espacioEnLaMano = 0
+	elif Input.is_action_just_pressed("Inventorio 2"):
+		espacioEnLaMano = 1
+	elif Input.is_action_just_pressed("Inventorio 3"):
+		espacioEnLaMano = 2
 
 func ManejarMovimiento(delta):
 	var TrueIncrement = Increment
@@ -135,7 +142,7 @@ func CamaraTopDown(delta):
 	camera.global_position = global_position + Vector3.UP * 5
 	
 func ManejarInventario(delta):
-	objetoEnLaMano.ObjetoContenido = elInventario[espacioEnLaMano]
+	objetoEnLaMano.ObjetoContenido = MiInventario[espacioEnLaMano]
 
 func _unhandled_input(event):
 	var input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED

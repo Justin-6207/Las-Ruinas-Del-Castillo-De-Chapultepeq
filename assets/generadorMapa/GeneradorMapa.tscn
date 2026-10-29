@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://beul3dr8s371x" path="res://assets/generadorMapa/ParedVacia.tscn" id="3_mj0no"]
 [ext_resource type="PackedScene" uid="uid://d3yatailfhfbi" path="res://assets/personajes/EnemigoBase.tscn" id="7_u6fk3"]
 
-
 [node name="GeneradorDeMapa" type="Node3D" unique_id=450716917]
 transform = Transform3D(2, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_4k5rq")

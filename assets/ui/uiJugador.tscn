@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/Jugador/InterfazGrafica.gd" id="1_oqi0v"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2m0w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_70n0a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_is37f"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_esf6n"]
 font_size = 20
 
@@ -19,16 +25,22 @@ theme_override_constants/h_separation = 8
 [node name="Button" type="Button" parent="HFlowContainer" unique_id=1892703830]
 custom_minimum_size = Vector2(125, 125)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_a2m0w")
+icon_alignment = 1
 expand_icon = true
 
 [node name="Button2" type="Button" parent="HFlowContainer" unique_id=1710054809]
 custom_minimum_size = Vector2(125, 125)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_70n0a")
+icon_alignment = 1
 expand_icon = true
 
 [node name="Button3" type="Button" parent="HFlowContainer" unique_id=2028912789]
 custom_minimum_size = Vector2(125, 125)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_is37f")
+icon_alignment = 1
 expand_icon = true
 
 [node name="ContadorLlaves" type="Label" parent="." unique_id=793498923]

@@ -18,11 +18,22 @@ func _process(delta):
 	if G.MiPersonaje == null:
 		return
 	
-	ContadorLlaves.text = "LLAVES RECOLECTADAS: " + str(G.MiPersonaje.llavesRecolectadas)
+	ContadorLlaves.text = "LLAVES RECOLECTADAS: " + str(G.MiPersonaje.llavesRecolectadas) + "/" + str(G.LlavesTotales)
 	var iter = 0
-	for objStr in G.MiPersonaje.elInventario:
+	for objStr in G.MiPersonaje.MiInventario:
+		if G.MiPersonaje.espacioEnLaMano == iter:
+			var new_stylebox = StyleBoxFlat.new()
+			new_stylebox.bg_color = Color.GREEN
+			new_stylebox.set_border_width_all(10)
+			new_stylebox.border_color = Color.GREEN
+			botones[iter].add_theme_stylebox_override("normal", new_stylebox)
+		else:
+			var new_stylebox = StyleBoxFlat.new()
+			new_stylebox.bg_color = Color.WEB_GRAY
+			botones[iter].add_theme_stylebox_override("normal", new_stylebox)
+			
 		if objStr != "":
-			botones[iter].icon = load(G.DataObjetos[objStr].icono)
+			botones[iter].icon = load(G.ObjetosData[objStr].icono)
 		else:
 			botones[iter].icon = null	
 		iter += 1

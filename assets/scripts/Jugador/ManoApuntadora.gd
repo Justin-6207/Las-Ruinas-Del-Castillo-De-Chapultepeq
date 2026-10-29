@@ -15,10 +15,9 @@ func ManejarMano(delta):
 	var distancia = 99999
 	var indice = -1
 	
-	for interaccionable in G.MisInteraccionables:
+	for interaccionable in G.MisInteraccionables.get_children():
 		indice += 1
 		if interaccionable == null or interaccionable.get_meta("Inusable"):
-			G.MisInteraccionables.remove_at(indice)
 			break
 			
 		var dir =  G.dirCam(interaccionable.global_position)

@@ -3,12 +3,13 @@ extends Node3D
 var movimientoAnterior = Vector3.ZERO
 var direccionMovimiento = Vector3(0,0,1)
 
+@export var stunned = 0
 @export var posicionArray = [1,1]
 @export var tipoEnemigo: String
 @onready var SpriteObjeto = $"SpriteObjeto"
 @onready var ContenedorSonidos = $"Sonidos"
 
-var enemigos = G.Enemigos
+var EnemigosData = G.EnemigosData
 var velocidad = 3.25
 var abriendoPuerta = 0
 var generandoCamino = false
@@ -22,11 +23,21 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	var isStunned = false
+	
+	if stunned > 0:
+		stunned -= delta
+		isStunned = true 
+	
+	var cond1 = (((global_position - G.MiPersonaje.global_position) * Vector3(1,0,1)).length() <= 0.5)
+	if cond1 and not isStunned:
+		get_tree().change_scene_to_file("res://escenas/Inicio.tscn")
+		
 	G.setPosArray(self)
 	global_basis = G.basisCam(global_position)
 	if tipoEnemigo != "":
-		scale = enemigos[tipoEnemigo].proporcion
-		SpriteObjeto.texture  = load(enemigos[tipoEnemigo].icono)
+		scale = EnemigosData[tipoEnemigo].proporcion
+		SpriteObjeto.texture  = load(EnemigosData[tipoEnemigo].icono)
 	
 	var distancia = 999999
 	var direccionElegida
@@ -34,7 +45,7 @@ func _process(delta):
 	var dirJug = G.dirJug(global_position)
 	var casteoCaracter = G.objectCast(self,dirJug)
 
-	if casteoCaracter.is_empty():
+	if casteoCaracter != null and casteoCaracter.is_empty():
 		caminoASeguir = null
 		direccionElegida = dirJug.normalized()
 	elif not rompiendoPuerta:
@@ -78,7 +89,7 @@ func _process(delta):
 				abriendoPuerta = 0
 
 		
-		if not rompiendoPuerta:
+		if (not isStunned) and not rompiendoPuerta:
 			movimientoAnterior = direccionElegida
 			global_position += direccionElegida * delta * velocidad
 		

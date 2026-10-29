@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://camktpgisgu2h"]
 
 [ext_resource type="Script" uid="uid://dpvoywukn6ghh" path="res://assets/scripts/PantallaPrincipal/BotonCambioEscena.gd" id="1_6iy57"]
+[ext_resource type="Script" uid="uid://beuj3gemphgqd" path="res://assets/scripts/PantallaPrincipal/Inicio.gd" id="1_is37f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxk5m"]
 
@@ -11,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_is37f")
 
 [node name="Label" type="Label" parent="." unique_id=1576072316]
 layout_mode = 0
@@ -46,4 +48,4 @@ theme_override_font_sizes/font_size = 55
 text = "NIVEL DE 
 MUESTRA"
 script = ExtResource("1_6iy57")
-caminoHaciaEscena = "res://escenas/Tutorial.tscn"
+caminoHaciaEscena = "res://escenas/Nivel De Muestra.tscn"
