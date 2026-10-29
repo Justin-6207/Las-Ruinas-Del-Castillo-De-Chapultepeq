@@ -511,6 +511,6 @@ func _ready():
 	generarSalida(pisosFisicos)
 	
 	if generarEnemigos:
-		G.Anunciante = "El fantasma aparecera en 10 segundos"
+		G.Anunciante.Anuncio = "El fantasma aparecera en 10 segundos"
 		await get_tree().create_timer(5).timeout
 		generarEnemigo("Vicente_Suarez")

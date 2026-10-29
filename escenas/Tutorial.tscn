@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://g6cegfv0x062" path="res://assets/generadorMapa/GeneradorMapa.tscn" id="1_g61xo"]
 [ext_resource type="PackedScene" uid="uid://cegnnt1qbyqy1" path="res://assets/personajes/Jugador.tscn" id="2_yldr8"]
-[ext_resource type="PackedScene" uid="uid://dj0tvsn21bdum" path="res://assets/ui/uiJugador.tscn" id="3_1pop8"]
 
 [node name="Juego" type="Node3D" unique_id=1674986011]
 
@@ -15,5 +14,3 @@ velocity = Vector3(-5.970534e-20, 0, -7.1581373e-20)
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1526147666]
 transform = Transform3D(-0.19365752, 1e-45, -0.98106927, -1e-45, 1, 1e-45, 0.98106927, 1e-45, -0.19365752, -0.39902, 1.0365702, 0.47715488)
 current = true
-
-[node name="UIJugador" parent="." unique_id=525737445 instance=ExtResource("3_1pop8")]
