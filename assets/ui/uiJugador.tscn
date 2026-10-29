@@ -22,8 +22,11 @@ script = ExtResource("1_oqi0v")
 
 [node name="HFlowContainer" type="HFlowContainer" parent="." unique_id=236521533]
 layout_mode = 0
-offset_right = 125.0
-offset_bottom = 383.0
+offset_left = 18.0
+offset_top = 523.00006
+offset_right = 411.0
+offset_bottom = 648.00006
+scale = Vector2(0.85, 0.85)
 theme_override_constants/h_separation = 8
 
 [node name="Button" type="Button" parent="HFlowContainer" unique_id=1892703830]
@@ -49,19 +52,20 @@ expand_icon = true
 
 [node name="ContadorLlaves" type="Label" parent="." unique_id=793498923]
 layout_mode = 0
-offset_left = 133.0
-offset_top = 2.0
-offset_right = 514.0
-offset_bottom = 56.0
+offset_left = 21.0
+offset_top = 487.0
+offset_right = 345.0
+offset_bottom = 515.0
+theme_override_font_sizes/font_size = 20
 text = "LLAVES RECOLECTADAS: "
 vertical_alignment = 1
 
 [node name="Anunciante" type="Label" parent="." unique_id=1379634219]
 layout_mode = 0
-offset_left = 299.0
-offset_top = 95.0
-offset_right = 859.0
-offset_bottom = 149.0
+offset_left = 369.0
+offset_top = 22.0
+offset_right = 804.55554
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_hwdao")
 horizontal_alignment = 1
@@ -71,13 +75,14 @@ script = ExtResource("2_lad2y")
 
 [node name="Notificacion" type="AudioStreamPlayer" parent="Anunciante" unique_id=1078346627]
 stream = ExtResource("3_fuinq")
+volume_db = -10.0
 
 [node name="BarraStamina" type="ColorRect" parent="." unique_id=1139124254]
 layout_mode = 0
-offset_left = 835.0
-offset_top = 11.0
-offset_right = 1135.0
-offset_bottom = 51.0
+offset_left = 839.0
+offset_top = 592.0
+offset_right = 1139.0
+offset_bottom = 632.0
 offset_transform_scale = Vector2(0, 0)
 color = Color(1, 0, 0, 1)
 
@@ -90,11 +95,12 @@ color = Color(0, 0.34586588, 0.68865025, 1)
 
 [node name="Restante" type="Label" parent="BarraStamina" unique_id=508567337]
 layout_mode = 0
-offset_top = 40.0
+offset_left = 4.0
+offset_top = -31.0
 offset_right = 300.0
-offset_bottom = 68.0
+offset_bottom = -3.0
 offset_transform_scale = Vector2(0, 0)
 text = "STAMINA"
 label_settings = SubResource("LabelSettings_esf6n")
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
