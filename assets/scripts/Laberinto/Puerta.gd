@@ -1,19 +1,22 @@
 extends Node3D
 @onready var MI3D = $MeshInstance3D
 @onready var CS3D = $MeshInstance3D/StaticBody3D/CollisionShape3D
+@onready var ContenedorSonidos = $Sonidos
+
 @export var Abierta = false 
 
-@onready var AbriendoPuerta = $AbriendoPuerta
-@onready var CerrandoPuerta = $CerrandoPuerta
+var sonidos = {}
 
 func usar():
 	if Abierta:
-		CerrandoPuerta.play()
+		sonidos["CerrandoPuerta"].play()
 	else:
-		AbriendoPuerta.play()	
+		sonidos["AbriendoPuerta"].play()	
 	Abierta = not Abierta
 
 func _ready():
+	for sonido in ContenedorSonidos.get_children():
+		sonidos[sonido.name] = sonido
 	G.MisInteraccionables.push_back(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

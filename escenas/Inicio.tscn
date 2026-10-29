@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://camktpgisgu2h"]
 
+[ext_resource type="Script" uid="uid://dpvoywukn6ghh" path="res://assets/scripts/PantallaPrincipal/BotonCambioEscena.gd" id="1_6iy57"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxk5m"]
+
 [node name="Inicio" type="Control" unique_id=911141524]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +11,39 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=1576072316]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 40.0
+offset_right = 1011.0
+offset_bottom = 245.0
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxFlat_sxk5m")
+text = "LAS RUINAS DEL 
+CASTILLO DE CHAPULTEPEC"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tutorial" type="Button" parent="." unique_id=1351782486]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 296.0
+offset_right = 454.0
+offset_bottom = 599.0
+theme_override_font_sizes/font_size = 55
+text = "TUTORIAL"
+script = ExtResource("1_6iy57")
+caminoHaciaEscena = "res://escenas/Tutorial.tscn"
+
+[node name="NivelMuestra" type="Button" parent="." unique_id=2033139218]
+layout_mode = 0
+offset_left = 678.0
+offset_top = 299.0
+offset_right = 1049.0
+offset_bottom = 591.0
+theme_override_font_sizes/font_size = 55
+text = "NIVEL DE 
+MUESTRA"
+script = ExtResource("1_6iy57")
+caminoHaciaEscena = "res://escenas/Tutorial.tscn"

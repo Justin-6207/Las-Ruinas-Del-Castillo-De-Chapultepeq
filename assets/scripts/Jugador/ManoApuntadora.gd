@@ -1,6 +1,5 @@
 extends Sprite3D
 
-
 var valorInterpolacion = 0
 var alJugador = true
 var posManoInicial
@@ -18,7 +17,7 @@ func ManejarMano(delta):
 	
 	for interaccionable in G.MisInteraccionables:
 		indice += 1
-		if interaccionable == null:
+		if interaccionable == null or interaccionable.get_meta("Inusable"):
 			G.MisInteraccionables.remove_at(indice)
 			break
 			

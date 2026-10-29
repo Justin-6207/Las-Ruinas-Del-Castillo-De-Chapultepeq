@@ -6,6 +6,7 @@ extends Node3D
 @export var paredVacia: PackedScene
 @export var piso: PackedScene
 @export var enemigoBase: PackedScene
+@export var dificultad = 0
 
 @onready var Paredes = $"Paredes"
 @onready var Piso = $"Piso"
@@ -247,9 +248,6 @@ func generarLaberintoArray(tamanoLaberinto : int):
 	laberinto[0][0] = 1
 	
 	eliminarCallejonesSinSalida()
-	var cuartos = generarCuartosArray(5)
-	
-	return cuartos
 
 #################################################################################
 
@@ -434,18 +432,37 @@ func generarEnemigo(paredesLaberinto : Array,NombreEnemigo):
 	
 #################################################################################
 
-func _ready() -> void:
+func _ready():
+	G.PathfindObject = null
+	G.MisInteraccionables = []
 	laberinto = []
-	await(get_tree().create_timer(.05).timeout)
+	await get_tree().create_timer(.05).timeout
 	
-	var tamanoLaberinto = 25
-	var cuartosArray = generarLaberintoArray(tamanoLaberinto)
+	var tamanoLaberinto
+	var cuartosAGenerar
+	var llavesAGenerar
+	var generarEnemigos = false
+	
+	if dificultad == 0:
+		generarEnemigos = false
+		cuartosAGenerar = 5
+		llavesAGenerar = 3
+		tamanoLaberinto = 25
+	elif dificultad == 1:
+		generarEnemigos = true
+		cuartosAGenerar = 7
+		llavesAGenerar = 5
+		tamanoLaberinto = 25	
+	
+	generarLaberintoArray(tamanoLaberinto)
+	var cuartosArray = generarCuartosArray(cuartosAGenerar)
 	var retornoFisico = crearLaberintoFisico()
 	var paredesFisicas = retornoFisico[0]
 	var pisosFisicos = retornoFisico[1]
-	
 	var cuartosFisicos = crearCuartosFisicos(cuartosArray,paredesFisicas)
 	crearObjetosEnCuartos(cuartosFisicos)
-	generarEnemigo(pisosFisicos,"Vicente_Suarez")
+	
+	if generarEnemigos: 
+		generarEnemigo(pisosFisicos,"Vicente_Suarez")
 	
 	G.PathfindObject = PathfindingClass.new(laberinto,pisosFisicos)

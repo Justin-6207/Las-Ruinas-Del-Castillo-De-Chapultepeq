@@ -1,6 +1,8 @@
 extends CharacterBody3D
 
 @export var elInventario = ["Espada","",""]
+var espacioEnLaMano = 0
+
 @export var llavesRecolectadas = 0
 @export var stamina = 100
 @export var maxStamina = 100
@@ -9,9 +11,6 @@ extends CharacterBody3D
 @onready var camera = $"../Camera3D"
 @onready var objetoEnLaMano = $"objetoEnLaMano"
 @onready var manoIndicadora = $"manoIndicadora"
-
-var espacioEnLaMano = 0
-var invObj = G.Objetos
 
 var Corriendo = false
 var directionX = 0
@@ -33,6 +32,10 @@ static var Friction = Increment/MaxSpeed
 
 ###############################################################################################
 
+func UsarObjeto():
+	objetoEnLaMano.UsarObjeto(elInventario[espacioEnLaMano])
+	elInventario[espacioEnLaMano] = ""
+
 func ManejarInput(delta):
 	directionX = 0
 	directionY = 0
@@ -49,6 +52,9 @@ func ManejarInput(delta):
 	
 	if Input.is_action_just_pressed("Click Izquierdo"):
 		manoIndicadora.interactuarConObjeto()
+		
+	if Input.is_action_just_pressed("Usar Objeto"):
+		UsarObjeto()
 
 	if Input.is_action_pressed("Correr") and stamina > 0:
 		Corriendo = true
@@ -129,11 +135,7 @@ func CamaraTopDown(delta):
 	camera.global_position = global_position + Vector3.UP * 5
 	
 func ManejarInventario(delta):
-	var objetoStr = elInventario[espacioEnLaMano]
-	if objetoStr == "":
-		objetoEnLaMano.texture = null
-	else:
-		objetoEnLaMano.texture = load(invObj[objetoStr].icono)
+	objetoEnLaMano.ObjetoContenido = elInventario[espacioEnLaMano]
 
 func _unhandled_input(event):
 	var input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
@@ -145,7 +147,6 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	G.MiPersonaje = self
 	G.Camara = camera
-	G.MiInventario = elInventario
 
 func _physics_process(delta):
 	G.setPosArray(self)

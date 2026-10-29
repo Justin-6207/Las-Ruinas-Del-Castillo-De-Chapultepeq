@@ -8,7 +8,6 @@ var direccionMovimiento = Vector3(0,0,1)
 @onready var SpriteObjeto = $"SpriteObjeto"
 @onready var ContenedorSonidos = $"Sonidos"
 
-var sonidos = {}
 var enemigos = G.Enemigos
 var velocidad = 3.25
 var abriendoPuerta = 0
@@ -16,6 +15,7 @@ var generandoCamino = false
 var rompiendoPuerta = false
 var caminoASeguir 
 
+var sonidos = {}
 func _ready():
 	for sonido in ContenedorSonidos.get_children():
 		sonidos[sonido.name] = sonido

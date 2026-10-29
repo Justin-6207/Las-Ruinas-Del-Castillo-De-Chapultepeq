@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dj0tvsn21bdum"]
 
-[ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/InterfazGrafica.gd" id="1_oqi0v"]
+[ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/Jugador/InterfazGrafica.gd" id="1_oqi0v"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_esf6n"]
 font_size = 20

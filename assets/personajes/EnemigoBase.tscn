@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d3yatailfhfbi"]
 
-[ext_resource type="Script" uid="uid://dwn05jfvn7ip3" path="res://assets/scripts/Enemigo.gd" id="1_hgynr"]
+[ext_resource type="Script" uid="uid://dwn05jfvn7ip3" path="res://assets/scripts/Laberinto/Enemigo.gd" id="1_hgynr"]
 [ext_resource type="AudioStream" uid="uid://c0rnn0paqthvt" path="res://assets/sonidos/rompiendoPuerta.mp3" id="2_4m4qh"]
 
 [node name="Node3D" type="Node3D" unique_id=1448700201]

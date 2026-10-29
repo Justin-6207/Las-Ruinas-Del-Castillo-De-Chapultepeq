@@ -8,7 +8,7 @@ static var Camara
 static var PathfindObject
 static var MisInteraccionables = [] 
 
-const Objetos = {
+const DataObjetos = {
 	"Espada" : {
 		"icono" : "res://assets/imagenes/espada.png",
 		"proporcion" : Vector3(.1,.05,.1)

@@ -15,14 +15,16 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if G.MiInventario == null:
+	if G.MiPersonaje == null:
 		return
 	
 	ContadorLlaves.text = "LLAVES RECOLECTADAS: " + str(G.MiPersonaje.llavesRecolectadas)
 	var iter = 0
-	for objStr in G.MiInventario:
+	for objStr in G.MiPersonaje.elInventario:
 		if objStr != "":
-			botones[iter].icon = load(G.Objetos[objStr].icono)
+			botones[iter].icon = load(G.DataObjetos[objStr].icono)
+		else:
+			botones[iter].icon = null	
 		iter += 1
 	
 	BarraStaminaRestante.text = "STAMINA: " + str(String.num(G.MiPersonaje.stamina, 1)) + "/" + str(G.MiPersonaje.maxStamina)
