@@ -133,7 +133,7 @@ func generarCuartosArray(numCuartos : int):
 			continue
 		if (y < 3) or (x < 3):
 			continue
-		if laberinto[y][x] == 0:
+		if laberinto[y][x] == 1:
 			var nodosVecinos = obtenerNodosVecinosYEsquinas(y,x)
 			var nodosLlenos = 0
 			var iter = 0
@@ -461,9 +461,9 @@ func tutorialIntro():
 	await get_tree().create_timer(2.5).timeout
 	G.Anunciante.Anuncio = "A continuacion se mostraran los controles basicos del juego"
 	await get_tree().create_timer(2.5).timeout
-	G.Anunciante.Anuncio = "Controles - Mouse derecho: Abrir / cerrar puertas, agarrar objetos"
+	G.Anunciante.Anuncio = "Controles - Boton del Mouse Izquierdo: Abrir / cerrar puertas, agarrar objetos"
 	await get_tree().create_timer(2.5).timeout
-	G.Anunciante.Anuncio = "Controles - Mouse izquierdo: Usar objetos en el inventario"
+	G.Anunciante.Anuncio = "Controles - Boton del Mouse Derecho: Usar objetos en el inventario"
 	await get_tree().create_timer(2.5).timeout
 	G.Anunciante.Anuncio = "Controles - Shift derecho: correr"
 	G.Tutorial = true
