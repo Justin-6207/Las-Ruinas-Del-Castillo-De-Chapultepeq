@@ -5,6 +5,7 @@ extends Control
 @onready var BarraStamina = $"BarraStamina"
 @onready var BarraStaminaLlena = $"BarraStamina/Lleno"
 @onready var BarraStaminaRestante = $"BarraStamina/Restante"
+@onready var Anunciante = $"Anunciante"
 var botones = []
 
 

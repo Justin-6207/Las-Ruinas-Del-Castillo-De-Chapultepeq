@@ -13,13 +13,19 @@ func usar():
 		G.MiPersonaje.llavesRecolectadas += 1
 		self.set_meta("Inusable",true)
 		sonidos["Llaves"].play()
+		if (G.MiPersonaje.llavesRecolectadas >= G.LlavesTotales):
+			G.Anunciante.Anuncio = "Encuentra la salida"
+		
 		await get_tree().create_timer(2.0).timeout
 		queue_free()
 	elif  ObjetoContenido == "Salida":
-		if (G.MiPersonaje.llavesRecolectadas > G.LlavesTotales):
+		if (G.MiPersonaje.llavesRecolectadas >= G.LlavesTotales):
 			ObjetoContenido = ""
 			queue_free()
 			get_tree().change_scene_to_file("res://escenas/Inicio.tscn")
+		else:
+			sonidos["PuertaBloqueada"].play()
+			G.Anunciante.Anuncio = "No tienes suficientes llaves para escapar"	
 	else:
 		var indice = 0
 		for str in G.MiPersonaje.MiInventario:
@@ -37,13 +43,13 @@ func usar():
 		G.MiPersonaje.MiInventario[ind] = buffr
 		ObjetoContenido = buffr2
 		
-		
 func _ready():
 	for sonido in ContenedorSonidos.get_children():
 		sonidos[sonido.name] = sonido
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	self.set_meta("NombreObjeto",ObjetoContenido)
 	global_basis = G.basisCam(global_position)
 	
 	if ObjetoContenido != "":

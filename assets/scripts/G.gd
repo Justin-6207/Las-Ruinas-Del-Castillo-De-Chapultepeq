@@ -8,6 +8,8 @@ static var PathfindObject
 static var MisEnemigos
 static var MisInteraccionables 
 static var LlavesTotales 
+static var Anunciante
+static var Tutorial 
 
 const ObjetosGenerables = ["Espada"]
 
@@ -89,7 +91,7 @@ static func dirCam(posicion):
 
 static func basisCam(posicion):
 	var DC = dirCam(posicion)
-	var BasisNueva = Basis.looking_at(DC)
+	var BasisNueva = Basis.looking_at(-DC)
 	return BasisNueva
 	
 ####################################################################################

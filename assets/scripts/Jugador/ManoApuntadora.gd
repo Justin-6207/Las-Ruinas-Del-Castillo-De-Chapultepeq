@@ -6,9 +6,24 @@ var posManoInicial
 var posManoFinal
 var interaccionableCercano
 
+var tutorialesPresentados = {}
+var tutoriales = {
+	"Llave" : "Tienes que recolectar todas las llaves en el mapa para seguir hacia el siguiente nivel",
+	"Espada" : "Puedes usar la espada a distancia corta para desabilitar al enemigo por 4 segundos",
+	"Puerta" : "Puedes cerrar una puerta en frente de un enemigo para rapidamente salirte de apuros",
+	"Salida" : "Unicamente al haber recolectado todas las llaves se abrira la salida",
+}
+
 func interactuarConObjeto():
 	if interaccionableCercano:
 		interaccionableCercano.usar()
+
+func MensajesTutorial():
+	if interaccionableCercano:
+		var nombre = interaccionableCercano.get_meta("NombreObjeto")
+		if (not tutorialesPresentados.has(nombre)) and tutoriales.has(nombre):
+			tutorialesPresentados[nombre] = true
+			G.Anunciante.Anuncio = tutoriales[nombre]
 
 func ManejarMano(delta):
 	var objetoMasCercano
@@ -67,3 +82,5 @@ func _ready():
 
 func _process(delta):
 	ManejarMano(delta)
+	if G.Tutorial:
+		MensajesTutorial()

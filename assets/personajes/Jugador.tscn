@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b2jngkdvmrnnd" path="res://assets/scripts/Jugador/ManoApuntadora.gd" id="3_tqbgv"]
 [ext_resource type="AudioStream" uid="uid://5junb178q61s" path="res://assets/sonidos/espada.mp3" id="4_uvepe"]
 [ext_resource type="AudioStream" uid="uid://bmmrk0wdpbw31" path="res://assets/sonidos/espadacritica.mp3" id="4_w1ytx"]
+[ext_resource type="PackedScene" uid="uid://dj0tvsn21bdum" path="res://assets/ui/uiJugador.tscn" id="7_w1ytx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a2icu"]
 
@@ -30,3 +31,5 @@ stream = ExtResource("4_w1ytx")
 transform = Transform3D(0.089, 0, 0, 0, 0.1, 0, 0, 0, 0.526, 0, -0.46704614, -0.03185153)
 texture = ExtResource("3_0gm3f")
 script = ExtResource("3_tqbgv")
+
+[node name="UIJugador" parent="." unique_id=525737445 instance=ExtResource("7_w1ytx")]

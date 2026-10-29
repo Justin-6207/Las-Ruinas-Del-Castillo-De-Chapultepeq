@@ -131,6 +131,8 @@ func generarCuartosArray(numCuartos : int):
 		var x = RNG.randi_range(0,tamLabArreglado)
 		if (y == 0 and x == 0) or (y == -1) or (x == -1):
 			continue
+		if (y < 3) or (x < 3):
+			continue
 		if laberinto[y][x] == 0:
 			var nodosVecinos = obtenerNodosVecinosYEsquinas(y,x)
 			var nodosLlenos = 0
@@ -246,8 +248,6 @@ func generarLaberintoArray(tamanoLaberinto : int):
 				nodosAVisitar.push_back([nodoVecino,miPosicion])
 
 	laberinto[0][0] = 1
-	
-	eliminarCallejonesSinSalida()
 
 #################################################################################
 
@@ -329,7 +329,6 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 			var nodosVecinos = obtenerNodosVecinos(pos[0],pos[1])
 			var paredCorrespondiente = paredesLaberinto[pos[0]][pos[1]]
 
-			
 			CuartoFisico.Piso.push_back(paredCorrespondiente)
 			
 			for nodoVecino in nodosVecinosRestringidos:
@@ -454,12 +453,26 @@ func generarSalida(pisosFisicos : Array):
 	Objetos.add_child(MiSalida)
 	
 	MiSalida.global_position = pisoS.global_position + Vector3.UP * 3
+
 #################################################################################
+
+func tutorialIntro():
+	G.Anunciante.Anuncio = "Bienvenido al tutorial del juego"
+	await get_tree().create_timer(2.5).timeout
+	G.Anunciante.Anuncio = "A continuacion se mostraran los controles basicos del juego"
+	await get_tree().create_timer(2.5).timeout
+	G.Anunciante.Anuncio = "Controles - Mouse derecho: Abrir / cerrar puertas, agarrar objetos"
+	await get_tree().create_timer(2.5).timeout
+	G.Anunciante.Anuncio = "Controles - Mouse izquierdo: Usar objetos en el inventario"
+	await get_tree().create_timer(2.5).timeout
+	G.Anunciante.Anuncio = "Controles - Shift derecho: correr"
+	G.Tutorial = true
 
 func _ready():
 	G.PathfindObject = null
 	G.MisInteraccionables = Objetos
 	G.MisEnemigos = Enemigos
+	G.Tutorial = false
 	
 	laberinto = []
 	await get_tree().create_timer(.05).timeout
@@ -470,6 +483,7 @@ func _ready():
 	var generarEnemigos = false
 	
 	if dificultad == 0:
+		WorkerThreadPool.add_task(tutorialIntro)
 		generarEnemigos = false
 		cuartosAGenerar = 5
 		llavesAGenerar = 3
@@ -484,6 +498,8 @@ func _ready():
 	
 	generarLaberintoArray(tamanoLaberinto)
 	var cuartosArray = generarCuartosArray(cuartosAGenerar)
+	eliminarCallejonesSinSalida()
+	
 	var retornoFisico = crearLaberintoFisico()
 	var paredesFisicas = retornoFisico[0]
 	var pisosFisicos = retornoFisico[1]
@@ -491,7 +507,10 @@ func _ready():
 	crearObjetosEnCuartos(cuartosFisicos,llavesAGenerar)
 	
 	G.PathfindObject = PathfindingClass.new(laberinto,pisosFisicos)
+	
 	generarSalida(pisosFisicos)
+	
 	if generarEnemigos:
+		G.Anunciante = "El fantasma aparecera en 10 segundos"
 		await get_tree().create_timer(5).timeout
 		generarEnemigo("Vicente_Suarez")

@@ -15,6 +15,7 @@ func usar():
 	Abierta = not Abierta
 
 func _ready():
+	self.set_meta("NombreObjeto","Puerta")
 	for sonido in ContenedorSonidos.get_children():
 		sonidos[sonido.name] = sonido
 

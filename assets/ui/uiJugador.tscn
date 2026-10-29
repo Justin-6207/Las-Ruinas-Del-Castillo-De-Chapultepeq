@@ -1,12 +1,15 @@
 [gd_scene format=3 uid="uid://dj0tvsn21bdum"]
 
-[ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/Jugador/InterfazGrafica.gd" id="1_oqi0v"]
+[ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/Jugador/InterfazGrafica/InterfazGrafica.gd" id="1_oqi0v"]
+[ext_resource type="Script" uid="uid://bgoi0m5foklgf" path="res://assets/scripts/Jugador/InterfazGrafica/Anunciante.gd" id="2_lad2y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2m0w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_70n0a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_is37f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hwdao"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_esf6n"]
 font_size = 20
@@ -18,8 +21,8 @@ script = ExtResource("1_oqi0v")
 
 [node name="HFlowContainer" type="HFlowContainer" parent="." unique_id=236521533]
 layout_mode = 0
-offset_right = 393.0
-offset_bottom = 125.0
+offset_right = 125.0
+offset_bottom = 383.0
 theme_override_constants/h_separation = 8
 
 [node name="Button" type="Button" parent="HFlowContainer" unique_id=1892703830]
@@ -45,12 +48,25 @@ expand_icon = true
 
 [node name="ContadorLlaves" type="Label" parent="." unique_id=793498923]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 132.0
-offset_right = 388.0
-offset_bottom = 186.0
+offset_left = 133.0
+offset_top = 2.0
+offset_right = 514.0
+offset_bottom = 56.0
 text = "LLAVES RECOLECTADAS: "
 vertical_alignment = 1
+
+[node name="Anunciante" type="Label" parent="." unique_id=1379634219]
+layout_mode = 0
+offset_left = 299.0
+offset_top = 95.0
+offset_right = 859.0
+offset_bottom = 149.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_hwdao")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+script = ExtResource("2_lad2y")
 
 [node name="BarraStamina" type="ColorRect" parent="." unique_id=1139124254]
 layout_mode = 0
