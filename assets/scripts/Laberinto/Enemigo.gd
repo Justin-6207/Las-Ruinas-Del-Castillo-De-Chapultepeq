@@ -87,10 +87,16 @@ func _process(delta):
 			if condicion1 and condicion2:
 				rompiendoPuerta = true
 				sonidos["RompiendoPuerta"].play()
+				
 				await get_tree().create_timer(2.0).timeout
+				
 				nodoPrincipal.usar()
 				rompiendoPuerta = false
 				abriendoPuerta = 0
+				
+				caminoASeguir = null
+				generandoCamino = false
+				
 
 		
 		if (not isStunned) and not rompiendoPuerta:

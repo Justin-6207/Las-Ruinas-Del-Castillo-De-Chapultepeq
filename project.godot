@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Las ruinas del castillo de Chapultepeq"
-run/main_scene="uid://bmmyhqr7am5rm"
+run/main_scene="uid://camktpgisgu2h"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -19,16 +19,16 @@ func nodosVecinos(y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = matrizLaberinto.size()-1
 	
-	if (y-1 > 0) and (y > 0):
+	if (y-1 >= 0) and (y >= 0):
 		nodosVecinos.push_back([matrizLaberinto[y - 1][x],genKey(y-1,x)])
 	
-	if (y+1 < tamLabArreglado) and (y < tamLabArreglado):
+	if (y+1 <= tamLabArreglado) and (y <= tamLabArreglado):
 		nodosVecinos.push_back([matrizLaberinto[y + 1][x],genKey(y+1,x)])
 		
-	if (x+1 < tamLabArreglado) and (x < tamLabArreglado):
+	if (x+1 <= tamLabArreglado) and (x <= tamLabArreglado):
 		nodosVecinos.push_back([matrizLaberinto[y][x + 1],genKey(y,x+1)])
 	
-	if (x-1 > 0) and (x > 0):
+	if (x-1 >= 0) and (x >= 0):
 		nodosVecinos.push_back([matrizLaberinto[y][x - 1],genKey(y,x-1)])
 	
 	return nodosVecinos
@@ -43,19 +43,15 @@ func generarMatrizAdyacencia():
 				
 			var matVc = {}
 			var nodosVecinos = nodosVecinos(y,x)
-			
 			for nodo in nodosVecinos:
-				if (valorMiNodo == 0 or valorMiNodo == 3) and nodo[0] == 0:
+				if (valorMiNodo == 0 or valorMiNodo == 4) and (nodo[0] == 0 or nodo[0] == 4):
+					matVc[nodo[1]] = 1
+
+				elif (valorMiNodo == 4 and nodo[0] == 3) or (valorMiNodo == 3 and nodo[0] == 4):
 					matVc[nodo[1]] = 1
 					
-				elif valorMiNodo == 0 and nodo[0] == 3:
+				elif (valorMiNodo == 3 and nodo[0] == 2) or (valorMiNodo == 2 and nodo[0] == 3):
 					matVc[nodo[1]] = 1
-					
-				elif valorMiNodo == 3 and nodo[0] == 2:
-					matVc[nodo[1]] = 1
-					
-				elif valorMiNodo == 2 and nodo[0] == 3:
-					matVc[nodo[1]] = 1	
 					
 				elif valorMiNodo == 2 and nodo[0] == 2:
 					matVc[nodo[1]] = 1

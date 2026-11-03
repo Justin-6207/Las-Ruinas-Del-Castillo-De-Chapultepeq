@@ -70,7 +70,8 @@ func ManejarMano(delta):
 	if (valorInterpolacion > 1):
 		valorInterpolacion = 1
 	
-	global_position = posManoInicial.lerp(posManoFinal, valorInterpolacion)
+	if posManoInicial and posManoFinal:
+		global_position = posManoInicial.lerp(posManoFinal, valorInterpolacion)
 	
 	var DireccionHaciaJugador = G.dirCam(global_position)
 	global_position += DireccionHaciaJugador * .15

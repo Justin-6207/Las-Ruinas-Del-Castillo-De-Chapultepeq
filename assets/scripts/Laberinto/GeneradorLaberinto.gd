@@ -16,53 +16,20 @@ extends Node3D
 var laberinto
 #################################################################################
 
-func obtenerNodosVecinosConSalidaYEsquinas(y : int,x : int):
-	var nodosVecinos = []
-	var tamLabArreglado = laberinto.size()-1
-	
-	if (y-2 > 0) and (y > 0) and (x-2 > 0) and (x > 0):
-		nodosVecinos.push_back([laberinto[y - 1][x - 1],laberinto[y - 2][x - 2],[y - 1,x - 1],"NO"])
-		
-	if (y-2 > 0) and (y > 0) and (x+2 < tamLabArreglado) and (x < tamLabArreglado):
-		nodosVecinos.push_back([laberinto[y - 1][x + 1],laberinto[y - 2][x + 2],[y - 1,x + 1],"NE"])
-	
-	if (y+2 < tamLabArreglado) and (y < tamLabArreglado) and (x-2 > 0) and (x > 0):
-		nodosVecinos.push_back([laberinto[y - 1][x - 1],laberinto[y - 2][x - 2],[y - 1,x - 1],"SO"])
-		
-	if (y+2 < tamLabArreglado) and (y < tamLabArreglado) and (x+2 < tamLabArreglado) and (x < tamLabArreglado):
-		nodosVecinos.push_back([laberinto[y - 1][x + 1],laberinto[y - 2][x + 2],[y - 1,x + 1],"SE"])
-	
-	
-	#############################################################################################
-
-	if (y-2 > 0) and (y > 0):
-		nodosVecinos.push_back([laberinto[y - 1][x],laberinto[y - 2][x],[y-1,x],"N"])
-	
-	if (y+2 < tamLabArreglado) and (y < tamLabArreglado):
-		nodosVecinos.push_back([laberinto[y + 1][x],laberinto[y + 2][x],[y+1,x],"S"])
-		
-	if (x+2 < tamLabArreglado) and (x < tamLabArreglado):
-		nodosVecinos.push_back([laberinto[y][x + 1],laberinto[y][x + 2],[y,x+1],"E"])
-	
-	if (x-2 > 0) and (x > 0):
-		nodosVecinos.push_back([laberinto[y][x - 1],laberinto[y][x - 2],[y,x-1],"O"])
-	
-	return nodosVecinos
-
 func obtenerNodosVecinosConSalida(y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
-	if (y-2 > 0) and (y > 0):
+	if (y-2 >= 0) and (y >= 0):
 		nodosVecinos.push_back([laberinto[y - 1][x],laberinto[y - 2][x],[y-1,x],"N"])
 	
-	if (y+2 < tamLabArreglado) and (y < tamLabArreglado):
+	if (y+2 <= tamLabArreglado) and (y <= tamLabArreglado):
 		nodosVecinos.push_back([laberinto[y + 1][x],laberinto[y + 2][x],[y+1,x],"S"])
 		
-	if (x+2 < tamLabArreglado) and (x < tamLabArreglado):
+	if (x+2 <= tamLabArreglado) and (x <= tamLabArreglado):
 		nodosVecinos.push_back([laberinto[y][x + 1],laberinto[y][x + 2],[y,x+1],"E"])
 	
-	if (x-2 > 0) and (x > 0):
+	if (x-2 >= 0) and (x >= 0):
 		nodosVecinos.push_back([laberinto[y][x - 1],laberinto[y][x - 2],[y,x-1],"O"])
 	
 	return nodosVecinos
@@ -71,16 +38,16 @@ func obtenerNodosVecinos(y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
-	if (y-1 > 0) and (y > 0):
+	if (y-1 >= 0) and (y >= 0):
 		nodosVecinos.push_back([laberinto[y - 1][x],[y-1,x],"N"])
 	
-	if (y+1 < tamLabArreglado) and (y < tamLabArreglado):
+	if (y+1 <= tamLabArreglado) and (y <= tamLabArreglado):
 		nodosVecinos.push_back([laberinto[y + 1][x],[y+1,x],"S"])
 		
-	if (x+1 < tamLabArreglado) and (x < tamLabArreglado):
+	if (x+1 <= tamLabArreglado) and (x <= tamLabArreglado):
 		nodosVecinos.push_back([laberinto[y][x + 1],[y,x+1],"E"])
 	
-	if (x-1 > 0) and (x > 0):
+	if (x-1 >= 0) and (x >= 0):
 		nodosVecinos.push_back([laberinto[y][x - 1],[y,x-1],"O"])
 	
 	return nodosVecinos
@@ -89,35 +56,73 @@ func obtenerNodosVecinosYEsquinas(y : int,x : int):
 	var nodosVecinos = []
 	var tamLabArreglado = laberinto.size()-1
 	
-	if (y-1 > 0) and (y > 0) and (x-1 > 0) and (x > 0):
+	if (y-1 >= 0) and (y >= 0) and (x-1 >= 0) and (x >= 0):
 		nodosVecinos.push_back([laberinto[y - 1][x - 1],[y - 1,x - 1],"NO"])
 		
-	if (y-1 > 0) and (y > 0) and (x+1 < tamLabArreglado) and (x < tamLabArreglado):
+	if (y-1 >= 0) and (y >= 0) and (x+1 <= tamLabArreglado) and (x <= tamLabArreglado):
 		nodosVecinos.push_back([laberinto[y - 1][x + 1],[y - 1,x + 1],"NE"])
 	
-	if (y+1 < tamLabArreglado) and (y < tamLabArreglado) and (x-1 > 0) and (x > 0):
+	if (y+1 <= tamLabArreglado) and (y <= tamLabArreglado) and (x-1 >= 0) and (x >= 0):
 		nodosVecinos.push_back([laberinto[y - 1][x - 1],[y - 1,x - 1],"SO"])
 		
-	if (y+1 < tamLabArreglado) and (y < tamLabArreglado) and (x+1 < tamLabArreglado) and (x < tamLabArreglado):
+	if (y+1 <= tamLabArreglado) and (y <= tamLabArreglado) and (x+1 <= tamLabArreglado) and (x <= tamLabArreglado):
 		nodosVecinos.push_back([laberinto[y - 1][x + 1],[y - 1,x + 1],"SE"])
 	
 	
 	#############################################################################################
 	
-	if (y-1 > 0) and (y > 0):
+	if (y-1 >= 0) and (y >= 0):
 		nodosVecinos.push_back([laberinto[y - 1][x],[y-1,x],"N"])
 	
-	if (y+1 < tamLabArreglado) and (y < tamLabArreglado):
+	if (y+1 <= tamLabArreglado) and (y <= tamLabArreglado):
 		nodosVecinos.push_back([laberinto[y + 1][x],[y+1,x],"S"])
 		
-	if (x+1 < tamLabArreglado) and (x < tamLabArreglado):
+	if (x+1 <= tamLabArreglado) and (x <= tamLabArreglado):
 		nodosVecinos.push_back([laberinto[y][x + 1],[y,x+1],"E"])
 	
-	if (x-1 > 0) and (x > 0):
+	if (x-1 >= 0) and (x >= 0):
 		nodosVecinos.push_back([laberinto[y][x - 1],[y,x-1],"O"])
 	
 	return nodosVecinos
 
+func obtenerNodosVecinosLlenos(y : int,x : int):
+	var nodosVecinos = obtenerNodosVecinos(y,x)
+	var nodosRetorno = []
+	for nodo in nodosVecinos:
+		if nodo[0] == 1:
+			nodosRetorno.append(nodo)
+		elif nodo[0] == 0:
+			var nVV = obtenerNodosVecinos(nodo[1][0],nodo[1][1])
+			var puede = true
+			for n in nVV:
+				if not (n[0] == 0):
+					puede = false
+			if puede:
+				nodosRetorno.append(nodo)
+					
+	return nodosRetorno
+
+func ordernarNodosPorDistancia(Nodos : Array) -> Array:
+	var nodosTemp = Nodos.duplicate()
+	var nodosNuevos = []
+	
+	while nodosTemp.size() > 0:
+		var CurrDist = 9999
+		var itEl = 0
+		
+		var it = 0
+		for pos in nodosTemp:
+			var tempDist = (Vector2.ZERO - Vector2(pos[1],pos[0])).length()
+			if tempDist < CurrDist:
+				CurrDist = tempDist
+				itEl = it
+			it += 1
+			
+		nodosNuevos.push_back(nodosTemp[itEl])
+		nodosTemp.remove_at(itEl)
+	
+	return nodosNuevos
+	
 #################################################################################
 
 func generarCuartosArray(numCuartos : int):
@@ -129,31 +134,25 @@ func generarCuartosArray(numCuartos : int):
 	while numCuartos > 0:
 		var y = RNG.randi_range(0,tamLabArreglado)
 		var x = RNG.randi_range(0,tamLabArreglado)
-		if (y == 0 and x == 0) or (y == -1) or (x == -1):
+		
+		if (y == 0 and x == 0) or (y == -1) or (x == -1) :
 			continue
-		if (y < 3) or (x < 3):
-			continue
-		if laberinto[y][x] == 1:
-			var nodosVecinos = obtenerNodosVecinosYEsquinas(y,x)
-			var nodosLlenos = 0
-			var iter = 0
 			
-			for vecino in nodosVecinos:
-				if vecino[0] == 1:
-					nodosLlenos += 1
-				elif vecino[0] == 2:
-					nodosLlenos = 0
-					break
-					
-				iter += 1
+		if laberinto[y][x] == 0 or laberinto[y][x] == 1:
+			var nodosTotalesLlenos = []
+			var nvll = obtenerNodosVecinosLlenos(y,x)
+			nodosTotalesLlenos.append_array(nvll)
+			for nodoVecino in nvll:
+				var nvll2 = obtenerNodosVecinosLlenos(nodoVecino[1][0],nodoVecino[1][1])
+				nodosTotalesLlenos.append_array(nvll2)
 				
+			var nodosLlenos = nodosTotalesLlenos.size()
 			if nodosLlenos >= 1:
-				var cuarto = []
-				cuarto.push_back([y,x])
+				var cuarto = [[y,x]]
 				numCuartos -= 1
 				laberinto[y][x] = 2
 				
-				for nodoVecino in nodosVecinos:
+				for nodoVecino in nodosTotalesLlenos:
 					cuarto.push_back([nodoVecino[1][0],nodoVecino[1][1]])
 					laberinto[nodoVecino[1][0]][nodoVecino[1][1]] = 2
 					
@@ -183,7 +182,8 @@ func eliminarCallejonesSinSalida():
 					iter += 1
 					
 				if nodosLlenos >= nodosVecinos.size()-1 and nodosVecinos.size() >= 3 and nodoCC:
-					laberinto[ nodosVecinos[nodoCC][2][0] ] [ nodosVecinos[nodoCC][2][1] ] = 0
+					if laberinto[ nodosVecinos[nodoCC][2][0] ] [ nodosVecinos[nodoCC][2][1] ] == 1:
+						laberinto[ nodosVecinos[nodoCC][2][0] ] [ nodosVecinos[nodoCC][2][1] ] = 0
 				else:
 					continue
 
@@ -303,18 +303,54 @@ func crearLaberintoFisico():
 				paredesLaberinto[z].push_back(paredGenerada)
 			else:
 				paredesLaberinto[z].push_back(null)
-			
-
-			
+	
 			x += 1
 		z += 1
 		x = 0
 
 	return [paredesLaberinto, pisosLaberinto]
 
+func crearPuertaAPartirDeNodos(ListaNodos : Array, paredesLaberinto):
+	for pos in ListaNodos:
+		var NodosVecinos = obtenerNodosVecinosConSalida(pos[0],pos[1])
+		
+		for nodoVecino in NodosVecinos:
+			if nodoVecino[0] == 0:
+				var Objeto = paredesLaberinto[pos[0]][pos[1]]
+				var POSSalvada
+				var BASISSalvada
+				
+				if nodoVecino[3] == "N":
+					POSSalvada = Objeto.find_child("Frente").global_position
+					BASISSalvada = Objeto.find_child("Frente").basis
+					Objeto.find_child("Frente").queue_free()
+				elif nodoVecino[3] == "S":
+					POSSalvada = Objeto.find_child("Detras").global_position
+					BASISSalvada = Objeto.find_child("Detras").basis
+					Objeto.find_child("Detras").queue_free()
+				elif nodoVecino[3] == "E":
+					POSSalvada = Objeto.find_child("Derecha").global_position
+					BASISSalvada = Objeto.find_child("Derecha").basis
+					Objeto.find_child("Derecha").queue_free()
+				elif nodoVecino[3] == "O":	
+					POSSalvada = Objeto.find_child("Izquierda").global_position
+					BASISSalvada = Objeto.find_child("Izquierda").basis
+					Objeto.find_child("Izquierda").queue_free()
+				
+				var PuertaFisica = puerta.instantiate()
+				Objetos.add_child(PuertaFisica)
+				PuertaFisica.set_meta("Puerta",true)
+				PuertaFisica.global_position = POSSalvada
+				PuertaFisica.basis = BASISSalvada
+				PuertaFisica.position += Vector3.UP * .25
+				
+				laberinto[nodoVecino[2][0]][nodoVecino[2][1]] = 4
+				laberinto[pos[0]][pos[1]] = 3
+				
+				return [PuertaFisica,Objeto]
+
 func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 	var cuartosFisicos = []
-	
 	for cuarto in cuartosArray:
 		var encontroSalida = false
 		var posPuertaAnterior
@@ -324,60 +360,20 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 			"PisoPrincipal" : null,
 		}
 		
+		var nodosOrdenados = ordernarNodosPorDistancia(cuarto)
+		var retorno = crearPuertaAPartirDeNodos(nodosOrdenados, paredesLaberinto)
+		nodosOrdenados.reverse()
+		crearPuertaAPartirDeNodos(nodosOrdenados, paredesLaberinto)
+		CuartoFisico.PisoPrincipal = retorno[1]
+			
 		for pos in cuarto:
-			var nodosVecinosRestringidos = obtenerNodosVecinosConSalida(pos[0],pos[1])
 			var nodosVecinos = obtenerNodosVecinos(pos[0],pos[1])
 			var paredCorrespondiente = paredesLaberinto[pos[0]][pos[1]]
-
 			CuartoFisico.Piso.push_back(paredCorrespondiente)
-			
-			for nodoVecino in nodosVecinosRestringidos:
-				if encontroSalida == true:
-					break
-				
-				if nodoVecino[0] == 0:
-					var POSSalvada
-					var BASISSalvada
-					
-					if not CuartoFisico.PisoPrincipal:
-						CuartoFisico.PisoPrincipal = paredCorrespondiente
-					
-					if posPuertaAnterior != null:
-						if (paredCorrespondiente.global_position - posPuertaAnterior).length() <= 4:
-							continue
-					
-					if nodoVecino[3] == "N":
-						POSSalvada = paredCorrespondiente.find_child("Frente").global_position
-						BASISSalvada = paredCorrespondiente.find_child("Frente").basis
-						paredCorrespondiente.find_child("Frente").queue_free()
-					elif nodoVecino[3] == "S":
-						POSSalvada = paredCorrespondiente.find_child("Detras").global_position
-						BASISSalvada = paredCorrespondiente.find_child("Detras").basis
-						paredCorrespondiente.find_child("Detras").queue_free()
-					elif nodoVecino[3] == "E":
-						POSSalvada = paredCorrespondiente.find_child("Derecha").global_position
-						BASISSalvada = paredCorrespondiente.find_child("Derecha").basis
-						paredCorrespondiente.find_child("Derecha").queue_free()
-					elif nodoVecino[3] == "O":	
-						POSSalvada = paredCorrespondiente.find_child("Izquierda").global_position
-						BASISSalvada = paredCorrespondiente.find_child("Izquierda").basis
-						paredCorrespondiente.find_child("Izquierda").queue_free()
-					
-					laberinto[pos[0]][pos[1]] = 3
-					
-					var PuertaFisica = puerta.instantiate()
-					Objetos.add_child(PuertaFisica)
-					PuertaFisica.set_meta("Puerta",true)
-					
-					posPuertaAnterior = paredCorrespondiente.global_position
-					PuertaFisica.global_position = POSSalvada
-					PuertaFisica.basis = BASISSalvada
-					PuertaFisica.position += Vector3.UP * .25
-					
-					
-			
+
 			for nodoVecino in nodosVecinos:
-				if not (laberinto[nodoVecino[1][0]][nodoVecino[1][1]] >= 2):
+				var valor = laberinto[nodoVecino[1][0]][nodoVecino[1][1]]
+				if not (valor == 2 or valor == 3):
 					continue
 				if nodoVecino[2] == "N":
 					paredCorrespondiente.find_child("Frente").queue_free()
@@ -387,20 +383,9 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 					paredCorrespondiente.find_child("Derecha").queue_free()
 				elif nodoVecino[2] == "O":	
 					paredCorrespondiente.find_child("Izquierda").queue_free()
-				elif nodoVecino[2] == "NE":
-					paredCorrespondiente.find_child("Derecha").queue_free()
-					paredCorrespondiente.find_child("Frente").queue_free()
-				elif nodoVecino[2] == "NO":
-					paredCorrespondiente.find_child("Izquierda").queue_free()
-					paredCorrespondiente.find_child("Frente").queue_free()
-				elif nodoVecino[2] == "SE":
-					paredCorrespondiente.find_child("Derecha").queue_free()
-					paredCorrespondiente.find_child("Detras").queue_free()
-				elif nodoVecino[2] == "SO":
-					paredCorrespondiente.find_child("Izquierda").queue_free()
-					paredCorrespondiente.find_child("Detras").queue_free()
-					
+
 		cuartosFisicos.push_back(CuartoFisico)
+	
 	
 	return cuartosFisicos
 
@@ -409,7 +394,7 @@ func crearObjetosEnCuartos(cuartosFisicos : Array,llavesAGenerar):
 		var pisoPrincipal = cuarto.PisoPrincipal
 		var pisoElegido
 		var distancia = 9999
-		
+
 		for piso in cuarto.Piso:
 			var tempDist = (piso.global_position - pisoPrincipal.global_position).length()
 			if tempDist < distancia:
@@ -424,7 +409,6 @@ func crearObjetosEnCuartos(cuartosFisicos : Array,llavesAGenerar):
 			MiLlave.ObjetoContenido = G.ObjetosGenerables.pick_random()	
 		
 		Objetos.add_child(MiLlave)
-		
 		MiLlave.global_position = pisoElegido.global_position + Vector3.UP
 
 func generarEnemigo(NombreEnemigo):
@@ -465,7 +449,7 @@ func tutorialIntro():
 	await get_tree().create_timer(2.75).timeout
 	G.Anunciante.Anuncio = "Controles - Boton del Mouse Derecho: Usar objetos en el inventario"
 	await get_tree().create_timer(2.75).timeout
-	G.Anunciante.Anuncio = "Controles - Shift derecho: correr"
+	G.Anunciante.Anuncio = "Controles - Shift / Mayus Izquierdo: correr"
 	await get_tree().create_timer(2.75).timeout
 	G.Anunciante.Anuncio = "Controles - Teclas 1, 2 y 3: Cambiar de objeto dentro del inventario"
 	await get_tree().create_timer(2.75).timeout
@@ -500,8 +484,8 @@ func _ready():
 	G.LlavesTotales = llavesAGenerar
 	
 	generarLaberintoArray(tamanoLaberinto)
-	var cuartosArray = generarCuartosArray(cuartosAGenerar)
 	eliminarCallejonesSinSalida()
+	var cuartosArray = generarCuartosArray(cuartosAGenerar)
 	
 	var retornoFisico = crearLaberintoFisico()
 	var paredesFisicas = retornoFisico[0]
@@ -514,6 +498,6 @@ func _ready():
 	generarSalida(pisosFisicos)
 	
 	if generarEnemigos:
-		G.Anunciante.Anuncio = "El fantasma aparecera en 10 segundos"
-		await get_tree().create_timer(5).timeout
+		G.Anunciante.Anuncio = "Tienes 10 segundos antes de que aparezca el enemigo principal"
+		await get_tree().create_timer(10).timeout
 		generarEnemigo("Vicente_Suarez")
