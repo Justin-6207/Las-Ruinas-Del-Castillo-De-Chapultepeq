@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d3yatailfhfbi" path="res://assets/personajes/EnemigoBase.tscn" id="7_u6fk3"]
 
 [node name="GeneradorDeMapa" type="Node3D" unique_id=450716917]
-transform = Transform3D(2, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_4k5rq")
 pared = ExtResource("2_epfxa")
 puerta = ExtResource("2_mj0no")

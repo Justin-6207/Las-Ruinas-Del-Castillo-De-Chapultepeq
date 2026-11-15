@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqn5ul401qnk0"
-path.s3tc="res://.godot/imported/espada.png-2a86cd8b3a90948a3fc7a0692077e433.s3tc.ctex"
+uid="uid://cp1u20qk74eaf"
+path.s3tc="res://.godot/imported/MuroLadrillos.png-8791deb18c96e14112abeb4c1dd7de58.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/imagenes/espada.png"
-dest_files=["res://.godot/imported/espada.png-2a86cd8b3a90948a3fc7a0692077e433.s3tc.ctex"]
+source_file="res://assets/imagenes/texturas/MuroLadrillos.png"
+dest_files=["res://.godot/imported/MuroLadrillos.png-8791deb18c96e14112abeb4c1dd7de58.s3tc.ctex"]
 
 [params]
 

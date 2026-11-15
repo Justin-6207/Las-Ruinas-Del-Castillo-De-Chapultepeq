@@ -252,7 +252,7 @@ func generarLaberintoArray(tamanoLaberinto : int):
 #################################################################################
 
 func darPosMeta(Piso,Posicion):
-	Piso.find_child("MeshInstance3D").find_child("StaticBody3D").set_meta("PosicionArray", [Posicion[0],Posicion[1]])
+	Piso.set_meta("PosicionArray", [Posicion[0],Posicion[1]])
 
 func crearLaberintoFisico():
 	var x = 0
@@ -341,8 +341,8 @@ func crearPuertaAPartirDeNodos(ListaNodos : Array, paredesLaberinto):
 				Objetos.add_child(PuertaFisica)
 				PuertaFisica.set_meta("Puerta",true)
 				PuertaFisica.global_position = POSSalvada
-				PuertaFisica.basis = BASISSalvada
-				PuertaFisica.position += Vector3.UP * .25
+				PuertaFisica.basis = BASISSalvada.scaled(PuertaFisica.basis.get_scale())
+				PuertaFisica.position += Vector3.UP * .5
 				
 				laberinto[nodoVecino[2][0]][nodoVecino[2][1]] = 4
 				laberinto[pos[0]][pos[1]] = 3

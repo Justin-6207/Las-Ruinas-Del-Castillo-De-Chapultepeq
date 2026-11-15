@@ -24,6 +24,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="Las ruinas del castillo de Chapultepeq"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 "Movimiento - Izquierda"={

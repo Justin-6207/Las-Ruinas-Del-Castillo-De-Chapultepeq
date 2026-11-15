@@ -21,8 +21,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	scale = Vector3(1,.5,1)
-	
+	scale = Vector3(1,1,1)
 	var mat = MI3D.material_override.duplicate()
 	MI3D.material_override = mat
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA

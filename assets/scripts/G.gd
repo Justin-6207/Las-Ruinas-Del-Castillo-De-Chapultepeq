@@ -15,23 +15,23 @@ const ObjetosGenerables = ["Espada"]
 
 const ObjetosData = {
 	"Espada" : {
-		"icono" : "res://assets/imagenes/espada.png",
-		"proporcion" : Vector3(.1,.05,.1)
+		"icono" : "res://assets/imagenes/objetos/espada.png",
+		"proporcion" : Vector3(.1,.1,.1)
 	},
 	"Llave" : {
-		"icono" : "res://assets/imagenes/llave.jpg",
-		"proporcion" : Vector3(.1,.05,.1) * .5
+		"icono" : "res://assets/imagenes/objetos/llave.jpg",
+		"proporcion" : Vector3(.1,.1,.1) * .5
 	},
 	"Salida" : {
-		"icono" : "res://assets/imagenes/Salida.jpg",
-		"proporcion" : Vector3(.1,.05,.1) * 2.5
+		"icono" : "res://assets/imagenes/objetos/Salida.jpg",
+		"proporcion" : Vector3(.1,.1,.1) * 2.5
 	}
 }
 
 const EnemigosData = {
 	"Vicente_Suarez" : {
-		"icono" : "res://assets/imagenes/VicenteSuarez.png",
-		"proporcion" : Vector3(.1,.05,.1) * 3
+		"icono" : "res://assets/imagenes/enemigos/VicenteSuarez.png",
+		"proporcion" : Vector3(.1,.1,.1) * 3
 	}
 }
 
@@ -77,7 +77,8 @@ static func setPosArray(Objeto : Node3D):
 	
 	if not resultado.is_empty():
 		var objetoColision = resultado.collider
-		var posArray = objetoColision.get_meta("PosicionArray")
+		var padreColision = objetoColision.get_parent().get_parent()
+		var posArray = padreColision.get_meta("PosicionArray")
 		if posArray:
 			Objeto.posicionArray = [posArray[0],posArray[1]]
 

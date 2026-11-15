@@ -7,10 +7,9 @@ extends CharacterBody3D
 @export var stamina = 100
 @export var maxStamina = 100
 @export var posicionArray = [1,1]
-
-@onready var camera = $"../Camera3D"
 @onready var objetoEnLaMano = $"objetoEnLaMano"
 @onready var manoIndicadora = $"manoIndicadora"
+var camera
 
 var Corriendo = false
 var directionX = 0
@@ -151,6 +150,10 @@ func _unhandled_input(event):
 		yMouseMove = event.relative.y
 
 func _ready():
+	camera = Camera3D.new()
+	get_parent().add_child.call_deferred(camera)
+	camera.make_current()
+	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	G.MiPersonaje = self
 	G.Camara = camera

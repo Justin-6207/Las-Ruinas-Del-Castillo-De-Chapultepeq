@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwe13i757qi8f"
-path="res://.godot/imported/VicenteSuarez.png-4b451a3b0d12b01cd7c2dd88b9cf64fe.ctex"
+uid="uid://cgn6xyoi8gyxs"
+path="res://.godot/imported/Salida.jpg-b8588dbbb61ee3f3364cb1c350135a4b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/imagenes/VicenteSuarez.png"
-dest_files=["res://.godot/imported/VicenteSuarez.png-4b451a3b0d12b01cd7c2dd88b9cf64fe.ctex"]
+source_file="res://assets/imagenes/objetos/Salida.jpg"
+dest_files=["res://.godot/imported/Salida.jpg-b8588dbbb61ee3f3364cb1c350135a4b.ctex"]
 
 [params]
 

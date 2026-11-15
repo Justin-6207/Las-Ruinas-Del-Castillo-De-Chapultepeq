@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cegnnt1qbyqy1"]
 
 [ext_resource type="Script" uid="uid://d2u5txu22uii" path="res://assets/scripts/Jugador/Jugador.gd" id="1_s5et1"]
-[ext_resource type="Texture2D" uid="uid://dqcu53dr44jve" path="res://assets/imagenes/mano.png" id="3_0gm3f"]
+[ext_resource type="Texture2D" uid="uid://dqcu53dr44jve" path="res://assets/imagenes/objetos/mano.png" id="3_0gm3f"]
 [ext_resource type="Script" uid="uid://cdamptqbdybut" path="res://assets/scripts/Jugador/ObjetoMano.gd" id="3_i30lq"]
 [ext_resource type="Script" uid="uid://b2jngkdvmrnnd" path="res://assets/scripts/Jugador/ManoApuntadora.gd" id="3_tqbgv"]
 [ext_resource type="AudioStream" uid="uid://5junb178q61s" path="res://assets/sonidos/espada.mp3" id="4_uvepe"]
