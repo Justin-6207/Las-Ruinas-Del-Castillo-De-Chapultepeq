@@ -1,18 +1,19 @@
 class_name G
 
-const RotationSpeed = 35.0
-
 static var MiPersonaje
-static var Camara
-static var PathfindObject
-static var MisEnemigos
 static var MisInteraccionables 
+static var Camara
 static var LlavesTotales 
 static var Anunciante
-static var Tutorial 
+static var Tutorial
+
+static var MisEnemigos
+static var PathfindObject
+
+static var LaberintoArray
+static var EsquinaLaberinto
 
 const ObjetosGenerables = ["Espada"]
-
 const ObjetosData = {
 	"Espada" : {
 		"icono" : "res://assets/imagenes/objetos/espada.png",
@@ -34,6 +35,20 @@ const EnemigosData = {
 		"proporcion" : Vector3(.1,.1,.1) * 3
 	}
 }
+
+static func limpiarCache():
+	MiPersonaje = null
+	MisInteraccionables = null
+	Camara = null
+	LlavesTotales = null
+	Anunciante = null
+	Tutorial = false
+	
+	MisEnemigos = null
+	PathfindObject = null
+	
+	LaberintoArray = null
+	EsquinaLaberinto = null
 
 static func objectCast(Objeto : Node3D,Direccion : Vector3):
 	if Objeto == null:
@@ -71,16 +86,28 @@ static func rayCast(space_state,Start,End):
 	return result
 
 static func setPosArray(Objeto : Node3D):
-	if Objeto == null:
+	if Objeto == null or LaberintoArray == null or G.EsquinaLaberinto == null:
 		return
+		
 	var resultado = objectCast(Objeto,-Vector3.UP * 10)
-	
+
 	if not resultado.is_empty():
 		var objetoColision = resultado.collider
 		var padreColision = objetoColision.get_parent().get_parent()
 		var posArray = padreColision.get_meta("PosicionArray")
+		
+		var posicionFinal = G.EsquinaLaberinto.global_position
+		var diferenciaOrigen = ((posicionFinal - Vector3(0,0,0)) * Vector3(1,0,1))
+		var diferencia = ((posicionFinal - Objeto.global_position) * Vector3(1,0,1))
+		
+		var x = (1-((diferencia.x/diferenciaOrigen.x))) * (LaberintoArray.size())
+		var y = (1-((diferencia.z/diferenciaOrigen.z))) * (LaberintoArray.size())
+		
+		Objeto.posicionArrayEstimada = [y,x]
+		
 		if posArray:
 			Objeto.posicionArray = [posArray[0],posArray[1]]
+	
 
 ####################################################################################
 

@@ -15,6 +15,9 @@
 [sub_resource type="LabelSettings" id="LabelSettings_esf6n"]
 font_size = 20
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esf6n"]
+bg_color = Color(1, 1, 1, 1)
+
 [node name="UIJugador" type="Control" unique_id=525737445]
 layout_mode = 3
 anchors_preset = 0
@@ -104,3 +107,11 @@ text = "STAMINA"
 label_settings = SubResource("LabelSettings_esf6n")
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="MiniMapa" type="Panel" parent="." unique_id=368309256]
+clip_children = 1
+layout_mode = 0
+offset_right = 281.0
+offset_bottom = 254.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/panel = SubResource("StyleBoxFlat_esf6n")

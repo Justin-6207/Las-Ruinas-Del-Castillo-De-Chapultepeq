@@ -6,9 +6,12 @@ extends CharacterBody3D
 @export var llavesRecolectadas = 0
 @export var stamina = 100
 @export var maxStamina = 100
-@export var posicionArray = [1,1]
 @onready var objetoEnLaMano = $"objetoEnLaMano"
 @onready var manoIndicadora = $"manoIndicadora"
+
+@export var posicionArray = [1,1]
+@export var posicionArrayEstimada = [1,1]
+
 var camera
 
 var Corriendo = false
@@ -48,7 +51,7 @@ func ManejarInput(delta):
 		directionY = -1.0
 	elif Input.is_action_pressed("Movimiento - Abajo"):
 		directionY = 1.0
-		
+	
 	if Input.is_action_pressed("Correr") and stamina > 0:
 		Corriendo = true
 		stamina -= delta * 20
@@ -95,8 +98,9 @@ func ManejarGravedad(delta):
 		CurrentGravitySpeed = Vector3(0,0,0)
 		
 func ManejarCamara(delta):
-	var blend = 1.0 - (pow(0.5,delta * G.RotationSpeed))
+	var blend = 1.0 - (pow(0.5,delta * RotationSpeed))
 	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
+
 	
 	xMouseMove = 0
 	yMouseMove = 0
@@ -119,7 +123,7 @@ func ManejarCamara(delta):
 	camera.global_position = global_position + Vector3.UP
 
 func CamaraTopDown(delta):
-	var blend = 1.0 - (pow(0.5,delta * G.RotationSpeed))
+	var blend = 1.0 - (pow(0.5,delta * RotationSpeed))
 	var mouse_motion = Vector2(xMouseMove,yMouseMove) * delta 
 	
 	xMouseMove = 0
@@ -153,7 +157,6 @@ func _ready():
 	camera = Camera3D.new()
 	get_parent().add_child.call_deferred(camera)
 	camera.make_current()
-	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	G.MiPersonaje = self
 	G.Camara = camera

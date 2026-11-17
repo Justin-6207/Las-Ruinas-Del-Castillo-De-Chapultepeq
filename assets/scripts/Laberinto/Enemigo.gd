@@ -4,10 +4,12 @@ var movimientoAnterior = Vector3.ZERO
 var direccionMovimiento = Vector3(0,0,1)
 
 @export var stunned = 0
-@export var posicionArray = [1,1]
 @export var tipoEnemigo: String
 @onready var SpriteObjeto = $"SpriteObjeto"
 @onready var ContenedorSonidos = $"Sonidos"
+
+@export var posicionArray = [1,1]
+@export var posicionArrayEstimada = [1,1]
 
 var EnemigosData = G.EnemigosData
 var velocidad = 3.25

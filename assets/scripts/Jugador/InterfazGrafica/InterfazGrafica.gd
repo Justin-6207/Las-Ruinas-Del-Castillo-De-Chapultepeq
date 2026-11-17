@@ -6,13 +6,35 @@ extends Control
 @onready var BarraStaminaLlena = $"BarraStamina/Lleno"
 @onready var BarraStaminaRestante = $"BarraStamina/Restante"
 @onready var Anunciante = $"Anunciante"
-var botones = []
+@onready var ContenedorMiniMapa = $"MiniMapa"
 
+var botones = []
+var panelesMiniMapa = []
 
 # Called when the node enters the scene tree for the first time.
+func moverMiniMapa():
+	pass
+
+func crearMiniMapa():
+	while G.LaberintoArray == null:
+		await get_tree().process_frame
+		
+	for y in range(0,G.LaberintoArray.size()):
+		for x in range(0,G.LaberintoArray.size()):
+				var casilla = Panel.new()
+				casilla.size = ContenedorMiniMapa.size
+				casilla.scale = Vector2(.5,.5)
+				casilla.name = str(y) + "," + str(x)
+				casilla.position = Vector2(x * 150,y * 150)
+				casilla.pivot_offset_ratio = Vector2(.5,.5)
+				casilla.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				ContenedorMiniMapa.add_child(casilla)
+				panelesMiniMapa.push_back(casilla)
+
 func _ready():
 	for i in Contenedor.get_children():
 		botones.push_back(i)
+	crearMiniMapa()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
