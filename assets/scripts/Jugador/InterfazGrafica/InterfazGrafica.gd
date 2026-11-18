@@ -11,8 +11,19 @@ extends Control
 var botones = []
 var panelesMiniMapa = []
 
-# Called when the node enters the scene tree for the first time.
+var scaleMiniMap = .25
+
 func moverMiniMapa():
+	var mult = ContenedorMiniMapa.size.x * scaleMiniMap
+	var PAE = G.MiPersonaje.posicionArrayEstimada
+	var vectorPAE = Vector2(PAE[1],PAE[0])
+	print(vectorPAE)
+	vectorPAE = vectorPAE * mult
+	
+	for y in range(0,G.LaberintoArray.size()):
+		for x in range(0,G.LaberintoArray.size()):
+			var casilla = panelesMiniMapa[y][x]
+			casilla.position = -vectorPAE + Vector2(x * mult,y * mult)
 	pass
 
 func crearMiniMapa():
@@ -20,27 +31,39 @@ func crearMiniMapa():
 		await get_tree().process_frame
 		
 	for y in range(0,G.LaberintoArray.size()):
+		panelesMiniMapa.push_back([])
 		for x in range(0,G.LaberintoArray.size()):
+				var valorLaberinto = G.LaberintoArray[y][x]
+				
 				var casilla = Panel.new()
 				casilla.size = ContenedorMiniMapa.size
-				casilla.scale = Vector2(.5,.5)
+				casilla.scale = Vector2(scaleMiniMap,scaleMiniMap)
 				casilla.name = str(y) + "," + str(x)
-				casilla.position = Vector2(x * 150,y * 150)
 				casilla.pivot_offset_ratio = Vector2(.5,.5)
 				casilla.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				
+				var new_stylebox = StyleBoxFlat.new()
+				
+				if valorLaberinto == 0:
+					new_stylebox.bg_color = Color.SADDLE_BROWN
+				elif valorLaberinto == 1:
+					new_stylebox.bg_color = Color.RED
+				elif valorLaberinto == 2 or valorLaberinto == 3:
+					new_stylebox.bg_color = Color.DIM_GRAY	
+				
 				ContenedorMiniMapa.add_child(casilla)
-				panelesMiniMapa.push_back(casilla)
+				casilla.add_theme_stylebox_override("panel", new_stylebox)
+				panelesMiniMapa[y].push_back(casilla)
 
 func _ready():
 	for i in Contenedor.get_children():
 		botones.push_back(i)
 	crearMiniMapa()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if G.MiPersonaje == null:
 		return
-	
+	moverMiniMapa()
 	ContadorLlaves.text = "LLAVES RECOLECTADAS: " + str(G.MiPersonaje.llavesRecolectadas) + "/" + str(G.LlavesTotales)
 	var iter = 0
 	for objStr in G.MiPersonaje.MiInventario:
@@ -63,4 +86,4 @@ func _process(delta):
 	
 	BarraStaminaRestante.text = "STAMINA: " + str(String.num(G.MiPersonaje.stamina, 1)) + "/" + str(G.MiPersonaje.maxStamina)
 	BarraStaminaLlena.scale = Vector2(G.MiPersonaje.stamina/G.MiPersonaje.maxStamina,1)
-		
+	

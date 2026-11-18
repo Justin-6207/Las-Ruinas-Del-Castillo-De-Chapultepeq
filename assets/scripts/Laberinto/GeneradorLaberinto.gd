@@ -380,10 +380,7 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 					paredCorrespondiente.find_child("Derecha").queue_free()
 				elif nodoVecino[2] == "O":	
 					paredCorrespondiente.find_child("Izquierda").queue_free()
-
 		cuartosFisicos.push_back(CuartoFisico)
-	
-	
 	return cuartosFisicos
 
 func crearObjetosEnCuartos(cuartosFisicos : Array,llavesAGenerar):

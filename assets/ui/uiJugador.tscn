@@ -86,14 +86,12 @@ offset_left = 839.0
 offset_top = 592.0
 offset_right = 1139.0
 offset_bottom = 632.0
-offset_transform_scale = Vector2(0, 0)
 color = Color(1, 0, 0, 1)
 
 [node name="Lleno" type="ColorRect" parent="BarraStamina" unique_id=770445587]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 40.0
-offset_transform_scale = Vector2(0, 0)
 color = Color(0, 0.34586588, 0.68865025, 1)
 
 [node name="Restante" type="Label" parent="BarraStamina" unique_id=508567337]
@@ -102,7 +100,6 @@ offset_left = 4.0
 offset_top = -31.0
 offset_right = 300.0
 offset_bottom = -3.0
-offset_transform_scale = Vector2(0, 0)
 text = "STAMINA"
 label_settings = SubResource("LabelSettings_esf6n")
 horizontal_alignment = 2
@@ -111,7 +108,7 @@ vertical_alignment = 1
 [node name="MiniMapa" type="Panel" parent="." unique_id=368309256]
 clip_children = 1
 layout_mode = 0
-offset_right = 281.0
-offset_bottom = 254.0
+offset_right = 300.0
+offset_bottom = 300.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_esf6n")
