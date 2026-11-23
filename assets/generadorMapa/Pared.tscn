@@ -8,7 +8,7 @@ data = PackedVector3Array(1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, 1, 1, 1, -1, 
 [node name="Pared" unique_id=1450937679 instance=ExtResource("1_g5rvy")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Ladrillo" parent_id_path=PackedInt32Array(1946273580) index="0" unique_id=2092253235]
+[node name="StaticBody3D" type="StaticBody3D" parent="Ladrillo" parent_id_path=PackedInt32Array(165287147) index="0" unique_id=2092253235]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ladrillo/StaticBody3D" index="0" unique_id=292603674]
 shape = SubResource("ConcavePolygonShape3D_wsvnb")

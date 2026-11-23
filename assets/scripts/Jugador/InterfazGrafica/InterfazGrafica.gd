@@ -7,23 +7,24 @@ extends Control
 @onready var BarraStaminaRestante = $"BarraStamina/Restante"
 @onready var Anunciante = $"Anunciante"
 @onready var ContenedorMiniMapa = $"MiniMapa"
+@onready var Puntero = $"MiniMapa/Puntero"
 
 var botones = []
 var panelesMiniMapa = []
 
-var scaleMiniMap = .5
+var scaleMiniMap = .25
 
 func moverMiniMapa():
-	var mult = (ContenedorMiniMapa.size.x/2) * scaleMiniMap
+	var mult = (ContenedorMiniMapa.size.x) * scaleMiniMap
+	var multVectorMedio = Vector2(mult * .5,mult * .5)
 	var PAE = G.MiPersonaje.posicionArrayEstimada
-	var vectorPAE = Vector2(PAE[1]-1,PAE[0]-1)
+	var vectorPAE = Vector2(PAE[1],PAE[0])
 	vectorPAE = vectorPAE * mult
-	
 	
 	for y in range(0,G.LaberintoArray.size()):
 		for x in range(0,G.LaberintoArray.size()):
 			var casilla = panelesMiniMapa[y][x]
-			casilla.position = -vectorPAE + Vector2(x * mult,y * mult)
+			casilla.position = -vectorPAE + (Vector2(x,y) * mult) + multVectorMedio
 	pass
 
 func crearMiniMapa():
