@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://5h4kuxh4olpg" path="res://assets/scripts/Jugador/InterfazGrafica/InterfazGrafica.gd" id="1_oqi0v"]
 [ext_resource type="Script" uid="uid://bgoi0m5foklgf" path="res://assets/scripts/Jugador/InterfazGrafica/Anunciante.gd" id="2_lad2y"]
 [ext_resource type="AudioStream" uid="uid://cgh1b5brimkhw" path="res://assets/sonidos/notificacion.mp3" id="3_fuinq"]
+[ext_resource type="Texture2D" uid="uid://b568ybiotf0g2" path="res://assets/imagenes/jugador/Puntero.png" id="4_w5lo2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2m0w"]
 
@@ -112,3 +113,12 @@ offset_right = 300.0
 offset_bottom = 300.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_esf6n")
+
+[node name="Puntero" type="TextureRect" parent="MiniMapa" unique_id=1398993046]
+z_index = 1
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 300.0
+scale = Vector2(0.15, 0.15)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("4_w5lo2")

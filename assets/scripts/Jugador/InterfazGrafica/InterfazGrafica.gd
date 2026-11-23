@@ -11,14 +11,14 @@ extends Control
 var botones = []
 var panelesMiniMapa = []
 
-var scaleMiniMap = .25
+var scaleMiniMap = .5
 
 func moverMiniMapa():
-	var mult = ContenedorMiniMapa.size.x * scaleMiniMap
+	var mult = (ContenedorMiniMapa.size.x/2) * scaleMiniMap
 	var PAE = G.MiPersonaje.posicionArrayEstimada
-	var vectorPAE = Vector2(PAE[1],PAE[0])
-	print(vectorPAE)
+	var vectorPAE = Vector2(PAE[1]-1,PAE[0]-1)
 	vectorPAE = vectorPAE * mult
+	
 	
 	for y in range(0,G.LaberintoArray.size()):
 		for x in range(0,G.LaberintoArray.size()):

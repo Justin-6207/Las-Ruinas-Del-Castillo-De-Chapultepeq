@@ -96,8 +96,14 @@ static func setPosArray(Objeto : Node3D):
 		var padreColision = objetoColision.get_parent().get_parent()
 		var posArray = padreColision.get_meta("PosicionArray")
 		
+		var tampf = G.EsquinaLaberinto.global_transform.basis.get_scale() * .25
+		tampf = Vector3(tampf.x,0,tampf.z)
+		
 		var posicionFinal = G.EsquinaLaberinto.global_position
-		var diferenciaOrigen = ((posicionFinal - Vector3(0,0,0)) * Vector3(1,0,1))
+		posicionFinal += Vector3(tampf.x,0,tampf.z)
+		var origen = Vector3(-tampf.x,0,-tampf.z)
+		
+		var diferenciaOrigen = ((posicionFinal - origen) * Vector3(1,0,1))
 		var diferencia = ((posicionFinal - Objeto.global_position) * Vector3(1,0,1))
 		
 		var x = (1-((diferencia.x/diferenciaOrigen.x))) * (LaberintoArray.size())
