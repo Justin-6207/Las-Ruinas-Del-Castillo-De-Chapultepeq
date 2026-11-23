@@ -13,16 +13,29 @@ static var PathfindObject
 static var LaberintoArray
 static var EsquinaLaberinto
 
-const ObjetosGenerables = ["Espada"]
+const ObjetosGenerables = ["Espada","Bidon","Tamal"]
 const ObjetosData = {
 	"Espada" : {
 		"icono" : "res://assets/imagenes/objetos/espada.png",
-		"proporcion" : Vector3(.1,.1,.1)
+		"proporcion" : Vector3(.1,.1,.1) * 2
 	},
+	
+	"Bidon" : {
+		"icono" : "res://assets/imagenes/objetos/bidon.png",
+		"proporcion" : Vector3(.1,.1,.1) * 2
+	},
+	
+	"Tamal" : {
+		"icono" : "res://assets/imagenes/objetos/tamal.png",
+		"proporcion" : Vector3(.1,.1,.1) * 2
+	},
+	
 	"Llave" : {
-		"icono" : "res://assets/imagenes/objetos/llave.jpg",
-		"proporcion" : Vector3(.1,.1,.1) * .5
+		"icono" : "res://assets/imagenes/objetos/llave.png",
+		"proporcion" : Vector3(.1,.1,.1) * 2
 	},
+	
+
 	"Salida" : {
 		"icono" : "res://assets/imagenes/objetos/Salida.jpg",
 		"proporcion" : Vector3(.1,.1,.1) * 2.5
@@ -133,4 +146,18 @@ static func basisCam(posicion):
 
 static func dirJug(posicion):
 	return ((MiPersonaje.global_position-posicion) * Vector3(1,0,1))
+	
+static func rotJug():
+	var look = MiPersonaje.global_basis.z
+	var sample = Vector3.FORWARD
+	var right = Vector3.RIGHT
+	
+	var pp = look.dot(sample)
+	var angulo = acos(look.dot(sample))
+	angulo = rad_to_deg(angulo)
+	
+	if (look.dot(right) < look.dot(-right)):
+		angulo = -angulo
+	
+	return angulo
 	

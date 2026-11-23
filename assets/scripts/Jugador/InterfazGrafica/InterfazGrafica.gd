@@ -15,6 +15,7 @@ var panelesMiniMapa = []
 var scaleMiniMap = .25
 
 func moverMiniMapa():
+	Puntero.rotation_degrees = G.rotJug()
 	var mult = (ContenedorMiniMapa.size.x) * scaleMiniMap
 	var multVectorMedio = Vector2(mult * .5,mult * .5)
 	var PAE = G.MiPersonaje.posicionArrayEstimada

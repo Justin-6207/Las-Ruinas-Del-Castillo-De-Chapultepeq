@@ -428,8 +428,7 @@ func generarSalida(pisosFisicos : Array):
 	MiSalida.name = "SALIDA"
 	
 	Objetos.add_child(MiSalida)
-	
-	MiSalida.global_position = pisoS.global_position + Vector3.UP * 3
+	MiSalida.global_position = pisoS.global_position + Vector3.UP * 2
 
 #################################################################################
 
@@ -442,7 +441,7 @@ func tutorialIntro():
 	await get_tree().create_timer(2.75).timeout
 	G.Anunciante.Anuncio = "Controles - Boton del Mouse Derecho: Usar objetos en el inventario"
 	await get_tree().create_timer(2.75).timeout
-	G.Anunciante.Anuncio = "Controles - Shift / Mayus Izquierdo: correr"
+	G.Anunciante.Anuncio = "Controles - CTRL Izquierdo: correr"
 	await get_tree().create_timer(2.75).timeout
 	G.Anunciante.Anuncio = "Controles - Teclas 1, 2 y 3: Cambiar de objeto dentro del inventario"
 	await get_tree().create_timer(2.75).timeout

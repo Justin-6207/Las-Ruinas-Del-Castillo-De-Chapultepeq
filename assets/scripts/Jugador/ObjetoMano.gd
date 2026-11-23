@@ -18,6 +18,8 @@ func  UsarObjeto(NombreObjeto):
 				enemigo.stunned = 4
 		if gaa:
 			sonidos["EspadaCritica"].play()
+	elif NombreObjeto == "Bidon":
+		G.MiPersonaje.stamina = 100
 
 func _process(delta):
 	global_basis = G.basisCam(global_position)

@@ -109,16 +109,16 @@ vertical_alignment = 1
 [node name="MiniMapa" type="Panel" parent="." unique_id=368309256]
 clip_children = 1
 layout_mode = 0
-offset_right = 300.0
-offset_bottom = 300.0
+offset_right = 200.0
+offset_bottom = 200.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_esf6n")
 
 [node name="Puntero" type="TextureRect" parent="MiniMapa" unique_id=1398993046]
 z_index = 1
 layout_mode = 0
-offset_right = 300.0
-offset_bottom = 300.0
+offset_right = 200.0
+offset_bottom = 200.0
 scale = Vector2(0.15, 0.15)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("4_w5lo2")
