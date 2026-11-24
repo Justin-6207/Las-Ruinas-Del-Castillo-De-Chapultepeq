@@ -9,6 +9,8 @@ var interaccionableCercano
 var tutorialesPresentados = {}
 var tutoriales = {
 	"Llave" : "Tienes que recolectar todas las llaves en el mapa para seguir hacia el siguiente nivel",
+	"Tamal" : "Stamina infinita por 5 segundos",
+	"Cantimplora" : "Regenera tu stamina al maximo",
 	"Espada" : "Puedes usar la espada a distancia corta para desabilitar al enemigo por 4 segundos",
 	"Puerta" : "Puedes cerrar una puerta en frente de un enemigo para rapidamente salirte de apuros",
 	"Salida" : "Unicamente al haber recolectado todas las llaves se abrira la salida",
@@ -38,11 +40,15 @@ func ManejarMano(delta):
 		var dir =  G.dirCam(interaccionable.global_position)
 		var dp = dir.dot(G.Camara.global_basis.z)
 		var angle = rad_to_deg(acos(dp))
-		var distTemp = (G.MiPersonaje.global_position - interaccionable.global_position).length()
-
-		if distTemp < distancia and distTemp <= 3 and angle <= 40:
-			distancia = distTemp
-			objetoMasCercano = interaccionable
+		
+		var dirPLYR = (G.MiPersonaje.global_position - interaccionable.global_position)
+		
+		var casteoJugador = G.objectCast(interaccionable,dirPLYR)
+		
+		if casteoJugador != null and casteoJugador.is_empty():
+			if dirPLYR.length() < distancia and dirPLYR.length() <= 3 and angle <= 40:
+				distancia = dirPLYR.length()
+				objetoMasCercano = interaccionable
 		
 	var Cambio = false
 	if objetoMasCercano:

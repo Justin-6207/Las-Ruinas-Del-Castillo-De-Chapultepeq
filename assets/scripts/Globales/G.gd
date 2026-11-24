@@ -11,6 +11,9 @@ static var MisEnemigos
 static var PathfindObject
 
 static var LaberintoArray
+static var EspaciosVaciosLaberintoArray
+static var LaberintoFisico
+
 static var InicioLaberintoJugador
 static var FinalLaberinto
 
@@ -26,8 +29,16 @@ static func limpiarCache():
 	PathfindObject = null
 	
 	LaberintoArray = null
+	EspaciosVaciosLaberintoArray = null
+	LaberintoFisico = null
+	
+	
 	FinalLaberinto = null
 	InicioLaberintoJugador = null
+
+static func pisoVacioAleatorio():
+	var pisoAleatorioArray = G.EspaciosVaciosLaberintoArray.pick_random()
+	return G.LaberintoFisico[pisoAleatorioArray[0]][pisoAleatorioArray[1]]
 
 static func objectCast(Objeto : Node3D,Direccion : Vector3):
 	if Objeto == null:
@@ -89,10 +100,10 @@ static func setPosArray(Objeto : Node3D):
 		var x = (1-((diferencia.x/diferenciaOrigen.x))) * (LaberintoArray.size())
 		var y = (1-((diferencia.z/diferenciaOrigen.z))) * (LaberintoArray.size())
 		
-		Objeto.posicionArrayEstimada = [y,x]
+		Objeto.set_meta("PosicionArrayEstimada",[y,x])
 		
 		if posArray:
-			Objeto.posicionArray = [posArray[0],posArray[1]]
+			Objeto.set_meta("PosicionArray",[posArray[0],posArray[1]])
 	
 
 ####################################################################################

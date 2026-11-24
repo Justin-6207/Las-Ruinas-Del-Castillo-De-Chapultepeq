@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dwn05jfvn7ip3" path="res://assets/scripts/Enemigo/Enemigo.gd" id="1_hgynr"]
 [ext_resource type="AudioStream" uid="uid://c0rnn0paqthvt" path="res://assets/sonidos/rompiendoPuerta.mp3" id="2_4m4qh"]
+[ext_resource type="AudioStream" uid="uid://p4pbj212dsjo" path="res://assets/sonidos/Hallelujah.mp3" id="3_fok2c"]
 [ext_resource type="AudioStream" uid="uid://bqux6kf4evrp2" path="res://assets/sonidos/estatica.mp3" id="3_sc0y2"]
+[ext_resource type="AudioStream" uid="uid://dufw48unbwnt1" path="res://assets/sonidos/risa.mp3" id="3_wpiq4"]
+[ext_resource type="AudioStream" uid="uid://bryt2ityyt4dl" path="res://assets/sonidos/teveo.mp3" id="4_iwu1m"]
 
 [node name="Node3D" type="Node3D" unique_id=1448700201]
 script = ExtResource("1_hgynr")
@@ -13,7 +16,20 @@ script = ExtResource("1_hgynr")
 
 [node name="RompiendoPuerta" type="AudioStreamPlayer" parent="Sonidos" unique_id=238744768]
 stream = ExtResource("2_4m4qh")
+volume_db = -20.0
+
+[node name="Hallelujah" type="AudioStreamPlayer" parent="Sonidos" unique_id=1873321118]
+stream = ExtResource("3_fok2c")
+volume_db = -10.0
+
+[node name="Risa" type="AudioStreamPlayer" parent="Sonidos" unique_id=10555122]
+stream = ExtResource("3_wpiq4")
+volume_db = -20.0
+
+[node name="TeVeo" type="AudioStreamPlayer" parent="Sonidos" unique_id=1156752646]
+stream = ExtResource("4_iwu1m")
+volume_db = -20.0
 
 [node name="Estatica" type="AudioStreamPlayer3D" parent="Sonidos" unique_id=582026228]
 stream = ExtResource("3_sc0y2")
-volume_db = -20.0
+volume_db = -30.0

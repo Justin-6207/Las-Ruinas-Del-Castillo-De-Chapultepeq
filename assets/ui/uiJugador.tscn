@@ -93,7 +93,7 @@ color = Color(1, 0, 0, 1)
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 40.0
-color = Color(0, 0.34586588, 0.68865025, 1)
+color = Color(0, 0.34509805, 0.6901961, 1)
 
 [node name="Restante" type="Label" parent="BarraStamina" unique_id=508567337]
 layout_mode = 0

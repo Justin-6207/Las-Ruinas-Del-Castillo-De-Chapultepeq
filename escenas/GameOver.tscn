@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dfesclutkscp"]
+
+[ext_resource type="Script" uid="uid://beuj3gemphgqd" path="res://assets/scripts/PantallaPrincipal/Inicio.gd" id="1_1s1dg"]
+[ext_resource type="Script" uid="uid://dpvoywukn6ghh" path="res://assets/scripts/PantallaPrincipal/BotonCambioEscena.gd" id="2_f3afy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxk5m"]
+
+[node name="Inicio" type="Control" unique_id=911141524]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1s1dg")
+
+[node name="Label" type="Label" parent="." unique_id=1576072316]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 119.0
+offset_right = 1049.0
+offset_bottom = 331.0
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxFlat_sxk5m")
+text = "¡GAME OVER!
+Te atraparon los niños heroes..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Nivel2" type="Button" parent="." unique_id=1519766881]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 392.0
+offset_right = 916.0
+offset_bottom = 476.0
+theme_override_font_sizes/font_size = 55
+text = "Regresar al menu de inicio"
+script = ExtResource("2_f3afy")
+caminoHaciaEscena = "res://escenas/Inicio.tscn"

@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var MiInventario = ["Espada","",""]
+@export var MiInventario = ["","",""]
 @export var espacioEnLaMano = 0
 
 @export var llavesRecolectadas = 0
@@ -10,9 +10,6 @@ extends CharacterBody3D
 
 @onready var objetoEnLaMano = $"objetoEnLaMano"
 @onready var manoIndicadora = $"manoIndicadora"
-
-@export var posicionArray = [1,1]
-@export var posicionArrayEstimada = [1,1]
 
 var camera
 
@@ -37,8 +34,9 @@ static var Friction = Increment/MaxSpeed
 ###############################################################################################
 
 func UsarObjeto():
-	objetoEnLaMano.UsarObjeto(MiInventario[espacioEnLaMano])
-	MiInventario[espacioEnLaMano] = ""
+	if not (MiInventario[espacioEnLaMano] == "Biblia"):
+		objetoEnLaMano.UsarObjeto(MiInventario[espacioEnLaMano])
+		MiInventario[espacioEnLaMano] = ""
 
 func ManejarInput(delta):
 	directionX = 0
@@ -162,6 +160,9 @@ func _unhandled_input(event):
 		yMouseMove = event.relative.y
 
 func _ready():
+	self.set_meta("PosicionArrayEstimada",[1,1])
+	self.set_meta("PosicionArray",[1,1])
+
 	camera = Camera3D.new()
 	get_parent().add_child.call_deferred(camera)
 	camera.make_current()

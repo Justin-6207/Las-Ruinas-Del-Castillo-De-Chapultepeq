@@ -21,9 +21,11 @@ func UsarObjeto(NombreObjeto):
 			
 	elif NombreObjeto == "Tamal":
 		G.MiPersonaje.staminaInfinita = 5
+		sonidos["Comer"].play()
 		
-	elif NombreObjeto == "Bidon":
+	elif NombreObjeto == "Cantimplora":
 		G.MiPersonaje.stamina = 100
+		sonidos["Beber"].play()
 
 func _process(delta):
 	global_basis = G.basisCam(global_position)

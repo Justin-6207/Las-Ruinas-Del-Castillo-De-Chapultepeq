@@ -4,21 +4,26 @@
 [ext_resource type="Texture2D" uid="uid://dqcu53dr44jve" path="res://assets/imagenes/objetos/mano.png" id="3_0gm3f"]
 [ext_resource type="Script" uid="uid://cdamptqbdybut" path="res://assets/scripts/Jugador/ObjetoMano.gd" id="3_i30lq"]
 [ext_resource type="Script" uid="uid://b2jngkdvmrnnd" path="res://assets/scripts/Jugador/ManoApuntadora.gd" id="3_tqbgv"]
+[ext_resource type="AudioStream" uid="uid://tcp1f0let3of" path="res://assets/sonidos/comer.mp3" id="4_oustn"]
 [ext_resource type="AudioStream" uid="uid://5junb178q61s" path="res://assets/sonidos/espada.mp3" id="4_uvepe"]
 [ext_resource type="AudioStream" uid="uid://bmmrk0wdpbw31" path="res://assets/sonidos/espadacritica.mp3" id="4_w1ytx"]
+[ext_resource type="AudioStream" uid="uid://3ybde2ymt2b4" path="res://assets/sonidos/beber.mp3" id="5_yjxo8"]
 [ext_resource type="PackedScene" uid="uid://dj0tvsn21bdum" path="res://assets/ui/uiJugador.tscn" id="7_w1ytx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a2icu"]
+height = 2.0195313
 
 [node name="Jugador" type="CharacterBody3D" unique_id=489573203]
 script = ExtResource("1_s5et1")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1849938897]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96442986, 0)
+light_energy = 1.5
 omni_range = 2.0
+omni_shadow_mode = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=936064317]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96442986, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9902344, 0)
 shape = SubResource("CapsuleShape3D_a2icu")
 
 [node name="objetoEnLaMano" type="Sprite3D" parent="." unique_id=275346033]
@@ -27,9 +32,19 @@ script = ExtResource("3_i30lq")
 
 [node name="Espada" type="AudioStreamPlayer" parent="objetoEnLaMano" unique_id=253891000]
 stream = ExtResource("4_uvepe")
+volume_db = -20.0
+
+[node name="Comer" type="AudioStreamPlayer" parent="objetoEnLaMano" unique_id=1847502554]
+stream = ExtResource("4_oustn")
+volume_db = -20.0
+
+[node name="Beber" type="AudioStreamPlayer" parent="objetoEnLaMano" unique_id=803541692]
+stream = ExtResource("5_yjxo8")
+volume_db = -20.0
 
 [node name="EspadaCritica" type="AudioStreamPlayer" parent="objetoEnLaMano" unique_id=1670977386]
 stream = ExtResource("4_w1ytx")
+volume_db = -20.0
 
 [node name="manoIndicadora" type="Sprite3D" parent="." unique_id=1059537019]
 transform = Transform3D(0.089, 0, 0, 0, 0.1, 0, 0, 0, 0.526, 0, -0.46704614, -0.03185153)

@@ -8,6 +8,14 @@
 [ext_resource type="PackedScene" uid="uid://beul3dr8s371x" path="res://assets/generadorMapa/ParedVacia.tscn" id="3_mj0no"]
 [ext_resource type="PackedScene" uid="uid://cdxygf7jvt2wb" path="res://assets/generadorMapa/PisoCuarto.tscn" id="7_idkqx"]
 [ext_resource type="PackedScene" uid="uid://d3yatailfhfbi" path="res://assets/personajes/EnemigoBase.tscn" id="7_u6fk3"]
+[ext_resource type="AudioStream" uid="uid://xxccltkgu4lh" path="res://assets/sonidos/tutorial.mp3" id="9_ekhss"]
+[ext_resource type="AudioStream" uid="uid://8p3rppg4r4rx" path="res://assets/sonidos/nivel1.mp3" id="10_wlriv"]
+[ext_resource type="AudioStream" uid="uid://cve4w5uwkp3n0" path="res://assets/sonidos/nivel2.mp3" id="11_3rfp5"]
+
+[sub_resource type="Environment" id="Environment_idkqx"]
+fog_enabled = true
+fog_light_color = Color(0.20443362, 0.22447285, 0.25883695, 1)
+fog_density = 0.25
 
 [node name="GeneradorDeMapa" type="Node3D" unique_id=450716917]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -20,6 +28,20 @@ piso = ExtResource("3_mbxyf")
 pisoCuarto = ExtResource("7_idkqx")
 enemigoBase = ExtResource("7_u6fk3")
 
+[node name="ContenedorSonidos" type="Node3D" parent="." unique_id=1177161795]
+
+[node name="Tutorial" type="AudioStreamPlayer" parent="ContenedorSonidos" unique_id=1183516742]
+stream = ExtResource("9_ekhss")
+parameters/looping = true
+
+[node name="Nivel1" type="AudioStreamPlayer" parent="ContenedorSonidos" unique_id=1800782012]
+stream = ExtResource("10_wlriv")
+parameters/looping = true
+
+[node name="Nivel2" type="AudioStreamPlayer" parent="ContenedorSonidos" unique_id=1834876233]
+stream = ExtResource("11_3rfp5")
+parameters/looping = true
+
 [node name="Piso" type="Node3D" parent="." unique_id=1323824451]
 
 [node name="Paredes" type="Node3D" parent="." unique_id=1777525595]
@@ -27,3 +49,6 @@ enemigoBase = ExtResource("7_u6fk3")
 [node name="Objetos" type="Node3D" parent="." unique_id=348054286]
 
 [node name="Enemigos" type="Node3D" parent="." unique_id=908336941]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1007211437]
+environment = SubResource("Environment_idkqx")

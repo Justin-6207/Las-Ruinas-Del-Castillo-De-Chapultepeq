@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpvoywukn6ghh" path="res://assets/scripts/PantallaPrincipal/BotonCambioEscena.gd" id="1_6iy57"]
 [ext_resource type="Script" uid="uid://beuj3gemphgqd" path="res://assets/scripts/PantallaPrincipal/Inicio.gd" id="1_is37f"]
+[ext_resource type="AudioStream" uid="uid://dlh5pwu8kps0s" path="res://assets/sonidos/intro.mp3" id="3_a2m0w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxk5m"]
 
@@ -29,23 +30,38 @@ vertical_alignment = 1
 
 [node name="Tutorial" type="Button" parent="." unique_id=1351782486]
 layout_mode = 0
-offset_left = 111.0
-offset_top = 296.0
-offset_right = 511.0
-offset_bottom = 596.0
-theme_override_font_sizes/font_size = 55
+offset_left = 1018.0
+offset_top = 561.0
+offset_right = 1146.0
+offset_bottom = 645.0
+theme_override_font_sizes/font_size = 25
 text = "TUTORIAL"
 script = ExtResource("1_6iy57")
 caminoHaciaEscena = "res://escenas/Tutorial.tscn"
 
-[node name="NivelMuestra" type="Button" parent="." unique_id=2033139218]
+[node name="Nivel1" type="Button" parent="." unique_id=2033139218]
 layout_mode = 0
-offset_left = 616.0
-offset_top = 299.0
-offset_right = 1016.0
-offset_bottom = 599.0
+offset_left = 129.0
+offset_top = 301.0
+offset_right = 529.0
+offset_bottom = 385.0
 theme_override_font_sizes/font_size = 55
-text = "NIVEL DE 
-MUESTRA"
+text = "NIVEL 1"
 script = ExtResource("1_6iy57")
-caminoHaciaEscena = "res://escenas/Nivel De Muestra.tscn"
+caminoHaciaEscena = "res://escenas/Nivel1.tscn"
+
+[node name="Nivel2" type="Button" parent="." unique_id=1519766881]
+layout_mode = 0
+offset_left = 585.0
+offset_top = 301.0
+offset_right = 985.0
+offset_bottom = 385.0
+theme_override_font_sizes/font_size = 55
+text = "NIVEL 2"
+script = ExtResource("1_6iy57")
+caminoHaciaEscena = "res://escenas/Nivel2.tscn"
+
+[node name="Intro" type="AudioStreamPlayer" parent="." unique_id=1651463140]
+stream = ExtResource("3_a2m0w")
+autoplay = true
+parameters/looping = true

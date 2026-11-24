@@ -13,8 +13,10 @@ extends Node3D
 @onready var Pisos = $"Piso"
 @onready var Objetos = $"Objetos"
 @onready var Enemigos = $"Enemigos"
+@onready var ContenedorSonidos = $ContenedorSonidos
 
 var laberinto = []
+var sonidos = {}
 #################################################################################
 
 func obtenerNodosVecinosConSalida(y : int,x : int):
@@ -247,7 +249,7 @@ func darPosMeta(Piso,Posicion):
 
 func crearLaberintoFisico():
 	var x = 0
-	var z = 0
+	var y = 0
 	var startPos = Vector3(0,0,0)
 	var paredesLaberinto = []
 	var pisosLaberinto = []
@@ -258,7 +260,7 @@ func crearLaberintoFisico():
 	
 	for contenedor in laberinto:
 		for nodo in contenedor:
-			var movingPos = startPos + Vector3(x,0,z)
+			var movingPos = startPos + Vector3(x,0,y)
 			var paredGenerada
 			
 			if nodo == 1:
@@ -275,39 +277,43 @@ func crearLaberintoFisico():
 			if nodo == 2:
 				miPiso = pisoCuarto.instantiate()
 				miPiso.position = movingPos + Vector3(0,-.5,0)
-				miPiso.name = str(z) + "-" + str(x)
+				miPiso.name = str(y) + "-" + str(x)
 			else:
 				miPiso = piso.instantiate()
 				miPiso.position = movingPos + Vector3(0,-.5,0)
-				miPiso.name = str(z) + "-" + str(x)
+				miPiso.name = str(y) + "-" + str(x)
 			
-			pisosLaberinto[z].push_back(miPiso)
-			darPosMeta(miPiso,[z,x])
+			if nodo == 0:
+				G.EspaciosVaciosLaberintoArray.append([y,x])
+			
+			pisosLaberinto[y].push_back(miPiso)
+			darPosMeta(miPiso,[y,x])
 			
 			if nodo == 0:
 				miPiso.set_meta("Libre",true)
 			else:
 				miPiso.set_meta("Libre",null)
 			
+			
 			Pisos.add_child(miPiso)
 			
 			if paredGenerada:
-				paredGenerada.name = str(z) + "-" + str(x)
-				paredesLaberinto[z].push_back(paredGenerada)
+				paredGenerada.name = str(y) + "-" + str(x)
+				paredesLaberinto[y].push_back(paredGenerada)
 			else:
-				paredesLaberinto[z].push_back(null)
+				paredesLaberinto[y].push_back(null)
 				
-			if x == laberinto.size()-1 and z == laberinto.size()-1:
+			if x == laberinto.size()-1 and y == laberinto.size()-1:
 				G.FinalLaberinto = miPiso
 			
-			if x == 1 and z == 1:
+			if x == 1 and y == 1:
 				G.InicioLaberintoJugador = miPiso
 				
-			if x == 1 and z == 1:
+			if x == 1 and y == 1:
 				G.MiPersonaje.global_position = miPiso.global_position + Vector3.UP * .5
 				
 			x += 1
-		z += 1
+		y += 1
 		x = 0
 
 	return [paredesLaberinto, pisosLaberinto]
@@ -414,7 +420,7 @@ func generarEnemigo(NombreEnemigo):
 	Enemigos.add_child(enemigo)
 	enemigo.global_position = (G.InicioLaberintoJugador.global_position * Vector3(1,0,1)) + Vector3.UP
 
-func generarSalida(pisosFisicos : Array):
+func generarSalidaFisica(pisosFisicos : Array):
 	var dist = 0
 	var pisoS
 	
@@ -450,11 +456,16 @@ func tutorialIntro():
 	G.Tutorial = true
 
 func _ready():
-	G.MisInteraccionables = Objetos
-	G.MisEnemigos = Enemigos
-	
 	while G.MiPersonaje == null:
 		await get_tree().process_frame
+		
+	for sonido in ContenedorSonidos.get_children():
+		sonidos[sonido.name] = sonido
+		
+	G.MisInteraccionables = Objetos
+	G.MisEnemigos = Enemigos
+	G.EspaciosVaciosLaberintoArray = []
+	G.MiPersonaje.MiInventario[1] = GameData.ObjetosGenerables.pick_random()
 	
 	var tamanoLaberinto
 	var cuartosAGenerar
@@ -462,16 +473,21 @@ func _ready():
 	var generarEnemigos = false
 	
 	if dificultad == 0:
+		sonidos["Tutorial"].play()
 		WorkerThreadPool.add_task(tutorialIntro)
-		generarEnemigos = false
 		cuartosAGenerar = 5
 		llavesAGenerar = 3
 		tamanoLaberinto = 25
 	elif dificultad == 1:
-		generarEnemigos = true
+		sonidos["Nivel1"].play()
 		cuartosAGenerar = 7
 		llavesAGenerar = 5
 		tamanoLaberinto = 25	
+	elif dificultad == 2:
+		sonidos["Nivel2"].play()
+		cuartosAGenerar = 10
+		llavesAGenerar = 7
+		tamanoLaberinto = 50	
 	
 	generarLaberintoArray(tamanoLaberinto)
 	eliminarCallejonesSinSalida()
@@ -483,13 +499,24 @@ func _ready():
 	var cuartosFisicos = crearCuartosFisicos(cuartosArray,paredesFisicas)
 	
 	crearObjetosEnCuartos(cuartosFisicos,llavesAGenerar)
-	generarSalida(pisosFisicos)
+	generarSalidaFisica(pisosFisicos)
 	
 	G.LlavesTotales = llavesAGenerar
 	G.PathfindObject = PathfindingClass.new(laberinto,pisosFisicos)
-	G.LaberintoArray = laberinto.duplicate(true)
 	
-	if generarEnemigos:
-		G.Anunciante.Anuncio = "Tienes 10 segundos antes de que aparezca el enemigo principal"
+	G.LaberintoArray = laberinto.duplicate(true)
+	G.LaberintoFisico = pisosFisicos
+	
+	if dificultad == 1:
+		G.Anunciante.Anuncio = "Enemigos presentes: Vicente Suarez"
+		await get_tree().create_timer(2).timeout
+	elif dificultad == 2:
+		G.Anunciante.Anuncio = "Enemigos presentes: Vicente Suarez, Francisco Marquez"
+		await get_tree().create_timer(2).timeout
+		
+	if dificultad >= 1:
+		G.Anunciante.Anuncio = "Tendras 10 segundos de ventaja"
 		await get_tree().create_timer(10).timeout
-		generarEnemigo("Nicolas_Bravo")
+		generarEnemigo("Vicente_Suarez")
+		if dificultad >= 2:
+			generarEnemigo("Francisco_Marquez")

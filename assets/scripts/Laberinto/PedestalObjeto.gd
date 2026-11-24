@@ -23,7 +23,7 @@ func usar():
 		if (G.MiPersonaje.llavesRecolectadas >= G.LlavesTotales):
 			ObjetoContenido = ""
 			sonidos["Victoria"].play()
-			get_tree().change_scene_to_file("res://escenas/Inicio.tscn")
+			get_tree().change_scene_to_file("res://escenas/Victoria.tscn")
 		else:
 			sonidos["PuertaBloqueada"].play()
 			G.Anunciante.Anuncio = "No tienes suficientes llaves para escapar"	

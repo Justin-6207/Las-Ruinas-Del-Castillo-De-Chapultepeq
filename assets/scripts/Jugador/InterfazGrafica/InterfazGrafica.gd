@@ -15,10 +15,13 @@ var panelesMiniMapa = []
 var scaleMiniMap = .2
 
 func moverMiniMapa():
+	if G.LaberintoArray == null:
+		return
+	
 	Puntero.rotation_degrees = G.rotJug()
 	var mult = (ContenedorMiniMapa.size.x) * scaleMiniMap
 	var multVectorMedio = Vector2(mult * .5,mult * .5)
-	var PAE = G.MiPersonaje.posicionArrayEstimada
+	var PAE = G.MiPersonaje.get_meta("PosicionArrayEstimada")
 	var vectorPAE = Vector2(PAE[1],PAE[0])
 	vectorPAE = vectorPAE * mult
 	
@@ -47,26 +50,19 @@ func crearMiniMapa():
 				var new_stylebox = StyleBoxFlat.new()
 				
 				if valorLaberinto == 0:
-					new_stylebox.bg_color = Color.SADDLE_BROWN
+					new_stylebox.bg_color = Color.DARK_GRAY
 				elif valorLaberinto == 1:
-					new_stylebox.bg_color = Color.RED
+					new_stylebox.bg_color = Color.DARK_RED
 				elif valorLaberinto == 2 or valorLaberinto == 3:
-					new_stylebox.bg_color = Color.DIM_GRAY	
+					new_stylebox.bg_color = Color.STEEL_BLUE
+				elif valorLaberinto == 4:
+					new_stylebox.bg_color = Color.SADDLE_BROWN
 				
 				ContenedorMiniMapa.add_child(casilla)
 				casilla.add_theme_stylebox_override("panel", new_stylebox)
 				panelesMiniMapa[y].push_back(casilla)
 
-func _ready():
-	for i in Contenedor.get_children():
-		botones.push_back(i)
-	crearMiniMapa()
-
-func _process(delta):
-	if G.MiPersonaje == null:
-		return
-	moverMiniMapa()
-	ContadorLlaves.text = "LLAVES RECOLECTADAS: " + str(G.MiPersonaje.llavesRecolectadas) + "/" + str(G.LlavesTotales)
+func mostrarInventario():
 	var iter = 0
 	for objStr in G.MiPersonaje.MiInventario:
 		if G.MiPersonaje.espacioEnLaMano == iter:
@@ -83,9 +79,28 @@ func _process(delta):
 		if objStr != "":
 			botones[iter].icon = load(GameData.Objetos[objStr].icono)
 		else:
-			botones[iter].icon = null	
+			botones[iter].icon = null
 		iter += 1
-	
+
+func recolectablesYStatus():
+	ContadorLlaves.text = "LLAVES RECOLECTADAS: " + str(G.MiPersonaje.llavesRecolectadas) + "/" + str(G.LlavesTotales)
 	BarraStaminaRestante.text = "STAMINA: " + str(String.num(G.MiPersonaje.stamina, 1)) + "/" + str(G.MiPersonaje.maxStamina)
 	BarraStaminaLlena.scale = Vector2(G.MiPersonaje.stamina/G.MiPersonaje.maxStamina,1)
 	
+	if G.MiPersonaje.staminaInfinita > 0:
+		BarraStaminaLlena.color = Color("414141ff")
+	else:
+		BarraStaminaLlena.color = Color("0058b0")
+	
+
+func _ready():
+	for i in Contenedor.get_children():
+		botones.push_back(i)
+	crearMiniMapa()
+
+func _process(delta):
+	if G.MiPersonaje == null:
+		return
+	moverMiniMapa()
+	mostrarInventario()
+	recolectablesYStatus()
