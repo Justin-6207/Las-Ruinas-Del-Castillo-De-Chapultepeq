@@ -1,13 +1,13 @@
 extends Sprite3D
 @export var ObjetoContenido = ""
-var invObj = G.ObjetosData
+var invObj = GameData.Objetos
 
 var sonidos = {}
 func _ready():
 	for sonido in get_children():
 		sonidos[sonido.name] = sonido
 
-func  UsarObjeto(NombreObjeto):
+func UsarObjeto(NombreObjeto):
 	if NombreObjeto == "Espada":
 		sonidos["Espada"].play()
 		var gaa = false
@@ -18,6 +18,10 @@ func  UsarObjeto(NombreObjeto):
 				enemigo.stunned = 4
 		if gaa:
 			sonidos["EspadaCritica"].play()
+			
+	elif NombreObjeto == "Tamal":
+		G.MiPersonaje.staminaInfinita = 5
+		
 	elif NombreObjeto == "Bidon":
 		G.MiPersonaje.stamina = 100
 

@@ -12,7 +12,7 @@ extends Control
 var botones = []
 var panelesMiniMapa = []
 
-var scaleMiniMap = .25
+var scaleMiniMap = .2
 
 func moverMiniMapa():
 	Puntero.rotation_degrees = G.rotJug()
@@ -81,7 +81,7 @@ func _process(delta):
 			botones[iter].add_theme_stylebox_override("normal", new_stylebox)
 			
 		if objStr != "":
-			botones[iter].icon = load(G.ObjetosData[objStr].icono)
+			botones[iter].icon = load(GameData.Objetos[objStr].icono)
 		else:
 			botones[iter].icon = null	
 		iter += 1

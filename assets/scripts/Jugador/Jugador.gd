@@ -6,6 +6,8 @@ extends CharacterBody3D
 @export var llavesRecolectadas = 0
 @export var stamina = 100
 @export var maxStamina = 100
+@export var staminaInfinita = 0
+
 @onready var objetoEnLaMano = $"objetoEnLaMano"
 @onready var manoIndicadora = $"manoIndicadora"
 
@@ -54,11 +56,17 @@ func ManejarInput(delta):
 	
 	if Input.is_action_pressed("Correr") and stamina > 0:
 		Corriendo = true
-		stamina -= delta * 20
+		if staminaInfinita <= 0:
+			stamina -= delta * 20
 	else:
 		Corriendo = false
-		if directionX == 0 and directionY == 0:
+		if directionX == 0 and directionY == 0 and staminaInfinita <= 0:
 			stamina += delta * 20
+	
+	if staminaInfinita > 0:
+		if stamina <= 0:
+			stamina = 1
+		staminaInfinita -= delta
 	
 	stamina = clamp(stamina,0,100)
 	

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cdxygf7jvt2wb"]
+
+[ext_resource type="Texture2D" uid="uid://ch0f8dhxmojuo" path="res://assets/imagenes/texturas/piso.jpg" id="1_6lolu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oxigh"]
+albedo_color = Color(0.2015267, 0.20152655, 0.20152658, 1)
+albedo_texture = ExtResource("1_6lolu")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ucgpn"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_a0700"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Cubo" type="Node3D" unique_id=1471863833]
+metadata/Libre = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=567728897]
+material_override = SubResource("StandardMaterial3D_oxigh")
+mesh = SubResource("BoxMesh_ucgpn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=322836981]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=175193655]
+shape = SubResource("ConcavePolygonShape3D_a0700")

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ch8t85pyjiybw" path="res://assets/scripts/Laberinto/Puerta.gd" id="1_iwrfn"]
 [ext_resource type="AudioStream" uid="uid://v366mgmtxjqf" path="res://assets/sonidos/abriendoPuerta.mp3" id="2_3yb2h"]
 [ext_resource type="AudioStream" uid="uid://c0okrf0riul0s" path="res://assets/sonidos/cerrandoPuerta.mp3" id="3_pgff1"]
+[ext_resource type="Texture2D" uid="uid://b15u453gi0wpb" path="res://assets/imagenes/texturas/PuertaBuena.png" id="4_q8761"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nekdi"]
 albedo_color = Color(0.61755615, 0.30092567, 8.663535e-07, 1)
@@ -17,6 +18,7 @@ script = ExtResource("1_iwrfn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1751069772]
 transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.05, 0, 0, 0)
+layers = 3
 material_override = SubResource("StandardMaterial3D_nekdi")
 mesh = SubResource("BoxMesh_iwrfn")
 
@@ -34,3 +36,13 @@ volume_db = -5.0
 [node name="CerrandoPuerta" type="AudioStreamPlayer" parent="Sonidos" unique_id=800440510]
 stream = ExtResource("3_pgff1")
 volume_db = -5.0
+
+[node name="TexturaPuerta" type="Decal" parent="." unique_id=1089140248]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+size = Vector3(1, 1, 1.0478516)
+texture_albedo = ExtResource("4_q8761")
+upper_fade = 1e-05
+lower_fade = 1e-05
+distance_fade_begin = 0.0
+distance_fade_length = 107.65
+cull_mask = 2

@@ -4,7 +4,7 @@ extends Node3D
 @onready var SpriteObjeto = $"SpriteObjeto"
 @onready var ContenedorSonidos = $"Sonidos"
 
-var invObj = G.ObjetosData
+var invObj = GameData.Objetos
 var sonidos = {}
 
 func usar():

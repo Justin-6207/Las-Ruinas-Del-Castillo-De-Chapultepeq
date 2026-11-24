@@ -11,43 +11,8 @@ static var MisEnemigos
 static var PathfindObject
 
 static var LaberintoArray
-static var EsquinaLaberinto
-
-const ObjetosGenerables = ["Espada","Bidon","Tamal"]
-const ObjetosData = {
-	"Espada" : {
-		"icono" : "res://assets/imagenes/objetos/espada.png",
-		"proporcion" : Vector3(.1,.1,.1) * 2
-	},
-	
-	"Bidon" : {
-		"icono" : "res://assets/imagenes/objetos/bidon.png",
-		"proporcion" : Vector3(.1,.1,.1) * 2
-	},
-	
-	"Tamal" : {
-		"icono" : "res://assets/imagenes/objetos/tamal.png",
-		"proporcion" : Vector3(.1,.1,.1) * 2
-	},
-	
-	"Llave" : {
-		"icono" : "res://assets/imagenes/objetos/llave.png",
-		"proporcion" : Vector3(.1,.1,.1) * 2
-	},
-	
-
-	"Salida" : {
-		"icono" : "res://assets/imagenes/objetos/Salida.jpg",
-		"proporcion" : Vector3(.1,.1,.1) * 2.5
-	}
-}
-
-const EnemigosData = {
-	"Vicente_Suarez" : {
-		"icono" : "res://assets/imagenes/enemigos/VicenteSuarez.png",
-		"proporcion" : Vector3(.1,.1,.1) * 3
-	}
-}
+static var InicioLaberintoJugador
+static var FinalLaberinto
 
 static func limpiarCache():
 	MiPersonaje = null
@@ -61,7 +26,8 @@ static func limpiarCache():
 	PathfindObject = null
 	
 	LaberintoArray = null
-	EsquinaLaberinto = null
+	FinalLaberinto = null
+	InicioLaberintoJugador = null
 
 static func objectCast(Objeto : Node3D,Direccion : Vector3):
 	if Objeto == null:
@@ -99,7 +65,7 @@ static func rayCast(space_state,Start,End):
 	return result
 
 static func setPosArray(Objeto : Node3D):
-	if Objeto == null or LaberintoArray == null or G.EsquinaLaberinto == null:
+	if Objeto == null or LaberintoArray == null or G.FinalLaberinto == null:
 		return
 		
 	var resultado = objectCast(Objeto,-Vector3.UP * 10)
@@ -109,11 +75,11 @@ static func setPosArray(Objeto : Node3D):
 		var padreColision = objetoColision.get_parent().get_parent()
 		var posArray = padreColision.get_meta("PosicionArray")
 		
-		var tampf = G.EsquinaLaberinto.global_transform.basis.get_scale() * .5
+		var tampf = G.FinalLaberinto.global_transform.basis.get_scale() * .5
 		tampf = Vector3(tampf.x,0,tampf.z)
 		
 		var origen = Vector3(-tampf.x,0,-tampf.z)
-		var posicionFinal = G.EsquinaLaberinto.global_position
+		var posicionFinal = G.FinalLaberinto.global_position
 		posicionFinal += Vector3(tampf.x,0,tampf.z)
 		
 		
@@ -131,9 +97,6 @@ static func setPosArray(Objeto : Node3D):
 
 ####################################################################################
 
-static func magCam(posicion):
-	return (Camara.global_position-posicion).length()
-
 static func dirCam(posicion):
 	return ((Camara.global_position-posicion) * Vector3(1,0,1)).normalized()
 
@@ -141,12 +104,7 @@ static func basisCam(posicion):
 	var DC = dirCam(posicion)
 	var BasisNueva = Basis.looking_at(-DC)
 	return BasisNueva
-	
-####################################################################################
 
-static func dirJug(posicion):
-	return ((MiPersonaje.global_position-posicion) * Vector3(1,0,1))
-	
 static func rotJug():
 	var look = MiPersonaje.global_basis.z
 	var sample = Vector3.FORWARD

@@ -5,6 +5,7 @@ extends Node3D
 @export var pedestalObjeto : PackedScene
 @export var paredVacia: PackedScene
 @export var piso: PackedScene
+@export var pisoCuarto: PackedScene
 @export var enemigoBase: PackedScene
 @export var dificultad = 0
 
@@ -91,14 +92,6 @@ func obtenerNodosVecinosLlenos(y : int,x : int):
 	for nodo in nodosVecinos:
 		if nodo[0] == 1:
 			nodosRetorno.append(nodo)
-		elif nodo[0] == 0:
-			var nVV = obtenerNodosVecinos(nodo[1][0],nodo[1][1])
-			var puede = true
-			for n in nVV:
-				if not (n[0] == 0):
-					puede = false
-			if puede:
-				nodosRetorno.append(nodo)
 					
 	return nodosRetorno
 
@@ -142,12 +135,12 @@ func generarCuartosArray(numCuartos : int):
 			var nodosTotalesLlenos = []
 			var nvll = obtenerNodosVecinosLlenos(y,x)
 			nodosTotalesLlenos.append_array(nvll)
+			
 			for nodoVecino in nvll:
 				var nvll2 = obtenerNodosVecinosLlenos(nodoVecino[1][0],nodoVecino[1][1])
 				nodosTotalesLlenos.append_array(nvll2)
 				
-			var nodosLlenos = nodosTotalesLlenos.size()
-			if nodosLlenos >= 1:
+			if nvll.size() >= 2:
 				var cuarto = [[y,x]]
 				numCuartos -= 1
 				laberinto[y][x] = 2
@@ -277,10 +270,16 @@ func crearLaberintoFisico():
 				paredGenerada = paredVacia.instantiate()
 				paredGenerada.position = movingPos
 				Paredes.add_child(paredGenerada)
-				
-			var miPiso = piso.instantiate()
-			miPiso.position = movingPos + Vector3(0,-.5,0)
-			miPiso.name = str(z) + "-" + str(x)
+			
+			var miPiso
+			if nodo == 2:
+				miPiso = pisoCuarto.instantiate()
+				miPiso.position = movingPos + Vector3(0,-.5,0)
+				miPiso.name = str(z) + "-" + str(x)
+			else:
+				miPiso = piso.instantiate()
+				miPiso.position = movingPos + Vector3(0,-.5,0)
+				miPiso.name = str(z) + "-" + str(x)
 			
 			pisosLaberinto[z].push_back(miPiso)
 			darPosMeta(miPiso,[z,x])
@@ -299,7 +298,10 @@ func crearLaberintoFisico():
 				paredesLaberinto[z].push_back(null)
 				
 			if x == laberinto.size()-1 and z == laberinto.size()-1:
-				G.EsquinaLaberinto = miPiso
+				G.FinalLaberinto = miPiso
+			
+			if x == 1 and z == 1:
+				G.InicioLaberintoJugador = miPiso
 				
 			if x == 1 and z == 1:
 				G.MiPersonaje.global_position = miPiso.global_position + Vector3.UP * .5
@@ -401,7 +403,7 @@ func crearObjetosEnCuartos(cuartosFisicos : Array,llavesAGenerar):
 			llavesAGenerar -= 1
 			MiLlave.ObjetoContenido = "Llave"
 		else:
-			MiLlave.ObjetoContenido = G.ObjetosGenerables.pick_random()	
+			MiLlave.ObjetoContenido = GameData.ObjetosGenerables.pick_random()	
 		
 		Objetos.add_child(MiLlave)
 		MiLlave.global_position = pisoElegido.global_position + Vector3.UP
@@ -410,7 +412,7 @@ func generarEnemigo(NombreEnemigo):
 	var enemigo = enemigoBase.instantiate()
 	enemigo.tipoEnemigo = NombreEnemigo
 	Enemigos.add_child(enemigo)
-	enemigo.global_position = Vector3.ZERO + Vector3.UP
+	enemigo.global_position = (G.InicioLaberintoJugador.global_position * Vector3(1,0,1)) + Vector3.UP
 
 func generarSalida(pisosFisicos : Array):
 	var dist = 0
@@ -490,4 +492,4 @@ func _ready():
 	if generarEnemigos:
 		G.Anunciante.Anuncio = "Tienes 10 segundos antes de que aparezca el enemigo principal"
 		await get_tree().create_timer(10).timeout
-		generarEnemigo("Vicente_Suarez")
+		generarEnemigo("Nicolas_Bravo")
