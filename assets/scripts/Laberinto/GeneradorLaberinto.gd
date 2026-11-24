@@ -465,7 +465,7 @@ func _ready():
 	G.MisInteraccionables = Objetos
 	G.MisEnemigos = Enemigos
 	G.EspaciosVaciosLaberintoArray = []
-	G.MiPersonaje.MiInventario[1] = GameData.ObjetosGenerables.pick_random()
+	G.MiPersonaje.MiInventario[0] = GameData.ObjetosGenerables.pick_random()
 	
 	var tamanoLaberinto
 	var cuartosAGenerar
