@@ -132,8 +132,14 @@ func generarCuartosArray(numCuartos : int):
 		
 		if (y == 0 and x == 0) or (y == -1) or (x == -1) :
 			continue
-			
-		if laberinto[y][x] == 0 or laberinto[y][x] == 1:
+		
+		var haySalida = false
+		var nodosVecinos = obtenerNodosVecinos(y,x)
+		for nodo in nodosVecinos:
+			if nodo[0] == 0:
+				haySalida = true
+		
+		if laberinto[y][x] == 1 and haySalida:
 			var nodosTotalesLlenos = []
 			var nvll = obtenerNodosVecinosLlenos(y,x)
 			nodosTotalesLlenos.append_array(nvll)
@@ -171,11 +177,19 @@ func eliminarCallejonesSinSalida():
 					if vecino[0] == 1:
 						nodosLlenos += 1
 					iter += 1
+				
+				var nodosALimpiar = 2
+				
+				if nodosLlenos >= 4:
+					nodosALimpiar = 3
 					
 				if nodosLlenos >= 3:
 					for nodo in nodosVecinosSalida:
-						laberinto[nodo[2][0]][nodo[2][1]] = 0
-						break
+						if nodo[0] == 1:
+							laberinto[nodo[2][0]][nodo[2][1]] = 0
+							nodosALimpiar -= 1
+							if nodosALimpiar <= 0:
+								break
 				else:
 					continue
 
@@ -320,7 +334,6 @@ func crearLaberintoFisico():
 func crearPuertaAPartirDeNodos(ListaNodos : Array, paredesLaberinto):
 	for pos in ListaNodos:
 		var NodosVecinos = obtenerNodosVecinos(pos[0],pos[1])
-		
 		for nodoVecino in NodosVecinos:
 			if nodoVecino[0] == 0:
 				var Objeto = paredesLaberinto[pos[0]][pos[1]]
@@ -329,9 +342,10 @@ func crearPuertaAPartirDeNodos(ListaNodos : Array, paredesLaberinto):
 				
 				var inicio = G.PathfindObject.genKey(1,1)
 				var fin = G.PathfindObject.genKey(nodoVecino[1][0],nodoVecino[1][1])
+				var camino
 				
-				var camino = G.PathfindObject.encontrarCamino(inicio,fin)
-
+				camino = G.PathfindObject.encontrarCamino(inicio,fin)
+				
 				if not camino:
 					continue
 				
@@ -363,7 +377,8 @@ func crearPuertaAPartirDeNodos(ListaNodos : Array, paredesLaberinto):
 				laberinto[pos[0]][pos[1]] = 3
 				
 				return [PuertaFisica,Objeto]
-
+	print("no regrese nada ):")
+	
 func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 	var cuartosFisicos = []
 	for cuarto in cuartosArray:
@@ -375,10 +390,15 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 		var nodosOrdenados = ordernarNodosPorDistancia(cuarto)
 		var retorno = crearPuertaAPartirDeNodos(nodosOrdenados, paredesLaberinto)
 		nodosOrdenados.reverse()
-		
 		crearPuertaAPartirDeNodos(nodosOrdenados, paredesLaberinto)
+		
+		if retorno == null:
+			print(cuarto)
+			for y in laberinto:
+				print(y)
+		
 		CuartoFisico.PisoPrincipal = retorno[1]
-			
+
 		for pos in cuarto:
 			var nodosVecinos = obtenerNodosVecinos(pos[0],pos[1])
 			var paredCorrespondiente = paredesLaberinto[pos[0]][pos[1]]
@@ -435,12 +455,13 @@ func generarSalidaFisica(pisosFisicos : Array):
 	var dist = 0
 	var pisoS
 	
-	for piso in Pisos.get_children():
-		var distTemp = piso.global_position - G.MiPersonaje.global_position
-		distTemp = distTemp.length()
-		if (distTemp > dist) and piso.get_meta("Libre"):
-			dist = distTemp
-			pisoS = piso
+	while pisoS == null:
+		for piso in Pisos.get_children():
+			var distTemp = piso.global_position - G.MiPersonaje.global_position
+			distTemp = distTemp.length()
+			if (distTemp > dist) and piso.get_meta("Libre"):
+				dist = distTemp
+				pisoS = piso
 	
 	var MiSalida = pedestalObjeto.instantiate()
 	MiSalida.ObjetoContenido = "Salida"
@@ -453,17 +474,17 @@ func generarSalidaFisica(pisosFisicos : Array):
 
 func tutorialIntro():
 	G.Anunciante.Anuncio = "Bienvenido al tutorial del juego"
-	await get_tree().create_timer(2.75).timeout
+	await get_tree().create_timer(3.5).timeout
 	G.Anunciante.Anuncio = "A continuacion se mostraran los controles basicos del juego"
-	await get_tree().create_timer(2.75).timeout
+	await get_tree().create_timer(3.5).timeout
 	G.Anunciante.Anuncio = "Controles - Boton del Mouse Izquierdo: Abrir / cerrar puertas, agarrar objetos"
-	await get_tree().create_timer(2.75).timeout
+	await get_tree().create_timer(3.5).timeout
 	G.Anunciante.Anuncio = "Controles - Boton del Mouse Derecho: Usar objetos en el inventario"
-	await get_tree().create_timer(2.75).timeout
+	await get_tree().create_timer(3.5).timeout
 	G.Anunciante.Anuncio = "Controles - CTRL Izquierdo: correr"
-	await get_tree().create_timer(2.75).timeout
+	await get_tree().create_timer(3.5).timeout
 	G.Anunciante.Anuncio = "Controles - Teclas 1, 2 y 3: Cambiar de objeto dentro del inventario"
-	await get_tree().create_timer(2.75).timeout
+	await get_tree().create_timer(3.5).timeout
 	G.Tutorial = true
 
 func _ready():
@@ -489,20 +510,34 @@ func _ready():
 		WorkerThreadPool.add_task(tutorialIntro)
 		cuartosAGenerar = 5
 		llavesAGenerar = 3
-		tamanoLaberinto = 25
+		tamanoLaberinto = 20
+		
 	elif dificultad == 1:
 		sonidos["Nivel1"].play()
 		cuartosAGenerar = 7
 		llavesAGenerar = 5
-		tamanoLaberinto = 25	
+		tamanoLaberinto = 20
+		
 	elif dificultad == 2:
 		sonidos["Nivel2"].play()
 		cuartosAGenerar = 10
 		llavesAGenerar = 7
-		tamanoLaberinto = 50	
+		tamanoLaberinto = 40
+		
+	elif dificultad >= 3:
+		sonidos["Nivel2"].play()
+		cuartosAGenerar = 13
+		llavesAGenerar = 9
+		tamanoLaberinto = 60
+		
+	elif dificultad >= 4:
+		sonidos["Nivel2"].play()
+		cuartosAGenerar = 16
+		llavesAGenerar = 12
+		tamanoLaberinto = 80
 	
 	generarLaberintoArray(tamanoLaberinto)
-	eliminarCallejonesSinSalida()
+	eliminarCallejonesSinSalida() 
 	var cuartosArray = generarCuartosArray(cuartosAGenerar)
 	
 	var retornoFisico = crearLaberintoFisico()
@@ -524,7 +559,7 @@ func _ready():
 	if dificultad == 1:
 		G.Anunciante.Anuncio = "Enemigos presentes: Nicolas Bravo"
 		await get_tree().create_timer(2).timeout
-	elif dificultad == 2:
+	elif dificultad >= 2:
 		G.Anunciante.Anuncio = "Enemigos presentes: Nicolas Bravo, Francisco Marquez"
 		await get_tree().create_timer(2).timeout
 		

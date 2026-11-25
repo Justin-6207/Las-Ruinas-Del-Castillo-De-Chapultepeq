@@ -71,6 +71,9 @@ func ManejarInput(delta):
 	if Input.is_action_just_pressed("Click Izquierdo"):
 		manoIndicadora.interactuarConObjeto()
 		
+	if Input.is_action_just_pressed("Reiniciar Juego"):
+		get_tree().change_scene_to_file("res://escenas/Inicio.tscn")
+		
 	if Input.is_action_just_pressed("Usar Objeto"):
 		UsarObjeto()
 

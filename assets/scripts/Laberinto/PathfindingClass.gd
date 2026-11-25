@@ -74,21 +74,23 @@ func encontrarCamino(PosicionInicial,PosicionFinal):
 		return
 	
 	minDist[PosicionInicial] = 0;
-	var timeout = 100
-	
-	while minDist[PosicionFinal] >= valorMaximo and timeout > 0:
-		timeout -= 1
-		var llavesMatAdya = matrizAdyacencia.keys()
-		llavesMatAdya.shuffle()
-		for nodoActual in llavesMatAdya:
-			if minDist[nodoActual] >= valorMaximo:
-				continue
-			var listaAdyacencia = matrizAdyacencia[nodoActual]
-			for nodoMeta in listaAdyacencia:
-				var peso = listaAdyacencia[nodoMeta]
-				if (minDist[nodoActual] + peso) < minDist[nodoMeta]:
-					minDist[nodoMeta] = minDist[nodoActual] + peso
-					padre[nodoMeta] = nodoActual
+	var llavesNuevas = [PosicionInicial]
+
+	while llavesNuevas.size() > 0:
+		var nodoActual = llavesNuevas[0]
+		llavesNuevas.remove_at(0)
+		
+		if minDist[nodoActual] >= valorMaximo:
+			continue
+		
+		var listaAdyacencia = matrizAdyacencia[nodoActual]
+		
+		for nodoMeta in listaAdyacencia:
+			var peso = listaAdyacencia[nodoMeta]
+			if (minDist[nodoActual] + peso) < minDist[nodoMeta]:
+				minDist[nodoMeta] = minDist[nodoActual] + peso
+				padre[nodoMeta] = nodoActual
+				llavesNuevas.push_back(nodoMeta)
 		
 	if minDist[PosicionFinal] >= valorMaximo:
 		return

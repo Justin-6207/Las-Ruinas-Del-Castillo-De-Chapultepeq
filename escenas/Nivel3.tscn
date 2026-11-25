@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cbjhevrk1rals"]
+
+[ext_resource type="PackedScene" uid="uid://g6cegfv0x062" path="res://assets/generadorMapa/GeneradorMapa.tscn" id="1_5qqb4"]
+[ext_resource type="PackedScene" uid="uid://cegnnt1qbyqy1" path="res://assets/personajes/Jugador.tscn" id="2_quavw"]
+
+[node name="Juego" type="Node3D" unique_id=1674986011]
+
+[node name="GeneradorMapa" parent="." unique_id=450716917 instance=ExtResource("1_5qqb4")]
+dificultad = 3
+
+[node name="Jugador" parent="." unique_id=489573203 instance=ExtResource("2_quavw")]
