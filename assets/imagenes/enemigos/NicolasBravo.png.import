@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq15741e61veg"
-path="res://.godot/imported/NicolasBravo.jpeg-16c09675c1b263c982e22d0e5618b75f.ctex"
+uid="uid://bbfiov12c2mgd"
+path="res://.godot/imported/NicolasBravo.png-94d9a82e59babc53c2d3dce781a8253b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/imagenes/enemigos/NicolasBravo.jpeg"
-dest_files=["res://.godot/imported/NicolasBravo.jpeg-16c09675c1b263c982e22d0e5618b75f.ctex"]
+source_file="res://assets/imagenes/enemigos/NicolasBravo.png"
+dest_files=["res://.godot/imported/NicolasBravo.png-94d9a82e59babc53c2d3dce781a8253b.ctex"]
 
 [params]
 

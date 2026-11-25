@@ -39,6 +39,11 @@ const Objetos = {
 }
 
 const Enemigos = {
+	"Nicolas_Bravo" : {
+		"icono" : "res://assets/imagenes/enemigos/NicolasBravo.png",
+		"proporcion" : Vector3(.1,.1,.1) * 3
+	},
+	
 	"Vicente_Suarez" : {
 		"icono" : "res://assets/imagenes/enemigos/VicenteSuarez.png",
 		"proporcion" : Vector3(.1,.1,.1) * 3

@@ -1,7 +1,7 @@
 class_name IA
 
 static func IABase(Enemigo : Node3D):
-	if Enemigo.tipoEnemigo == "Vicente_Suarez":
+	if Enemigo.tipoEnemigo == "Nicolas_Bravo":
 		Enemigo.sonidos["Estatica"].play()
 	elif Enemigo.tipoEnemigo == "Francisco_Marquez":
 		Enemigo.velocidad = 4
@@ -15,12 +15,12 @@ static func IABase(Enemigo : Node3D):
 		await Tree.process_frame
 		var delta = Tree.root.get_process_delta_time()
 		
-		if Enemigo.tipoEnemigo == "Vicente_Suarez":
-			VicenteSuarez(Enemigo)
+		if Enemigo.tipoEnemigo == "Nicolas_Bravo":
+			NicolasBravo(Enemigo)
 		elif Enemigo.tipoEnemigo == "Francisco_Marquez":
 			FranciscoMarquez(Enemigo,delta)
 		
-static func VicenteSuarez(Enemigo : Node3D):
+static func NicolasBravo(Enemigo : Node3D):
 	if Enemigo.tocandoMeta:
 		for i in range(0,G.MiPersonaje.MiInventario.size()):
 			var objeto = G.MiPersonaje.MiInventario[i]

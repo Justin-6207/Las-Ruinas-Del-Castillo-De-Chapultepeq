@@ -523,15 +523,15 @@ func _ready():
 	G.LaberintoFisico = pisosFisicos
 	
 	if dificultad == 1:
-		G.Anunciante.Anuncio = "Enemigos presentes: Vicente Suarez"
+		G.Anunciante.Anuncio = "Enemigos presentes: Nicolas Bravo"
 		await get_tree().create_timer(2).timeout
 	elif dificultad == 2:
-		G.Anunciante.Anuncio = "Enemigos presentes: Vicente Suarez, Francisco Marquez"
+		G.Anunciante.Anuncio = "Enemigos presentes: Nicolas Bravo, Francisco Marquez"
 		await get_tree().create_timer(2).timeout
 		
 	if dificultad >= 1:
 		G.Anunciante.Anuncio = "Tendras 10 segundos de ventaja"
 		await get_tree().create_timer(10).timeout
-		generarEnemigo("Vicente_Suarez")
+		generarEnemigo("Nicolas_Bravo")
 		if dificultad >= 2:
 			generarEnemigo("Francisco_Marquez")
