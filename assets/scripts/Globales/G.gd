@@ -13,6 +13,7 @@ static var PathfindObject
 static var LaberintoArray
 static var EspaciosVaciosLaberintoArray
 static var LaberintoFisico
+static var ObjetosLaberinto
 
 static var InicioLaberintoJugador
 static var FinalLaberinto
@@ -31,7 +32,7 @@ static func limpiarCache():
 	LaberintoArray = null
 	EspaciosVaciosLaberintoArray = null
 	LaberintoFisico = null
-	
+	ObjetosLaberinto = null
 	
 	FinalLaberinto = null
 	InicioLaberintoJugador = null
@@ -79,29 +80,29 @@ static func setPosArray(Objeto : Node3D):
 	if Objeto == null or LaberintoArray == null or G.FinalLaberinto == null:
 		return
 		
-	var resultado = objectCast(Objeto,-Vector3.UP * 10)
+	var tampf = G.FinalLaberinto.global_transform.basis.get_scale() * .5
+	tampf = Vector3(tampf.x,0,tampf.z)
+			
+	var origen = Vector3(-tampf.x,0,-tampf.z)
+	var posicionFinal = G.FinalLaberinto.global_position
+	posicionFinal += Vector3(tampf.x,0,tampf.z)
+			
+	var diferenciaOrigen = ((posicionFinal - origen) * Vector3(1,0,1))
+	var diferencia = ((posicionFinal - Objeto.global_position) * Vector3(1,0,1))
 
+	var x = (1-((diferencia.x/diferenciaOrigen.x))) * (LaberintoArray.size())
+	var y = (1-((diferencia.z/diferenciaOrigen.z))) * (LaberintoArray.size())
+	
+	Objeto.set_meta("PosicionArrayEstimada",[y,x])
+	Objeto.set_meta("PosicionArrayEstimadaInt",[floor(y),floor(x)])
+	
+	var resultado = objectCast(Objeto,-Vector3.UP * 10)
+	
 	if not resultado.is_empty():
 		var objetoColision = resultado.collider
 		var padreColision = objetoColision.get_parent().get_parent()
 		var posArray = padreColision.get_meta("PosicionArray")
-		
-		var tampf = G.FinalLaberinto.global_transform.basis.get_scale() * .5
-		tampf = Vector3(tampf.x,0,tampf.z)
-		
-		var origen = Vector3(-tampf.x,0,-tampf.z)
-		var posicionFinal = G.FinalLaberinto.global_position
-		posicionFinal += Vector3(tampf.x,0,tampf.z)
-		
-		
-		var diferenciaOrigen = ((posicionFinal - origen) * Vector3(1,0,1))
-		var diferencia = ((posicionFinal - Objeto.global_position) * Vector3(1,0,1))
-		
-		var x = (1-((diferencia.x/diferenciaOrigen.x))) * (LaberintoArray.size())
-		var y = (1-((diferencia.z/diferenciaOrigen.z))) * (LaberintoArray.size())
-		
-		Objeto.set_meta("PosicionArrayEstimada",[y,x])
-		
+
 		if posArray:
 			Objeto.set_meta("PosicionArray",[posArray[0],posArray[1]])
 	

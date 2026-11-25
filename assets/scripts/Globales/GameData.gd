@@ -31,6 +31,10 @@ const Objetos = {
 	"Salida" : {
 		"icono" : "res://assets/imagenes/objetos/Salida.png",
 		"proporcion" : Vector3(.1,.1,.1) * 2.5
+	},
+	"Pregunta" : {
+		"icono" : "res://assets/imagenes/objetos/Pregunta.png",
+		"proporcion" : Vector3(.1,.1,.1) * 2.5
 	}
 }
 

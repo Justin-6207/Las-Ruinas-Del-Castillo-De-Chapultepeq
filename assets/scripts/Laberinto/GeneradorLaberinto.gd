@@ -320,7 +320,7 @@ func crearLaberintoFisico():
 
 func crearPuertaAPartirDeNodos(ListaNodos : Array, paredesLaberinto):
 	for pos in ListaNodos:
-		var NodosVecinos = obtenerNodosVecinosConSalida(pos[0],pos[1])
+		var NodosVecinos = obtenerNodosVecinos(pos[0],pos[1])
 		
 		for nodoVecino in NodosVecinos:
 			if nodoVecino[0] == 0:
@@ -328,19 +328,27 @@ func crearPuertaAPartirDeNodos(ListaNodos : Array, paredesLaberinto):
 				var POSSalvada
 				var BASISSalvada
 				
-				if nodoVecino[3] == "N":
+				var inicio = G.PathfindObject.genKey(1,1)
+				var fin = G.PathfindObject.genKey(nodoVecino[1][0],nodoVecino[1][1])
+				
+				var camino = G.PathfindObject.encontrarCamino(inicio,fin)
+
+				if not camino:
+					continue
+				
+				if nodoVecino[2] == "N":
 					POSSalvada = Objeto.find_child("Frente").global_position
 					BASISSalvada = Objeto.find_child("Frente").basis
 					Objeto.find_child("Frente").queue_free()
-				elif nodoVecino[3] == "S":
+				elif nodoVecino[2] == "S":
 					POSSalvada = Objeto.find_child("Detras").global_position
 					BASISSalvada = Objeto.find_child("Detras").basis
 					Objeto.find_child("Detras").queue_free()
-				elif nodoVecino[3] == "E":
+				elif nodoVecino[2] == "E":
 					POSSalvada = Objeto.find_child("Derecha").global_position
 					BASISSalvada = Objeto.find_child("Derecha").basis
 					Objeto.find_child("Derecha").queue_free()
-				elif nodoVecino[3] == "O":	
+				elif nodoVecino[2] == "O":	
 					POSSalvada = Objeto.find_child("Izquierda").global_position
 					BASISSalvada = Objeto.find_child("Izquierda").basis
 					Objeto.find_child("Izquierda").queue_free()
@@ -352,7 +360,7 @@ func crearPuertaAPartirDeNodos(ListaNodos : Array, paredesLaberinto):
 				PuertaFisica.basis = BASISSalvada.scaled(PuertaFisica.basis.get_scale())
 				PuertaFisica.position += Vector3.UP * .5
 				
-				laberinto[nodoVecino[2][0]][nodoVecino[2][1]] = 4
+				laberinto[nodoVecino[1][0]][nodoVecino[1][1]] = 4
 				laberinto[pos[0]][pos[1]] = 3
 				
 				return [PuertaFisica,Objeto]
@@ -368,6 +376,7 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 		var nodosOrdenados = ordernarNodosPorDistancia(cuarto)
 		var retorno = crearPuertaAPartirDeNodos(nodosOrdenados, paredesLaberinto)
 		nodosOrdenados.reverse()
+		
 		crearPuertaAPartirDeNodos(nodosOrdenados, paredesLaberinto)
 		CuartoFisico.PisoPrincipal = retorno[1]
 			
@@ -389,6 +398,7 @@ func crearCuartosFisicos(cuartosArray : Array,paredesLaberinto : Array):
 				elif nodoVecino[2] == "O":	
 					paredCorrespondiente.find_child("Izquierda").queue_free()
 		cuartosFisicos.push_back(CuartoFisico)
+		
 	return cuartosFisicos
 
 func crearObjetosEnCuartos(cuartosFisicos : Array,llavesAGenerar):
@@ -410,9 +420,11 @@ func crearObjetosEnCuartos(cuartosFisicos : Array,llavesAGenerar):
 			MiLlave.ObjetoContenido = "Llave"
 		else:
 			MiLlave.ObjetoContenido = GameData.ObjetosGenerables.pick_random()	
-		
+
 		Objetos.add_child(MiLlave)
 		MiLlave.global_position = pisoElegido.global_position + Vector3.UP
+		
+		G.setPosArray(MiLlave)
 
 func generarEnemigo(NombreEnemigo):
 	var enemigo = enemigoBase.instantiate()
@@ -466,6 +478,7 @@ func _ready():
 	G.MisEnemigos = Enemigos
 	G.EspaciosVaciosLaberintoArray = []
 	G.MiPersonaje.MiInventario[0] = GameData.ObjetosGenerables.pick_random()
+	G.ObjetosLaberinto = Objetos
 	
 	var tamanoLaberinto
 	var cuartosAGenerar
@@ -496,8 +509,10 @@ func _ready():
 	var retornoFisico = crearLaberintoFisico()
 	var paredesFisicas = retornoFisico[0]
 	var pisosFisicos = retornoFisico[1]
-	var cuartosFisicos = crearCuartosFisicos(cuartosArray,paredesFisicas)
 	
+	G.PathfindObject = PathfindingClass.new(laberinto,pisosFisicos)
+	
+	var cuartosFisicos = crearCuartosFisicos(cuartosArray,paredesFisicas)
 	crearObjetosEnCuartos(cuartosFisicos,llavesAGenerar)
 	generarSalidaFisica(pisosFisicos)
 	

@@ -68,8 +68,14 @@ func encontrarCamino(PosicionInicial,PosicionFinal):
 		minDist[key] = valorMaximo
 		padre[key] = "NULL"
 	
+	if matrizAdyacencia.has(PosicionInicial) == false:
+		return
+	if matrizAdyacencia.has(PosicionFinal) == false:
+		return
+	
 	minDist[PosicionInicial] = 0;
 	var timeout = 100
+	
 	while minDist[PosicionFinal] >= valorMaximo and timeout > 0:
 		timeout -= 1
 		var llavesMatAdya = matrizAdyacencia.keys()

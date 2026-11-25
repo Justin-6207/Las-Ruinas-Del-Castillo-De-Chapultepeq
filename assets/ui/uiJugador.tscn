@@ -95,6 +95,11 @@ offset_right = 300.0
 offset_bottom = 40.0
 color = Color(0, 0.34509805, 0.6901961, 1)
 
+[node name="TextureRect" type="TextureRect" parent="BarraStamina/Lleno" unique_id=1930660086]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="Restante" type="Label" parent="BarraStamina" unique_id=508567337]
 layout_mode = 0
 offset_left = 4.0

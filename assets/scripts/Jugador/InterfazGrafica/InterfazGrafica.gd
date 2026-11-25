@@ -12,7 +12,7 @@ extends Control
 var botones = []
 var panelesMiniMapa = []
 
-var scaleMiniMap = .2
+var scaleMiniMap = .1
 
 func moverMiniMapa():
 	if G.LaberintoArray == null:
@@ -29,6 +29,27 @@ func moverMiniMapa():
 		for x in range(0,G.LaberintoArray.size()):
 			var casilla = panelesMiniMapa[y][x]
 			casilla.position = -vectorPAE + (Vector2(x,y) * mult) + multVectorMedio
+			
+			var miTextura = casilla.get_child(0)
+			if not (miTextura == null):
+				miTextura.texture = null
+			
+	for objeto in G.ObjetosLaberinto.get_children():
+		G.setPosArray(objeto)
+		var pos = objeto.get_meta("PosicionArrayEstimadaInt")
+		
+		if pos[0] < 0 or pos[0] > G.LaberintoArray.size()-1:
+			continue
+		if pos[1] < 0 or pos[1] > G.LaberintoArray.size()-1:
+			continue
+			
+		var casilla : Panel = panelesMiniMapa[pos[0]][pos[1]]
+		var miTextura = casilla.get_child(0)
+
+		if not (miTextura == null):
+			miTextura.texture = null
+			if (not (objeto.ObjetoContenido == "Puerta")) and (not (objeto.ObjetoContenido == "")):
+				miTextura.texture = load(GameData.Objetos["Pregunta"].icono)
 	pass
 
 func crearMiniMapa():
@@ -47,8 +68,14 @@ func crearMiniMapa():
 				casilla.pivot_offset_ratio = Vector2(.5,.5)
 				casilla.mouse_filter = Control.MOUSE_FILTER_IGNORE
 				
-				var new_stylebox = StyleBoxFlat.new()
+				var trect = TextureRect.new()
+				trect.name = "MiTextura"
+				trect.size = ContenedorMiniMapa.size
+				trect.pivot_offset_ratio = Vector2(.5,.5)
+				trect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 				
+				var new_stylebox = StyleBoxFlat.new()
+
 				if valorLaberinto == 0:
 					new_stylebox.bg_color = Color.DARK_GRAY
 				elif valorLaberinto == 1:
@@ -59,6 +86,7 @@ func crearMiniMapa():
 					new_stylebox.bg_color = Color.SADDLE_BROWN
 				
 				ContenedorMiniMapa.add_child(casilla)
+				casilla.add_child(trect)
 				casilla.add_theme_stylebox_override("panel", new_stylebox)
 				panelesMiniMapa[y].push_back(casilla)
 

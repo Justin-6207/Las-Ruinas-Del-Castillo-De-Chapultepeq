@@ -4,7 +4,7 @@ extends Node3D
 @onready var ContenedorSonidos = $Sonidos
 
 @export var Abierta = false 
-
+var ObjetoContenido = "Puerta"
 var sonidos = {}
 
 func usar():
