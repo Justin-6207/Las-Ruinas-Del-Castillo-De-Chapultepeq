@@ -50,6 +50,30 @@ text = "NIVEL 1"
 script = ExtResource("1_6iy57")
 caminoHaciaEscena = "res://escenas/Nivel1.tscn"
 
+[node name="Nivel3" type="Button" parent="." unique_id=673667373]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 471.0
+offset_right = 526.0
+offset_bottom = 555.0
+theme_override_font_sizes/font_size = 55
+text = "NIVEL 3
+"
+script = ExtResource("1_6iy57")
+caminoHaciaEscena = "res://escenas/Nivel3.tscn"
+
+[node name="Nivel4" type="Button" parent="." unique_id=1375468482]
+layout_mode = 0
+offset_left = 583.0
+offset_top = 468.0
+offset_right = 983.0
+offset_bottom = 552.0
+theme_override_font_sizes/font_size = 55
+text = "NIVEL 4
+"
+script = ExtResource("1_6iy57")
+caminoHaciaEscena = "res://escenas/Nivel4.tscn"
+
 [node name="Nivel2" type="Button" parent="." unique_id=1519766881]
 layout_mode = 0
 offset_left = 585.0

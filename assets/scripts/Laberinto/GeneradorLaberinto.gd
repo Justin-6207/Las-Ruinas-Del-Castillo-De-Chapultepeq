@@ -162,21 +162,20 @@ func eliminarCallejonesSinSalida():
 	for y in range(0,tamanoLaberinto):
 		for x in range(0,tamanoLaberinto):
 			if laberinto[y][x] == 0:
-				var nodosVecinos = obtenerNodosVecinosConSalida(y,x)
+				var nodosVecinosSalida = obtenerNodosVecinosConSalida(y,x)
+				var nodosVecinos = obtenerNodosVecinos(y,x)
 				var nodosLlenos = 0
-				var nodoCC
-				
+	
 				var iter = 0
 				for vecino in nodosVecinos:
 					if vecino[0] == 1:
 						nodosLlenos += 1
-						if vecino[1] == 0:
-							nodoCC = iter
 					iter += 1
 					
-				if nodosLlenos >= nodosVecinos.size()-1 and nodosVecinos.size() >= 3 and nodoCC:
-					if laberinto[ nodosVecinos[nodoCC][2][0] ] [ nodosVecinos[nodoCC][2][1] ] == 1:
-						laberinto[ nodosVecinos[nodoCC][2][0] ] [ nodosVecinos[nodoCC][2][1] ] = 0
+				if nodosLlenos >= 3:
+					for nodo in nodosVecinosSalida:
+						laberinto[nodo[2][0]][nodo[2][1]] = 0
+						break
 				else:
 					continue
 
